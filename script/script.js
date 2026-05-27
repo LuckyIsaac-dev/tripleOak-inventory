@@ -7,6 +7,21 @@ class Water {
     this.type = productDetails.type;
     this.id = productDetails.id;
   }
+
+  editQuantity(value, productId) {
+    if (this.id === productId) {
+      if (value <= 0) return;
+      if ((this.quantity -= value <= 0)) return;
+      return (this.quantity -= value);
+    }
+  }
+
+  updateQuantity(value, productId) {
+    if (this.id === productId) {
+      if (value <= 0) return;
+      return (this.quantity += value);
+    }
+  }
 }
 
 const waters = [
@@ -22,7 +37,7 @@ const waters = [
     image: "",
     name: "Eva Water 150cl",
     price: "3600",
-    quantity: 0,
+    quantity: 10,
     type: "bottle water",
     id: "2",
   },
@@ -121,48 +136,71 @@ let products;
 products = waters.map((water) => {
   return new Water(water);
 });
+
 generateHTML();
+
 function generateHTML() {
   let productHTML = "";
   products.forEach((bottleWater) => {
     let html = `
-      <div class="product-card">
-      <span class="status-badge instock">In Stock</span>
-      <div class="product-image">
-        <img src="images/EVA-WATER-150CL.jpeg" />
-      </div>
-      <div class="product-details">
-        <h2 class="product-name">${bottleWater.name}</h2>
-        <div class="product-meta">
-          <p><strong>Price:</strong> ₦ ${bottleWater.price} / carton</p>
-          <!-- <p><strong>Last Updated:</strong> 23-05-2026</p> -->
+           <div class="product-card" style="animation-delay: 0s">
+        <div class="card-image-wrap">
+          <img
+            src="https://www.evawater.com.ng/wp-content/uploads/2021/07/75cl.png"
+            alt="Eva 75cl"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.style.display = 'flex';
+            "
+            style="display: none"
+          />
+          <div class="placeholder-img" style="display: flex">💧</div>
+          <span class="stock-badge out-of-stock">Out of Stock</span>
         </div>
-        <div class="quantity-badge">
-          <span>Quantity: <strong> ${bottleWater.quantity} packs</strong></span>
+        <div class="card-body">
+          <div class="card-brand">Eva</div>
+          <div class="card-name">Eva 75cl</div>
+          <div class="card-stats">
+            <div class="card-stat">
+              <div class="stat-label">Quantity</div>
+              <div class="stat-value empty">0</div>
+            </div>
+            <div class="card-stat">
+              <div class="stat-label">Price / Pack</div>
+              <div class="stat-value"></div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-card btn-edit" onclick="openEditModal(1)">
+               Edit
+            </button>
+            <button class="btn-card btn-update" onclick="openQtyModal(1)">
+              Update Stock
+            </button>
+          </div>
         </div>
       </div>
-      <div class="card-actions">
-        <button class="btn btn-update">Update Qty</button>
-        <button class="btn btn-edit" data-product-id="${bottleWater.id}">Edit</button>
-      </div>
-    </div>
     `;
     productHTML += html;
   });
-  document.querySelector(".product-grid").innerHTML = productHTML;
+  document.querySelector(".products-grid").innerHTML = productHTML;
 }
-function editQuantity(value, productId) {
-  products.forEach((water) => {
-    if (water.id === productId) {
-      if (water.quantity <= 0) return;
-      return (water.quantity -= value);
-    }
-  });
-}
+let input = document.querySelector(".update-quantity-input");
+let saveBtn = document.querySelector(".update-btn");
+let value;
 document.querySelectorAll(".btn-edit").forEach((editButton) => {
   editButton.addEventListener("click", () => {
     const productId = editButton.dataset.productId;
-    console.log(productId);
+    document.querySelector(".update-model").classList.add("model-active");
+    saveBtn.addEventListener("click", () => {
+      value = Number(input.value);
+      products.forEach((product) => {
+        if (product.id === productId) {
+          product.editQuantity(value, productId);
+          console.log(product);
+          generateHTML();
+        }
+      });
+    });
   });
 });
-editQuantity(2, "1");

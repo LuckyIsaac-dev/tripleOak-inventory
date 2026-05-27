@@ -35,27 +35,62 @@
         <p class="stat-number">2</p>
       </div>
     </section>
-    <main class="product-grid"></main>
-    <!-- <div class="product-card">
-      <span class="status-badge instock">In Stock</span>
-      <div class="product-image">
-        <img src="images/EVA-WATER-150CL.jpeg" />
-      </div>
-      <div class="product-details">
-        <h2 class="product-name">Eva Water 75cl</h2>
-        <div class="product-meta">
-          <p><strong>Price:</strong> ₦3,200 / carton</p>
-          < <p><strong>Last Updated:</strong> 23-05-2026</p> 
+    <div class="update-model-overlay">
+      <div class="update-model">
+        <div class="model-header">
+          <h3>Update Stock</h3>
+          <p>Eva 75cl</p>
         </div>
-        <div class="quantity-badge">
-          <span>Quantity: <strong>320 packs</strong></span>
+
+        <p>New quantity</p>
+        <input type="text" class="update-quantity-input" />
+        <div class="btn-container">
+          <button class="cancel-btn">Cancel</button
+          ><button class="update-btn">Update Quantity</button>
         </div>
       </div>
-      <div class="card-actions">
-        <button class="btn btn-update">Update Qty</button>
-        <button class="btn btn-edit">Edit</button>
+    </div>
+
+    <main class="products-grid">
+      <div class="product-card" style="animation-delay: 0s">
+        <div class="card-image-wrap">
+          <img
+            src="https://www.evawater.com.ng/wp-content/uploads/2021/07/75cl.png"
+            alt="Eva 75cl"
+            onerror="
+              this.style.display = 'none';
+              this.nextElementSibling.style.display = 'flex';
+            "
+            style="display: none"
+          />
+          <div class="placeholder-img" style="display: flex">💧</div>
+          <span class="stock-badge out-of-stock">Out of Stock</span>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">Eva</div>
+          <div class="card-name">Eva 75cl</div>
+          <div class="card-stats">
+            <div class="card-stat">
+              <div class="stat-label">Quantity</div>
+              <div class="stat-value empty">0</div>
+            </div>
+            <div class="card-stat">
+              <div class="stat-label">Price / Pack</div>
+              <div class="stat-value">₦—</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-card btn-edit" onclick="openEditModal(1)">
+              ✏️ Edit
+            </button>
+            <button class="btn-card btn-update" onclick="openQtyModal(1)">
+              📦 Update Stock
+            </button>
+          </div>
+        </div>
       </div>
-    </div> -->
-    <script src="script/script.js"></script>
+    </main>
+
+    <script type="module" src="script/script.js"></script>
   </body>
 </html>
