@@ -13,14 +13,14 @@
     <link rel="stylesheet" href="styles/stores.css" />
   </head>
   <body>
-    <header class="main-header">
+    <!-- <header class="main-header">
       <div class="header-title">
         <h1>HydroTrack</h1>
         <p>Bottled Water Inventory Management</p>
       </div>
       <button class="add-product-btn">+ Add New Product</button>
-    </header>
-
+    </header> -->
+    <!-- 
     <section class="stats-overview">
       <div class="stat-card">
         <h3>Total Items</h3>
@@ -34,22 +34,30 @@
         <h3>Low Stock Alerts</h3>
         <p class="stat-number">2</p>
       </div>
-    </section>
-    <div class="update-model-overlay">
-      <div class="update-model">
-        <div class="model-header">
+    </section> -->
+    <dialog class="modal" style="max-width: 380px" closedby="any">
+      <div class="modal-header">
+        <div>
           <h3>Update Stock</h3>
-          <p>Eva 75cl</p>
+          <p id="qty-modal-product-name">Product name</p>
         </div>
+        <button class="modal-close" onclick="closeModal('qty-modal')">✕</button>
+      </div>
 
-        <p>New quantity</p>
-        <input type="text" class="update-quantity-input" />
-        <div class="btn-container">
-          <button class="cancel-btn">Cancel</button
-          ><button class="update-btn">Update Quantity</button>
+      <div class="form-group" style="margin-bottom: 8px">
+        <label>New Quantity</label>
+        <div class="qty-controls">
+          <input type="text" class="qty-input" id="qty-input" />
         </div>
       </div>
-    </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal('qty-modal')">
+          Cancel
+        </button>
+        <button class="btn-save" onclick="saveQty()">Update Quantity</button>
+      </div>
+    </dialog>
 
     <main class="products-grid">
       <div class="product-card" style="animation-delay: 0s">

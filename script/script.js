@@ -1,6 +1,7 @@
 class Water {
   constructor(productDetails) {
     this.image = productDetails.image;
+    this.brand = productDetails.brand;
     this.name = productDetails.name;
     this.price = productDetails.price;
     this.quantity = productDetails.quantity;
@@ -27,7 +28,8 @@ class Water {
 const waters = [
   {
     image: "",
-    name: "Eva Water 75cl",
+    brand: "Eva",
+    name: "Eva 75cl",
     price: "3500",
     quantity: 10,
     type: "bottle water",
@@ -35,7 +37,8 @@ const waters = [
   },
   {
     image: "",
-    name: "Eva Water 150cl",
+    brand: "Eva",
+    name: "Eva 150cl",
     price: "3600",
     quantity: 10,
     type: "bottle water",
@@ -43,6 +46,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "CWAY",
     name: "Cway 600ml",
     price: "3600",
     quantity: 0,
@@ -51,6 +55,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "CWAY",
     name: "Cway 750ml",
     price: "3600",
     quantity: 0,
@@ -59,6 +64,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "CWAY",
     name: "Cway 1500ml",
     price: "3600",
     quantity: 0,
@@ -67,7 +73,8 @@ const waters = [
   },
   {
     image: "",
-    name: "Aquafina 75ml",
+    brand: "AQUAFINA",
+    name: "Aquafina  75cl",
     price: "3600",
     quantity: 0,
     type: "bottle water",
@@ -75,6 +82,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "LASIEN",
     name: "Lasien 50cl",
     price: "3600",
     quantity: 0,
@@ -83,6 +91,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "LASIEN",
     name: "Lasien 75cl",
     price: "3600",
     quantity: 0,
@@ -91,6 +100,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "LASIEN",
     name: "Lasien 150cl",
     price: "3600",
     quantity: 0,
@@ -99,6 +109,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "NESTLE",
     name: "Nestle Blue 60cl",
     price: "3600",
     quantity: 0,
@@ -107,6 +118,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "NESTLE",
     name: "Nestle Green 60cl",
     price: "3600",
     quantity: 0,
@@ -115,6 +127,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "CWAY",
     name: "Cway Refill",
     price: "3600",
     quantity: 0,
@@ -123,6 +136,7 @@ const waters = [
   },
   {
     image: "",
+    brand: "BIMO",
     name: "Bimo Refill",
     price: "3600",
     quantity: 0,
@@ -158,23 +172,23 @@ function generateHTML() {
           <span class="stock-badge out-of-stock">Out of Stock</span>
         </div>
         <div class="card-body">
-          <div class="card-brand">Eva</div>
-          <div class="card-name">Eva 75cl</div>
+          <div class="card-brand">${bottleWater.brand}</div>
+          <div class="card-name"> ${bottleWater.name}</div>
           <div class="card-stats">
             <div class="card-stat">
               <div class="stat-label">Quantity</div>
-              <div class="stat-value empty">0</div>
+              <div class="stat-value empty">${bottleWater.quantity}</div>
             </div>
             <div class="card-stat">
               <div class="stat-label">Price / Pack</div>
-              <div class="stat-value"></div>
+              <div class="stat-value">${bottleWater.price}</div>
             </div>
           </div>
           <div class="card-actions">
-            <button class="btn-card btn-edit" onclick="openEditModal(1)">
+            <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
                Edit
             </button>
-            <button class="btn-card btn-update" onclick="openQtyModal(1)">
+            <button class="btn-card btn-update">
               Update Stock
             </button>
           </div>
@@ -186,12 +200,23 @@ function generateHTML() {
   document.querySelector(".products-grid").innerHTML = productHTML;
 }
 let input = document.querySelector(".update-quantity-input");
-let saveBtn = document.querySelector(".update-btn");
+let saveBtn = document.querySelector(".btn-update");
 let value;
+let modal = document.querySelector("dialog");
+let modalProductName = document.getElementById("qty-modal-product-name");
 document.querySelectorAll(".btn-edit").forEach((editButton) => {
   editButton.addEventListener("click", () => {
     const productId = editButton.dataset.productId;
-    document.querySelector(".update-model").classList.add("model-active");
+
+    products.forEach((product) => {
+      if (product.id === productId) {
+        console.log(product);
+        modalProductName.innerHTML = product.name;
+      }
+    });
+
+    modal.showModal();
+
     saveBtn.addEventListener("click", () => {
       value = Number(input.value);
       products.forEach((product) => {

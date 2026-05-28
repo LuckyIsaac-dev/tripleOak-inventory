@@ -34,7 +34,7 @@
   --white: #ffffff;
   --success: #10b981;
   --warning: #f59e0b;
-  --danger: #ef4444;
+  --danger: #fe2712;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -616,7 +616,7 @@ body {
 }
 .stock-badge.out-of-stock {
   background: #fff5f5;
-  color: #dc2626;
+  color: var(--danger);
 }
 
 .card-body {
@@ -734,15 +734,18 @@ body {
 
 /* ── MODAL ── */
 .modal-overlay {
-  display: none;
-  position: fixed;
   inset: 0;
   background: rgba(10, 22, 40, 0.6);
   backdrop-filter: blur(4px);
-  z-index: 1000;
+
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+dialog {
+  border: none;
+  margin: auto;
 }
 
 .modal-overlay.open {
