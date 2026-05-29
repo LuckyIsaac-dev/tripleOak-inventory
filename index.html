@@ -16,25 +16,50 @@
     <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
       <div class="modal-header">
         <div>
-          <h3>Update Stock</h3>
+          <h3>Edit Stock</h3>
           <p id="qty-modal-product-name">Product name</p>
         </div>
-        <button class="modal-close" onclick="closeModal('qty-modal')">✕</button>
+        <button class="modal-close">✕</button>
       </div>
 
       <div class="form-group" style="margin-bottom: 8px">
         <label>New Quantity</label>
         <div class="qty-controls">
-          <input type="text" class="qty-input" />
+          <input type="text" class="edit-stock-input" />
         </div>
       </div>
 
       <div class="modal-footer">
         <button class="btn-cancel">Cancel</button>
-        <button class="btn-save">Update Quantity</button>
+        <button class="btn-save">Edit Quantity</button>
       </div>
     </dialog>
 
+    <dialog
+      class="modal update-modal"
+      style="max-width: 380px"
+      closedby="closedrequest"
+    >
+      <div class="modal-header">
+        <div>
+          <h3>Update Stock</h3>
+          <p id="modal-product-name">Product name</p>
+        </div>
+        <button class="modal-close" onclick="closeModal('qty-modal')">✕</button>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 8px">
+        <label>New Quantity To Add</label>
+        <div class="qty-controls">
+          <input type="text" class="qty-input update-qty" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-save btn-update-stock">Update Quantity</button>
+      </div>
+    </dialog>
     <main class="products-grid"></main>
 
     <script type="module" src="script/script.js"></script>

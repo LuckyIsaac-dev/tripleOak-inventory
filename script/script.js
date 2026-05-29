@@ -20,16 +20,19 @@ class Water {
   updateQuantity(value, productId) {
     if (this.id === productId) {
       if (value <= 0) return;
-      return (this.quantity += value);
+      this.quantity += value;
     }
   }
 }
-let input = document.querySelector(".qty-input");
-let saveBtn = document.querySelector(".btn-save");
-let value;
-let modal = document.querySelector("dialog");
+const editQtyInput = document.querySelector(".edit-stock-input");
+const updateQtyInput = document.querySelector(".update-qty");
+const editStockBtn = document.querySelector(".btn-save");
+const editModal = document.querySelector("dialog");
+let updateModal = document.querySelector(".update-modal");
 let modalProductName = document.getElementById("qty-modal-product-name");
+let updateModalName = document.getElementById("modal-product-name");
 let productGrid = document.querySelector(".products-grid");
+let updateStockBtn = document.querySelector(".btn-update-stock");
 const waters = [
   {
     image: "",
@@ -182,7 +185,7 @@ function generateHTML() {
           <div class="card-stats">
             <div class="card-stat">
               <div class="stat-label">Quantity</div>
-              <div class="stat-value empty">${bottleWater.quantity}</div>
+              <div class="stat-value ">${bottleWater.quantity}</div>
             </div>
             <div class="card-stat">
               <div class="stat-label">Price / Pack</div>
@@ -193,7 +196,7 @@ function generateHTML() {
             <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
                Edit
             </button>
-            <button class="btn-card btn-update">
+            <button class="btn-card btn-update" data-product-id="${bottleWater.id}">
               Update Stock
             </button>
           </div>
@@ -217,30 +220,60 @@ function getProduct(productId) {
 let currentProductId = null;
 
 productGrid.addEventListener("click", (e) => {
-  let editBtn = e.target.closest(".btn-edit");
-  if (!editBtn) return;
-  currentProductId = editBtn.dataset.productId;
-  // let productCard = editBtn.closest(".product-card");
+  const editBtn = e.target.closest(".btn-edit");
+  const updateBtn = e.target.closest(".btn-update");
 
-  let product = getProduct(currentProductId);
-  modalProductName.innerHTML = product.name;
+  if (editBtn) {
+    currentProductId = editBtn.dataset.productId;
 
-  modal.showModal();
+    let product = getProduct(currentProductId);
+    modalProductName.innerHTML = product.name;
 
-  saveProduct(currentProductId);
+    editModal.showModal();
+
+    editStock(currentProductId);
+  }
+
+  if (updateBtn) {
+    const productId = updateBtn.dataset.productId;
+    let product = getProduct(productId);
+    updateModalName.innerHTML = product.name;
+
+    updateModal.showModal();
+
+    updateStock(productId);
+  }
 });
-function saveProduct(productId) {
+
+function editStock(productId) {
   let matchingProduct = null;
-  saveBtn.addEventListener(
+  editStockBtn.addEventListener(
     "click",
     () => {
-      value = Number(input.value);
+      const value = Number(editQtyInput.value);
       matchingProduct = getProduct(productId);
       matchingProduct.editQuantity(value, productId);
-      modal.close();
+      editModal.close();
 
-      input.value = "";
+      editQtyInput.value = "";
       generateHTML();
+    },
+    { once: true },
+  );
+}
+
+function updateStock(productId) {
+  let matchingProduct = null;
+  updateStockBtn.addEventListener(
+    "click",
+    () => {
+      let newQuantity = Number(updateQtyInput.value);
+      matchingProduct = getProduct(productId);
+      matchingProduct.updateQuantity(newQuantity, productId);
+      updateModal.close();
+
+      generateHTML();
+      updateQtyInput.value = "";
     },
     { once: true },
   );
