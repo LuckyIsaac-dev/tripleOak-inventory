@@ -13,29 +13,7 @@
     <link rel="stylesheet" href="styles/stores.css" />
   </head>
   <body>
-    <!-- <header class="main-header">
-      <div class="header-title">
-        <h1>HydroTrack</h1>
-        <p>Bottled Water Inventory Management</p>
-      </div>
-      <button class="add-product-btn">+ Add New Product</button>
-    </header> -->
-    <!-- 
-    <section class="stats-overview">
-      <div class="stat-card">
-        <h3>Total Items</h3>
-        <p class="stat-number">6</p>
-      </div>
-      <div class="stat-card">
-        <h3>Total Stock (Crats/Pcs)</h3>
-        <p class="stat-number">1,240</p>
-      </div>
-      <div class="stat-card low-stock-alert">
-        <h3>Low Stock Alerts</h3>
-        <p class="stat-number">2</p>
-      </div>
-    </section> -->
-    <dialog class="modal" style="max-width: 380px" closedby="any">
+    <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
       <div class="modal-header">
         <div>
           <h3>Update Stock</h3>
@@ -47,57 +25,17 @@
       <div class="form-group" style="margin-bottom: 8px">
         <label>New Quantity</label>
         <div class="qty-controls">
-          <input type="text" class="qty-input" id="qty-input" />
+          <input type="text" class="qty-input" />
         </div>
       </div>
 
       <div class="modal-footer">
-        <button class="btn-cancel" onclick="closeModal('qty-modal')">
-          Cancel
-        </button>
-        <button class="btn-save" onclick="saveQty()">Update Quantity</button>
+        <button class="btn-cancel">Cancel</button>
+        <button class="btn-save">Update Quantity</button>
       </div>
     </dialog>
 
-    <main class="products-grid">
-      <div class="product-card" style="animation-delay: 0s">
-        <div class="card-image-wrap">
-          <img
-            src="https://www.evawater.com.ng/wp-content/uploads/2021/07/75cl.png"
-            alt="Eva 75cl"
-            onerror="
-              this.style.display = 'none';
-              this.nextElementSibling.style.display = 'flex';
-            "
-            style="display: none"
-          />
-          <div class="placeholder-img" style="display: flex">💧</div>
-          <span class="stock-badge out-of-stock">Out of Stock</span>
-        </div>
-        <div class="card-body">
-          <div class="card-brand">Eva</div>
-          <div class="card-name">Eva 75cl</div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="stat-label">Quantity</div>
-              <div class="stat-value empty">0</div>
-            </div>
-            <div class="card-stat">
-              <div class="stat-label">Price / Pack</div>
-              <div class="stat-value">₦—</div>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn-card btn-edit" onclick="openEditModal(1)">
-              ✏️ Edit
-            </button>
-            <button class="btn-card btn-update" onclick="openQtyModal(1)">
-              📦 Update Stock
-            </button>
-          </div>
-        </div>
-      </div>
-    </main>
+    <main class="products-grid"></main>
 
     <script type="module" src="script/script.js"></script>
   </body>

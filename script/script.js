@@ -11,9 +11,9 @@ class Water {
 
   editQuantity(value, productId) {
     if (this.id === productId) {
-      if (value <= 0) return;
-      if ((this.quantity -= value <= 0)) return;
-      return (this.quantity -= value);
+      if (value <= 0 || this.quantity - value < 0) return;
+      console.log(productId);
+      this.quantity -= value;
     }
   }
 
@@ -24,7 +24,12 @@ class Water {
     }
   }
 }
-
+let input = document.querySelector(".qty-input");
+let saveBtn = document.querySelector(".btn-save");
+let value;
+let modal = document.querySelector("dialog");
+let modalProductName = document.getElementById("qty-modal-product-name");
+let productGrid = document.querySelector(".products-grid");
 const waters = [
   {
     image: "",
@@ -199,33 +204,44 @@ function generateHTML() {
   });
   document.querySelector(".products-grid").innerHTML = productHTML;
 }
-let input = document.querySelector(".update-quantity-input");
-let saveBtn = document.querySelector(".btn-update");
-let value;
-let modal = document.querySelector("dialog");
-let modalProductName = document.getElementById("qty-modal-product-name");
-document.querySelectorAll(".btn-edit").forEach((editButton) => {
-  editButton.addEventListener("click", () => {
-    const productId = editButton.dataset.productId;
 
-    products.forEach((product) => {
-      if (product.id === productId) {
-        console.log(product);
-        modalProductName.innerHTML = product.name;
-      }
-    });
-
-    modal.showModal();
-
-    saveBtn.addEventListener("click", () => {
-      value = Number(input.value);
-      products.forEach((product) => {
-        if (product.id === productId) {
-          product.editQuantity(value, productId);
-          console.log(product);
-          generateHTML();
-        }
-      });
-    });
+function getProduct(productId) {
+  let matchingProduct;
+  products.forEach((product) => {
+    if (product.id === productId) {
+      matchingProduct = product;
+    }
   });
+  return matchingProduct;
+}
+let currentProductId = null;
+
+productGrid.addEventListener("click", (e) => {
+  let editBtn = e.target.closest(".btn-edit");
+  if (!editBtn) return;
+  currentProductId = editBtn.dataset.productId;
+  // let productCard = editBtn.closest(".product-card");
+
+  let product = getProduct(currentProductId);
+  modalProductName.innerHTML = product.name;
+
+  modal.showModal();
+
+  saveProduct(currentProductId);
 });
+function saveProduct(productId) {
+  let matchingProduct = null;
+  saveBtn.addEventListener(
+    "click",
+    () => {
+      value = Number(input.value);
+      matchingProduct = getProduct(productId);
+      matchingProduct.editQuantity(value, productId);
+      modal.close();
+
+      input.value = "";
+      generateHTML();
+    },
+    { once: true },
+  );
+}
