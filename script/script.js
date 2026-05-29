@@ -163,13 +163,18 @@ function saveToStorage() {
   localStorage.setItem("product", JSON.stringify(products));
 }
 
-console.log(JSON.parse(localStorage.getItem("product")));
+function getStockStatus(quantity) {
+  if (quantity === 0) return { label: "Out of Stock", class: "out-of-stock" };
+  if (quantity <= 10) return { label: "Low Stock", class: "low-stock" };
+  return { label: "In Stock", class: "in-stock" };
+}
 
 generateHTML();
 
 function generateHTML() {
   let productHTML = "";
   products.forEach((bottleWater) => {
+    const Stock = getStockStatus(bottleWater.quantity);
     let html = `
            <div class="product-card" style="animation-delay: 0s">
         <div class="card-image-wrap">
@@ -183,7 +188,9 @@ function generateHTML() {
             style="display: none"
           />
           <div class="placeholder-img" style="display: flex">💧</div>
-          <span class="stock-badge out-of-stock">Out of Stock</span>
+          <span class="stock-badge ${Stock.class}">
+            ${Stock.label}
+          </span>
         </div>
         <div class="card-body">
           <div class="card-brand">${bottleWater.brand}</div>
