@@ -28,17 +28,17 @@ const editQtyInput = document.querySelector(".edit-stock-input");
 const updateQtyInput = document.querySelector(".update-qty");
 const editStockBtn = document.querySelector(".btn-save");
 const editModal = document.querySelector("dialog");
-let updateModal = document.querySelector(".update-modal");
-let modalProductName = document.getElementById("qty-modal-product-name");
-let updateModalName = document.getElementById("modal-product-name");
-let productGrid = document.querySelector(".products-grid");
-let updateStockBtn = document.querySelector(".btn-update-stock");
+const updateModal = document.querySelector(".update-modal");
+const modalProductName = document.getElementById("qty-modal-product-name");
+const updateModalName = document.getElementById("modal-product-name");
+const productGrid = document.querySelector(".products-grid");
+const updateStockBtn = document.querySelector(".btn-update-stock");
 const waters = [
   {
     image: "",
     brand: "Eva",
     name: "Eva 75cl",
-    price: "3500",
+    price: 3500,
     quantity: 10,
     type: "bottle water",
     id: "1",
@@ -47,7 +47,7 @@ const waters = [
     image: "",
     brand: "Eva",
     name: "Eva 150cl",
-    price: "3600",
+    price: 3600,
     quantity: 10,
     type: "bottle water",
     id: "2",
@@ -56,7 +56,7 @@ const waters = [
     image: "",
     brand: "CWAY",
     name: "Cway 600ml",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "3",
@@ -65,7 +65,7 @@ const waters = [
     image: "",
     brand: "CWAY",
     name: "Cway 750ml",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "4",
@@ -74,7 +74,7 @@ const waters = [
     image: "",
     brand: "CWAY",
     name: "Cway 1500ml",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "5",
@@ -83,7 +83,7 @@ const waters = [
     image: "",
     brand: "AQUAFINA",
     name: "Aquafina  75cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "6",
@@ -92,7 +92,7 @@ const waters = [
     image: "",
     brand: "LASIEN",
     name: "Lasien 50cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "7",
@@ -101,7 +101,7 @@ const waters = [
     image: "",
     brand: "LASIEN",
     name: "Lasien 75cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "8",
@@ -110,7 +110,7 @@ const waters = [
     image: "",
     brand: "LASIEN",
     name: "Lasien 150cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "9",
@@ -119,7 +119,7 @@ const waters = [
     image: "",
     brand: "NESTLE",
     name: "Nestle Blue 60cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "10",
@@ -128,7 +128,7 @@ const waters = [
     image: "",
     brand: "NESTLE",
     name: "Nestle Green 60cl",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "bottle water",
     id: "11",
@@ -137,7 +137,7 @@ const waters = [
     image: "",
     brand: "CWAY",
     name: "Cway Refill",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "refill",
     id: "12",
@@ -146,7 +146,7 @@ const waters = [
     image: "",
     brand: "BIMO",
     name: "Bimo Refill",
-    price: "3600",
+    price: 3600,
     quantity: 0,
     type: "refill",
     id: "13",
@@ -154,10 +154,16 @@ const waters = [
 ];
 
 let products;
+const saved = localStorage.getItem("product");
+products = saved
+  ? JSON.parse(saved).map((p) => new Water(p))
+  : waters.map((w) => new Water(w));
 
-products = waters.map((water) => {
-  return new Water(water);
-});
+function saveToStorage() {
+  localStorage.setItem("product", JSON.stringify(products));
+}
+
+console.log(JSON.parse(localStorage.getItem("product")));
 
 generateHTML();
 
@@ -217,9 +223,9 @@ function getProduct(productId) {
   });
   return matchingProduct;
 }
-let currentProductId = null;
 
 productGrid.addEventListener("click", (e) => {
+  let currentProductId = null;
   const editBtn = e.target.closest(".btn-edit");
   const updateBtn = e.target.closest(".btn-update");
 
@@ -232,6 +238,8 @@ productGrid.addEventListener("click", (e) => {
     editModal.showModal();
 
     editStock(currentProductId);
+
+    console.log(JSON.parse(localStorage.getItem("product")));
   }
 
   if (updateBtn) {
@@ -242,6 +250,8 @@ productGrid.addEventListener("click", (e) => {
     updateModal.showModal();
 
     updateStock(productId);
+
+    console.log(JSON.parse(localStorage.getItem("product")));
   }
 });
 
@@ -274,6 +284,7 @@ function updateStock(productId) {
 
       generateHTML();
       updateQtyInput.value = "";
+      saveToStorage();
     },
     { once: true },
   );
