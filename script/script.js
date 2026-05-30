@@ -12,7 +12,7 @@ class Water {
   editQuantity(value, productId) {
     if (this.id === productId) {
       if (value <= 0 || this.quantity - value < 0) return;
-      console.log(productId);
+      if (isNaN(value)) return;
       this.quantity -= value;
     }
   }
@@ -20,6 +20,8 @@ class Water {
   updateQuantity(value, productId) {
     if (this.id === productId) {
       if (value <= 0) return;
+      if (isNaN(value)) return;
+
       this.quantity += value;
     }
   }
@@ -30,9 +32,14 @@ const editStockBtn = document.querySelector(".btn-save");
 const editModal = document.querySelector("dialog");
 const updateModal = document.querySelector(".update-modal");
 const modalProductName = document.getElementById("qty-modal-product-name");
+const closeModalBtn = document.querySelector(".modal-close");
+const closeEditBtn = document.querySelector(".edit-close");
 const updateModalName = document.getElementById("modal-product-name");
 const productGrid = document.querySelector(".products-grid");
 const updateStockBtn = document.querySelector(".btn-update-stock");
+const cancelUpdateBtn = document.querySelector(".btn-cancel-update");
+const cancelEditBtn = document.querySelector(".btn-cancel-edit");
+
 const waters = [
   {
     image: "",
@@ -152,6 +159,18 @@ const waters = [
     id: "13",
   },
 ];
+cancelUpdateBtn.addEventListener("click", closeModal);
+closeModalBtn.addEventListener("click", closeModal);
+cancelEditBtn.addEventListener("click", closeEditModal);
+closeEditBtn.addEventListener("click", closeEditModal);
+function closeModal() {
+  updateModal.close();
+  updateQtyInput.value = "";
+}
+function closeEditModal() {
+  editModal.close();
+  editQtyInput.value = "";
+}
 
 let products;
 const saved = localStorage.getItem("product");
@@ -169,12 +188,18 @@ function getStockStatus(quantity) {
   return { label: "In Stock", class: "in-stock" };
 }
 
+function quantityWarning(quantity) {
+  if (quantity === 0) return "empty";
+  if (quantity <= 10) return "low";
+}
+
 generateHTML();
 
 function generateHTML() {
   let productHTML = "";
   products.forEach((bottleWater) => {
     const Stock = getStockStatus(bottleWater.quantity);
+    const quantity = quantityWarning(bottleWater.quantity);
     let html = `
            <div class="product-card" style="animation-delay: 0s">
         <div class="card-image-wrap">
@@ -198,7 +223,7 @@ function generateHTML() {
           <div class="card-stats">
             <div class="card-stat">
               <div class="stat-label">Quantity</div>
-              <div class="stat-value ">${bottleWater.quantity}</div>
+              <div class="stat-value  ${quantity}">${bottleWater.quantity}</div>
             </div>
             <div class="card-stat">
               <div class="stat-label">Price / Pack</div>
@@ -245,8 +270,6 @@ productGrid.addEventListener("click", (e) => {
     editModal.showModal();
 
     editStock(currentProductId);
-
-    console.log(JSON.parse(localStorage.getItem("product")));
   }
 
   if (updateBtn) {
@@ -257,8 +280,6 @@ productGrid.addEventListener("click", (e) => {
     updateModal.showModal();
 
     updateStock(productId);
-
-    console.log(JSON.parse(localStorage.getItem("product")));
   }
 });
 
