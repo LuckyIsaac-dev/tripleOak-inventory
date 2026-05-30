@@ -13,29 +13,27 @@
     <link rel="stylesheet" href="styles/stores.css" />
   </head>
   <body>
-    <div class="modal-overlay">
-      <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
-        <div class="modal-header">
-          <div>
-            <h3>Edit Stock</h3>
-            <p id="qty-modal-product-name">Product name</p>
-          </div>
-          <button class="modal-close edit-close">✕</button>
+    <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
+      <div class="modal-header">
+        <div>
+          <h3>Edit Stock</h3>
+          <p id="qty-modal-product-name">Product name</p>
         </div>
+        <button class="edit-close">✕</button>
+      </div>
 
-        <div class="form-group" style="margin-bottom: 8px">
-          <label>New Quantity</label>
-          <div class="qty-controls">
-            <input type="text" class="edit-stock-input" />
-          </div>
+      <div class="form-group" style="margin-bottom: 8px">
+        <label>New Quantity</label>
+        <div class="qty-controls">
+          <input type="text" class="edit-stock-input" />
         </div>
+      </div>
 
-        <div class="modal-footer">
-          <button class="btn-cancel btn-cancel-edit">Cancel</button>
-          <button class="btn-save">Edit Quantity</button>
-        </div>
-      </dialog>
-    </div>
+      <div class="modal-footer">
+        <button class="btn-cancel btn-cancel-edit">Cancel</button>
+        <button class="btn-save">Edit Quantity</button>
+      </div>
+    </dialog>
 
     <dialog
       class="modal update-modal"
