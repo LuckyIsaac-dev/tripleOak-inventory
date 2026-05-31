@@ -253,6 +253,25 @@ body {
   margin-top: 8px;
   letter-spacing: 0.02em;
 }
+.guest-btn {
+  width: 100%;
+  padding: 13px 24px;
+  /* background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
+  color: white; */
+  background: var(--gray-100);
+  color: var(--gray-600);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+  margin-top: 8px;
+  letter-spacing: 0.02em;
+}
 
 .btn-primary:hover {
   transform: translateY(-1px);
@@ -892,6 +911,9 @@ dialog {
   font-weight: 600;
   cursor: pointer;
   transition: background 0.15s;
+}
+.guest-btn:hover {
+  background: var(--gray-200);
 }
 
 .btn-cancel:hover {

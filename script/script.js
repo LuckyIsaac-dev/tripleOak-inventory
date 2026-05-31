@@ -59,7 +59,7 @@ function handleLogin() {
     document.querySelector(".products-grid").style.display = "grid";
     document.getElementById("login-page").style.display = "none";
   } else {
-    console.log("failed");
+    document.querySelector(".login-error").style.display = "flex";
   }
 }
 
