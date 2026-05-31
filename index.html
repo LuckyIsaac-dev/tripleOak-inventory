@@ -13,6 +13,62 @@
     <link rel="stylesheet" href="styles/stores.css" />
   </head>
   <body>
+    <div id="login-page">
+      <div class="login-grid">
+        <div class="login-brand">
+          <div class="brand-icon">🛒</div>
+          <h1>Triple Oak<br /><span>Stores</span></h1>
+          <p>
+            Manage your water inventory with ease. Real-time stock tracking for
+            you and your team.
+          </p>
+          <div class="login-stats">
+            <div class="stat-item">
+              <div class="num" id="stat-products">—</div>
+              <div class="label">Products</div>
+            </div>
+            <div class="stat-item">
+              <div class="num" id="stat-total-qty">—</div>
+              <div class="label">Total Units</div>
+            </div>
+            <div class="stat-item">
+              <div class="num" id="stat-low">—</div>
+              <div class="label">Low Stock</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="login-form-wrap">
+          <div class="login-card">
+            <h2>Welcome back</h2>
+            <p class="subtitle">Sign in to access inventory</p>
+
+            <div class="form-group">
+              <label>Username</label>
+              <input
+                type="text"
+                id="login-username"
+                placeholder="Enter your username"
+                autocomplete="username"
+              />
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+              />
+            </div>
+            <button class="btn-primary">Sign In →</button>
+            <div class="login-error" id="login-error">
+              Incorrect username or password.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
       <div class="modal-header">
         <div>

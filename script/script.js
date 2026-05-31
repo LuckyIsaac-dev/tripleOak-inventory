@@ -26,6 +26,12 @@ class Water {
     }
   }
 }
+const persons = {
+  lucky: { name: "lucky", password: "1234" },
+  akan: { name: "akan", password: "akan123" },
+};
+let lucky = "akan";
+console.log(persons[lucky]);
 const editQtyInput = document.querySelector(".edit-stock-input");
 const updateQtyInput = document.querySelector(".update-qty");
 const editStockBtn = document.querySelector(".btn-save");
@@ -142,12 +148,21 @@ const waters = [
   },
   {
     image: "",
+    brand: "NESTLE",
+    name: "Nestle 150cl",
+    price: 3600,
+    quantity: 0,
+    type: "bottle water",
+    id: "12",
+  },
+  {
+    image: "",
     brand: "CWAY",
     name: "Cway Refill",
     price: 3600,
     quantity: 0,
     type: "refill",
-    id: "12",
+    id: "13",
   },
   {
     image: "",
@@ -156,7 +171,23 @@ const waters = [
     price: 3600,
     quantity: 0,
     type: "refill",
-    id: "13",
+    id: "14",
+  },
+  {
+    image: "",
+    brand: "JASMINE",
+    name: "Jasmine 75cl",
+    price: 3600,
+    quantity: 0,
+    id: "15",
+  },
+  {
+    image: "",
+    brand: "BRACO",
+    name: "Braco 100cl",
+    price: 3600,
+    quantity: 0,
+    id: "16",
   },
 ];
 cancelUpdateBtn.addEventListener("click", closeModal);
