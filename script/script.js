@@ -44,9 +44,13 @@ const productGrid = document.querySelector(".products-grid");
 const updateStockBtn = document.querySelector(".btn-update-stock");
 const cancelUpdateBtn = document.querySelector(".btn-cancel-update");
 const cancelEditBtn = document.querySelector(".btn-cancel-edit");
+
 const signInBtn = document
   .querySelector(".btn-primary")
   .addEventListener("click", handleLogin);
+const guest = document
+  .querySelector(".guest-btn")
+  .addEventListener("click", guestAccount);
 
 function handleLogin() {
   const userName = document
@@ -58,9 +62,16 @@ function handleLogin() {
   if (user && user.password === loginPassword) {
     document.querySelector(".products-grid").style.display = "grid";
     document.getElementById("login-page").style.display = "none";
+    renderPage();
   } else {
     document.querySelector(".login-error").style.display = "flex";
   }
+}
+
+function guestAccount() {
+  document.querySelector(".products-grid").style.display = "grid";
+  document.getElementById("login-page").style.display = "none";
+  generateHTML(true);
 }
 
 const waters = [
@@ -211,24 +222,12 @@ cancelUpdateBtn.addEventListener("click", closeModal);
 closeModalBtn.addEventListener("click", closeModal);
 cancelEditBtn.addEventListener("click", closeEditModal);
 closeEditBtn.addEventListener("click", closeEditModal);
-function closeModal() {
-  updateModal.close();
-  updateQtyInput.value = "";
-}
-function closeEditModal() {
-  editModal.close();
-  editQtyInput.value = "";
-}
 
 let products;
 const saved = localStorage.getItem("product");
 products = saved
   ? JSON.parse(saved).map((p) => new Water(p))
   : waters.map((w) => new Water(w));
-
-function saveToStorage() {
-  localStorage.setItem("product", JSON.stringify(products));
-}
 
 function getStockStatus(quantity) {
   if (quantity === 0) return { label: "Out of Stock", class: "out-of-stock" };
@@ -243,7 +242,7 @@ function quantityWarning(quantity) {
 
 generateHTML();
 
-function generateHTML() {
+function generateHTML(isGuest = false) {
   let productHTML = "";
   products.forEach((bottleWater) => {
     const Stock = getStockStatus(bottleWater.quantity);
@@ -279,12 +278,17 @@ function generateHTML() {
             </div>
           </div>
           <div class="card-actions">
+          ${
+            isGuest
+              ? `<p class="guest-account"> View only </p>`
+              : `
             <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
                Edit
             </button>
             <button class="btn-card btn-update" data-product-id="${bottleWater.id}">
               Update Stock
-            </button>
+            </button>`
+          }
           </div>
         </div>
       </div>
@@ -304,32 +308,46 @@ function getProduct(productId) {
   return matchingProduct;
 }
 
-productGrid.addEventListener("click", (e) => {
-  let currentProductId = null;
-  const editBtn = e.target.closest(".btn-edit");
-  const updateBtn = e.target.closest(".btn-update");
+function closeModal() {
+  updateModal.close();
+  updateQtyInput.value = "";
+}
+function closeEditModal() {
+  editModal.close();
+  editQtyInput.value = "";
+}
 
-  if (editBtn) {
-    currentProductId = editBtn.dataset.productId;
+function saveToStorage() {
+  localStorage.setItem("product", JSON.stringify(products));
+}
+function renderPage() {
+  productGrid.addEventListener("click", (e) => {
+    let currentProductId = null;
+    const editBtn = e.target.closest(".btn-edit");
+    const updateBtn = e.target.closest(".btn-update");
 
-    let product = getProduct(currentProductId);
-    modalProductName.innerHTML = product.name;
+    if (editBtn) {
+      currentProductId = editBtn.dataset.productId;
 
-    editModal.showModal();
+      let product = getProduct(currentProductId);
+      modalProductName.innerHTML = product.name;
 
-    editStock(currentProductId);
-  }
+      editModal.showModal();
 
-  if (updateBtn) {
-    const productId = updateBtn.dataset.productId;
-    let product = getProduct(productId);
-    updateModalName.innerHTML = product.name;
+      editStock(currentProductId);
+    }
 
-    updateModal.showModal();
+    if (updateBtn) {
+      const productId = updateBtn.dataset.productId;
+      let product = getProduct(productId);
+      updateModalName.innerHTML = product.name;
 
-    updateStock(productId);
-  }
-});
+      updateModal.showModal();
+
+      updateStock(productId);
+    }
+  });
+}
 
 function editStock(productId) {
   let matchingProduct = null;
@@ -343,6 +361,7 @@ function editStock(productId) {
 
       editQtyInput.value = "";
       generateHTML();
+      saveToStorage();
     },
     { once: true },
   );
