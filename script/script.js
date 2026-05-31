@@ -30,8 +30,7 @@ const persons = {
   lucky: { name: "lucky", password: "1234" },
   akan: { name: "akan", password: "akan123" },
 };
-let lucky = "akan";
-console.log(persons[lucky]);
+
 const editQtyInput = document.querySelector(".edit-stock-input");
 const updateQtyInput = document.querySelector(".update-qty");
 const editStockBtn = document.querySelector(".btn-save");
@@ -45,6 +44,24 @@ const productGrid = document.querySelector(".products-grid");
 const updateStockBtn = document.querySelector(".btn-update-stock");
 const cancelUpdateBtn = document.querySelector(".btn-cancel-update");
 const cancelEditBtn = document.querySelector(".btn-cancel-edit");
+const signInBtn = document
+  .querySelector(".btn-primary")
+  .addEventListener("click", handleLogin);
+
+function handleLogin() {
+  const userName = document
+    .getElementById("login-username")
+    .value.trim()
+    .toLowerCase();
+  const loginPassword = document.getElementById("login-password").value;
+  const user = persons[userName];
+  if (user && user.password === loginPassword) {
+    document.querySelector(".products-grid").style.display = "grid";
+    document.getElementById("login-page").style.display = "none";
+  } else {
+    console.log("failed");
+  }
+}
 
 const waters = [
   {
