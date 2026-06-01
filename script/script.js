@@ -280,7 +280,7 @@ function generateHTML(isGuest = false) {
           <div class="card-actions">
           ${
             isGuest
-              ? `<p class="guest-account"> View only </p>`
+              ? `<p class="guest-account">View only </p>`
               : `
             <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
                Edit
