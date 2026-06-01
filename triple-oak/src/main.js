@@ -233,28 +233,6 @@ async function loadProducts(isGuest) {
   }
 }
 
-// async function saveToStorage() {
-//   console.log("saveToStorage has started, products", products.length);
-//   try {
-//     for (const product of products) {
-//       console.log("saving product", product.id, product.name);
-//       await setDoc(doc(db, "product", product.id), {
-//         image: product.image,
-//         brand: product.brand,
-//         name: product.name,
-//         price: product.price,
-//         quantity: product.quantity,
-//         type: product.type,
-//         id: product.id,
-//       });
-//       console.log("saved to firestore", product.id);
-//     }
-//   } catch (error) {
-//     console.error("failed to save to firestore", error);
-//   }
-//   console.log("all done");
-// }
-
 async function saveToStorage() {
   try {
     const { writeBatch, doc } = await import("firebase/firestore");
