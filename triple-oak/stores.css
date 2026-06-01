@@ -1215,16 +1215,13 @@ td.admin-only {
 
 /* ── PRODUCT GRID ── */
 .products-grid {
-  max-width: 1200px;
-  margin: 0 auto;
   display: none;
   /* display: grid; */
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
 }
 
 .product-card {
-  width: 90%;
   background: white;
   border-radius: var(--radius-md);
   border: 1px solid var(--gray-100);
@@ -1698,6 +1695,13 @@ dialog {
   .login-grid {
     grid-template-columns: 1fr;
   }
+  .products-grid {
+    margin: 0 1rem;
+    place-items: center;
+  }
+  .product-card {
+    width: 310px;
+  }
   .login-brand {
     display: none;
   }
@@ -1723,7 +1727,7 @@ dialog {
     align-items: flex-start;
   }
   .stat-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
   .user-name {
     display: none;
