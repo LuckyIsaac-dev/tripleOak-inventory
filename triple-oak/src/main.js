@@ -318,7 +318,7 @@ function generateHTML(isGuest = false) {
                 ? `<p class="guest-account"> View only</p>`
                 : `
               <button class="btn-card btn-edit" data-product-id="${bottleWater.id}">Edit</button>
-              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Update Stock</button>
+              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Restock</button>
             `
             }
           </div>

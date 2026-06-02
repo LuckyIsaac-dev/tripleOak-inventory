@@ -3,725 +3,2688 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Triple Oak Stores — Inventory Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
     <style>
-      /* ===== DASHBOARD HERO ===== */
-
-      .dashboard-hero {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 24px;
-        margin-bottom: 24px;
-        flex-wrap: wrap;
+      /* ===================== CSS VARIABLES ===================== */
+      :root {
+        --blue-50: #eff7ff;
+        --blue-100: #dbecfe;
+        --blue-200: #c0dffd;
+        --blue-300: #94cbfc;
+        --blue-400: #62aef8;
+        --blue-500: #3e8ef4;
+        --blue-600: #276fe9;
+        --blue-700: #1f5ad6;
+        --blue-800: #204aad;
+        --blue-900: #1f4189;
+        --blue-950: #182953;
+        --gray-50: #f5f7fa;
+        --gray-100: #ebeff3;
+        --gray-200: #d2dce5;
+        --gray-300: #abbece;
+        --gray-400: #7e9ab2;
+        --gray-500: #5e7e99;
+        --gray-600: #4a657f;
+        --gray-700: #3d5267;
+        --gray-800: #354657;
+        --gray-900: #303d4a;
+        --gray-950: #14191f;
+        --accent: #00aaff;
+        --white: #ffffff;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #fe2712;
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 20px;
+        --shadow-sm:
+          0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 4px 16px rgba(10, 22, 40, 0.1);
+        --shadow-lg: 0 10px 40px rgba(10, 22, 40, 0.14);
+        --topbar-h: 68px;
       }
 
-      .hero-label {
-        color: var(--blue-500);
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 10px;
+      /* ===================== RESET ===================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-
-      .dashboard-hero h1 {
-        font-size: 2rem;
-        color: var(--blue-950);
-        margin-bottom: 10px;
+      html {
+        scroll-behavior: smooth;
       }
-
-      .hero-text {
-        color: var(--gray-500);
-        max-width: 600px;
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--gray-50);
+        color: var(--gray-900);
+        min-height: 100vh;
+        font-size: 14px;
         line-height: 1.6;
       }
-
-      .hero-right {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+        outline: none;
+      }
+      input,
+      select {
+        font-family: inherit;
+        outline: none;
+        border: none;
       }
 
-      .hero-meta-card {
-        background: white;
-        border: 1px solid var(--gray-100);
-        border-radius: var(--radius-md);
-        padding: 16px 18px;
-        min-width: 150px;
+      /* ===================== SCROLLBAR ===================== */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--gray-100);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--gray-300);
+        border-radius: 99px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--gray-400);
+      }
+
+      /* ===================== TOPBAR ===================== */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: var(--topbar-h);
+        background: var(--white);
+        border-bottom: 1.5px solid var(--gray-100);
         box-shadow: var(--shadow-sm);
-      }
-
-      .hero-meta-card span {
-        display: block;
-        color: var(--gray-400);
-        font-size: 0.75rem;
-        margin-bottom: 6px;
-      }
-
-      .hero-meta-card strong {
-        color: var(--blue-900);
-        font-size: 1rem;
-      }
-
-      /* ===== ALERT ===== */
-
-      .dashboard-alert {
         display: flex;
         align-items: center;
-        gap: 12px;
-        background: #fff8e8;
-        border: 1px solid #fde7b0;
-        color: #9a6700;
-        padding: 14px 18px;
-        border-radius: var(--radius-md);
-        margin-bottom: 24px;
+        padding: 0 28px;
+        gap: 20px;
       }
-
-      /* ===== SUMMARY GRID ===== */
-
-      .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 18px;
-        margin-bottom: 24px;
-      }
-
-      .summary-card {
-        background: white;
-        border-radius: var(--radius-md);
-        padding: 24px;
-        border: 1px solid var(--gray-100);
+      .topbar-logo {
         display: flex;
         align-items: center;
-        gap: 16px;
-        box-shadow: var(--shadow-sm);
-        transition: 0.25s ease;
+        gap: 10px;
+        flex-shrink: 0;
       }
-
-      .summary-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
-      }
-
-      .summary-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 14px;
+      .topbar-logo .logo-icon {
+        width: 38px;
+        height: 38px;
+        background: linear-gradient(135deg, var(--blue-600), var(--blue-400));
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 24px;
+        color: var(--white);
+        font-size: 18px;
+        box-shadow: 0 4px 12px rgba(39, 111, 233, 0.35);
       }
-
-      .summary-icon.blue {
-        background: var(--blue-50);
+      .topbar-logo .brand {
+        font-weight: 700;
+        font-size: 15px;
+        color: var(--gray-900);
+        line-height: 1.2;
       }
-
-      .summary-icon.green {
-        background: #ecfdf5;
-      }
-
-      .summary-icon.orange {
-        background: #fff7ed;
-      }
-
-      .summary-icon.red {
-        background: #fff1f2;
-      }
-
-      .summary-content p {
-        color: var(--gray-500);
-        margin-bottom: 6px;
-      }
-
-      .summary-content h2 {
-        color: var(--blue-900);
-        font-size: 1.8rem;
-      }
-
-      .summary-content span {
+      .topbar-logo .brand span {
+        display: block;
+        font-size: 11px;
+        font-weight: 400;
         color: var(--gray-400);
-        font-size: 0.8rem;
+        letter-spacing: 0.4px;
       }
-
-      /* ===== QUICK ACTIONS ===== */
-
-      .quick-actions {
-        display: flex;
-        gap: 14px;
-        flex-wrap: wrap;
-        margin-bottom: 28px;
-      }
-
-      .quick-btn {
-        background: white;
-        border: 1px solid var(--gray-100);
-        border-radius: 12px;
-        padding: 12px 18px;
-        cursor: pointer;
-        font-family: inherit;
+      .topbar-title {
+        flex: 1;
+        font-size: 15px;
         font-weight: 600;
-        transition: 0.2s ease;
+        color: var(--gray-700);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .topbar-title::before {
+        content: "";
+        display: block;
+        width: 1.5px;
+        height: 20px;
+        background: var(--gray-200);
+      }
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        background: var(--gray-50);
+        border: 1.5px solid var(--gray-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-500);
+        font-size: 15px;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .icon-btn:hover {
+        background: var(--blue-50);
+        color: var(--blue-600);
+        border-color: var(--blue-200);
+      }
+      .icon-btn .badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 8px;
+        height: 8px;
+        background: var(--danger);
+        border-radius: 50%;
+        border: 1.5px solid var(--white);
+      }
+      .topbar-user {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 5px 12px 5px 5px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--gray-100);
+        background: var(--gray-50);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .topbar-user:hover {
+        background: var(--blue-50);
+        border-color: var(--blue-200);
+      }
+      .topbar-user .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-weight: 700;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .topbar-user .uname {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-800);
+      }
+      .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        background: var(--danger);
+        color: var(--white);
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s;
+        box-shadow: 0 2px 8px rgba(254, 39, 18, 0.25);
+      }
+      .logout-btn:hover {
+        background: #d91e08;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(254, 39, 18, 0.35);
       }
 
-      .quick-btn:hover {
-        background: var(--blue-500);
-        color: white;
-        transform: translateY(-2px);
-      }
-
-      /* ===== MAIN GRID ===== */
-
-      .main-dashboard-grid {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 20px;
-      }
-
-      .dashboard-left,
-      .dashboard-right {
+      /* ===================== MAIN LAYOUT ===================== */
+      .main-wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 28px 28px 60px;
         display: flex;
         flex-direction: column;
+        gap: 28px;
+      }
+
+      /* ===================== WELCOME ===================== */
+      .welcome-section {
+        background-color: var(--gray-600);
+        /* background: linear-gradient(
+          120deg,
+          var(--blue-700) 0%,
+          var(--blue-500) 60%,
+          var(--blue-400) 100%
+        ); */
+        border-radius: var(--radius-lg);
+        padding: 30px 36px;
+        color: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+        /* box-shadow: 0 8px 32px rgba(39, 111, 233, 0.3); */
+      }
+      .welcome-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .welcome-section::after {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+        top: -80px;
+        right: -60px;
+      }
+      .welcome-left {
+        position: relative;
+        z-index: 1;
+      }
+      .welcome-left h1 {
+        font-size: 26px;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        margin-bottom: 6px;
+      }
+      .welcome-left .sub {
+        font-size: 14px;
+        opacity: 0.85;
+        font-weight: 400;
+        margin-bottom: 14px;
+      }
+      .welcome-meta {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .welcome-meta .meta-pill {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 5px 12px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .welcome-right {
+        position: relative;
+        z-index: 1;
+        text-align: right;
+      }
+      .welcome-right .big-date {
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -1px;
+        opacity: 0.9;
+      }
+      .welcome-right .date-sub {
+        font-size: 13px;
+        opacity: 0.65;
+        margin-top: 4px;
+      }
+
+      /* ===================== STAT CARDS ===================== */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+      }
+      .stat-card {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        border: 1.5px solid var(--gray-100);
+        box-shadow: var(--shadow-sm);
+        transition: all 0.25s;
+        position: relative;
+        overflow: hidden;
+      }
+      .stat-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--blue-200);
+      }
+      .stat-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: 0 0 var(--radius-md) var(--radius-md);
+      }
+      .stat-card.blue::after {
+        background: linear-gradient(90deg, var(--blue-500), var(--blue-400));
+      }
+      .stat-card.green::after {
+        background: var(--success);
+      }
+      .stat-card.yellow::after {
+        background: var(--warning);
+      }
+      .stat-card.red::after {
+        background: var(--danger);
+      }
+      .stat-card.purple::after {
+        background: #8b5cf6;
+      }
+      .stat-card.teal::after {
+        background: #14b8a6;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .stat-card.blue .stat-icon {
+        background: var(--blue-50);
+        color: var(--blue-600);
+      }
+      .stat-card.green .stat-icon {
+        background: #ecfdf5;
+        color: var(--success);
+      }
+      .stat-card.yellow .stat-icon {
+        background: #fffbeb;
+        color: var(--warning);
+      }
+      .stat-card.red .stat-icon {
+        background: #fff5f5;
+        color: var(--danger);
+      }
+      .stat-card.purple .stat-icon {
+        background: #f5f3ff;
+        color: #8b5cf6;
+      }
+      .stat-card.teal .stat-icon {
+        background: #f0fdfa;
+        color: #14b8a6;
+      }
+      .stat-num {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--gray-900);
+        line-height: 1;
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+      }
+      .stat-label {
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--gray-400);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .stat-trend {
+        margin-top: 10px;
+        font-size: 11.5px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .stat-trend.up {
+        color: var(--success);
+      }
+      .stat-trend.down {
+        color: var(--danger);
+      }
+      .stat-trend.neutral {
+        color: var(--gray-400);
+      }
+
+      /* ===================== TWO-COL LAYOUT ===================== */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .three-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+      }
+      .col-7-5 {
+        display: grid;
+        grid-template-columns: 7fr 5fr;
         gap: 20px;
       }
 
-      /* ===== PANEL ===== */
-
-      .dashboard-panel {
-        background: white;
+      /* ===================== CARD BASE ===================== */
+      .card {
+        background: var(--white);
         border-radius: var(--radius-md);
-        padding: 22px;
-        border: 1px solid var(--gray-100);
+        border: 1.5px solid var(--gray-100);
         box-shadow: var(--shadow-sm);
+        overflow: hidden;
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 22px;
+        border-bottom: 1.5px solid var(--gray-100);
+      }
+      .card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gray-900);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .card-title i {
+        color: var(--blue-500);
+        font-size: 14px;
+      }
+      .card-body {
+        padding: 20px 22px;
+      }
+      .card-link {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--blue-600);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: gap 0.2s;
+        cursor: pointer;
+      }
+      .card-link:hover {
+        gap: 8px;
       }
 
-      .panel-header {
+      /* ===================== INVENTORY HEALTH ===================== */
+      .health-row {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .health-item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .health-item-top {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
       }
-
-      .panel-header h3 {
-        color: var(--blue-900);
-        font-size: 1rem;
+      .health-item-top .hlabel {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--gray-700);
+        display: flex;
+        align-items: center;
+        gap: 7px;
       }
-
-      /* ===== HEALTH ===== */
-
-      .health-progress {
-        width: 100%;
-        height: 10px;
-        background: var(--gray-100);
-        border-radius: 999px;
-        overflow: hidden;
-        margin-bottom: 18px;
+      .health-item-top .hlabel .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
       }
-
+      .health-item-top .hpct {
+        font-size: 13px;
+        font-weight: 700;
+      }
       .health-bar {
-        width: 82%;
-        height: 100%;
-        background: linear-gradient(90deg, var(--blue-500), var(--accent));
+        height: 8px;
+        background: var(--gray-100);
+        border-radius: 99px;
+        overflow: hidden;
       }
-
-      .health-stats {
+      .health-bar .hfill {
+        height: 100%;
+        border-radius: 99px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .alert-pills {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-top: 18px;
       }
-
-      .health-item {
+      .alert-pill {
         display: flex;
         align-items: center;
         gap: 10px;
-      }
-
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-      }
-
-      .dot.green {
-        background: var(--success);
-      }
-
-      .dot.orange {
-        background: var(--warning);
-      }
-
-      .dot.red {
-        background: var(--danger);
-      }
-
-      /* ===== TABLE ===== */
-
-      .table-actions {
-        display: flex;
-        gap: 10px;
-      }
-
-      .table-actions input {
         padding: 10px 14px;
-        border-radius: 10px;
-        border: 1px solid var(--gray-200);
-        outline: none;
+        border-radius: var(--radius-sm);
+        font-size: 12.5px;
+        font-weight: 500;
+      }
+      .alert-pill.critical {
+        background: #fff5f5;
+        color: var(--danger);
+        border: 1px solid #fecaca;
+      }
+      .alert-pill.warn {
+        background: #fffbeb;
+        color: #b45309;
+        border: 1px solid #fde68a;
       }
 
-      .table-actions button {
-        padding: 10px 16px;
-        border: none;
-        background: var(--blue-500);
-        color: white;
-        border-radius: 10px;
+      /* ===================== QUICK ACTIONS ===================== */
+      .qa-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        padding: 20px 22px;
+      }
+      .qa-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 18px 12px;
+        border-radius: var(--radius-md);
+        background: var(--gray-50);
+        border: 1.5px solid var(--gray-100);
+        color: var(--gray-700);
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.22s;
         cursor: pointer;
       }
+      .qa-btn:hover {
+        background: var(--blue-50);
+        color: var(--blue-700);
+        border-color: var(--blue-200);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .qa-btn .qa-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--white);
+        border: 1.5px solid var(--gray-100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: all 0.22s;
+      }
+      .qa-btn:hover .qa-icon {
+        background: var(--blue-600);
+        color: var(--white);
+        border-color: var(--blue-600);
+        box-shadow: 0 4px 12px rgba(39, 111, 233, 0.35);
+      }
+      .qa-btn.danger:hover {
+        background: #fff5f5;
+        color: var(--danger);
+        border-color: #fecaca;
+      }
+      .qa-btn.danger:hover .qa-icon {
+        background: var(--danger);
+        border-color: var(--danger);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(254, 39, 18, 0.3);
+      }
 
+      /* ===================== SEARCH + FILTER ===================== */
+      .table-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 22px;
+        border-bottom: 1.5px solid var(--gray-100);
+        flex-wrap: wrap;
+      }
+      .search-wrap {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+      }
+      .search-wrap i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray-400);
+        font-size: 13px;
+      }
+      .search-wrap input {
+        width: 100%;
+        padding: 9px 12px 9px 34px;
+        border-radius: var(--radius-sm);
+        background: var(--gray-50);
+        border: 1.5px solid var(--gray-200);
+        font-size: 13px;
+        color: var(--gray-800);
+        transition: all 0.2s;
+      }
+      .search-wrap input:focus {
+        border-color: var(--blue-400);
+        background: var(--white);
+        box-shadow: 0 0 0 3px rgba(62, 142, 244, 0.12);
+      }
+      .filter-select {
+        padding: 9px 12px;
+        border-radius: var(--radius-sm);
+        background: var(--gray-50);
+        border: 1.5px solid var(--gray-200);
+        font-size: 13px;
+        color: var(--gray-700);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .filter-select:focus {
+        border-color: var(--blue-400);
+        box-shadow: 0 0 0 3px rgba(62, 142, 244, 0.12);
+      }
+      .sort-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 14px;
+        border-radius: var(--radius-sm);
+        background: var(--gray-50);
+        border: 1.5px solid var(--gray-200);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--gray-700);
+        transition: all 0.2s;
+      }
+      .sort-btn:hover {
+        border-color: var(--blue-400);
+        color: var(--blue-600);
+        background: var(--blue-50);
+      }
+
+      /* ===================== TABLE ===================== */
       .table-wrap {
         overflow-x: auto;
       }
-
-      .inventory-table {
+      table {
         width: 100%;
         border-collapse: collapse;
       }
-
-      .inventory-table th {
-        text-align: left;
-        padding-bottom: 16px;
-        color: var(--gray-400);
-        font-size: 0.8rem;
-      }
-
-      .inventory-table td {
-        padding: 18px 0;
-        border-top: 1px solid var(--gray-100);
-      }
-
-      .status {
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-size: 0.75rem;
-        font-weight: 600;
-      }
-
-      .status.success {
-        background: #ecfdf5;
-        color: #047857;
-      }
-
-      .status.warning {
-        background: #fff7ed;
-        color: #c2410c;
-      }
-
-      .status.danger {
-        background: #fff1f2;
-        color: #be123c;
-      }
-
-      /* ===== CHART ===== */
-
-      .chart-placeholder {
-        height: 260px;
-        border-radius: 14px;
+      thead tr {
         background: var(--gray-50);
+        border-bottom: 1.5px solid var(--gray-100);
+      }
+      th {
+        padding: 11px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--gray-400);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        white-space: nowrap;
+      }
+      tbody tr {
+        border-bottom: 1px solid var(--gray-100);
+        transition: background 0.18s;
+      }
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+      tbody tr:hover {
+        background: var(--gray-50);
+      }
+      td {
+        padding: 13px 16px;
+        font-size: 13px;
+        color: var(--gray-800);
+        white-space: nowrap;
+      }
+      .td-product {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .product-img {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        background: var(--blue-50);
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+        border: 1.5px solid var(--blue-100);
+      }
+      .product-name {
+        font-weight: 600;
+        color: var(--gray-900);
+      }
+      .product-sku {
+        font-size: 11px;
         color: var(--gray-400);
       }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 99px;
+        font-size: 11.5px;
+        font-weight: 600;
+      }
+      .badge.in-stock {
+        background: #ecfdf5;
+        color: #059669;
+      }
+      .badge.low-stock {
+        background: #fffbeb;
+        color: #b45309;
+      }
+      .badge.out-stock {
+        background: #fff5f5;
+        color: #dc2626;
+      }
+      .badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .actions-cell {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .action-icon-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 7px;
+        border: 1.5px solid var(--gray-200);
+        background: var(--white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: var(--gray-500);
+        cursor: pointer;
+        transition: all 0.18s;
+      }
+      .action-icon-btn:hover {
+        color: var(--blue-600);
+        border-color: var(--blue-300);
+        background: var(--blue-50);
+      }
+      .action-icon-btn.del:hover {
+        color: var(--danger);
+        border-color: #fecaca;
+        background: #fff5f5;
+      }
 
-      /* ===== ACTIVITY ===== */
-
+      /* ===================== ACTIVITY FEED ===================== */
       .activity-list {
         display: flex;
         flex-direction: column;
-        gap: 18px;
+        gap: 0;
       }
-
       .activity-item {
         display: flex;
+        align-items: flex-start;
         gap: 12px;
+        padding: 14px 22px;
+        border-bottom: 1px solid var(--gray-100);
+        position: relative;
+        transition: background 0.18s;
       }
-
+      .activity-item:last-child {
+        border-bottom: none;
+      }
+      .activity-item:hover {
+        background: var(--gray-50);
+      }
       .activity-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 13px;
+        flex-shrink: 0;
+        margin-top: 2px;
       }
-
       .activity-icon.blue {
         background: var(--blue-50);
+        color: var(--blue-600);
       }
-
       .activity-icon.green {
         background: #ecfdf5;
+        color: var(--success);
       }
-
+      .activity-icon.yellow {
+        background: #fffbeb;
+        color: var(--warning);
+      }
       .activity-icon.red {
-        background: #fff1f2;
+        background: #fff5f5;
+        color: var(--danger);
+      }
+      .activity-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .activity-content .auser {
+        font-weight: 600;
+        color: var(--gray-900);
+        font-size: 13px;
+      }
+      .activity-content .adesc {
+        font-size: 12.5px;
+        color: var(--gray-500);
+        margin-top: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .activity-content .atime {
+        font-size: 11px;
+        color: var(--gray-300);
+        margin-top: 3px;
       }
 
-      /* ===== STAFF ===== */
-
+      /* ===================== STAFF PANEL ===================== */
       .staff-list {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: 0;
       }
-
       .staff-item {
         display: flex;
         align-items: center;
         gap: 12px;
+        padding: 13px 22px;
+        border-bottom: 1px solid var(--gray-100);
+        transition: background 0.18s;
       }
-
-      .staff-avatar {
-        width: 42px;
-        height: 42px;
+      .staff-item:last-child {
+        border-bottom: none;
+      }
+      .staff-item:hover {
+        background: var(--gray-50);
+      }
+      .staff-av {
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
-        background: var(--blue-100);
-        color: var(--blue-700);
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 13px;
         font-weight: 700;
+        color: var(--white);
+        flex-shrink: 0;
       }
-
-      .staff-info p {
+      .staff-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .staff-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-900);
+      }
+      .staff-role {
+        font-size: 11.5px;
         color: var(--gray-400);
-        font-size: 0.8rem;
       }
-
-      /* ===== LOW STOCK ===== */
-
-      .low-stock-panel {
-        border: 1px solid #ffd5d5;
+      .staff-meta {
+        text-align: right;
+        flex-shrink: 0;
       }
-
-      .low-stock-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 14px 0;
-        border-top: 1px solid var(--gray-100);
-      }
-
-      .low-stock-item span {
-        color: var(--danger);
+      .staff-actions-count {
+        font-size: 13px;
         font-weight: 700;
+        color: var(--gray-900);
+      }
+      .staff-productivity {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 4px;
+        justify-content: flex-end;
+      }
+      .prod-bar {
+        width: 50px;
+        height: 5px;
+        background: var(--gray-100);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .prod-fill {
+        height: 100%;
+        border-radius: 99px;
+      }
+      .prod-pct {
+        font-size: 10.5px;
+        color: var(--gray-400);
+        font-weight: 500;
       }
 
-      /* ===== RESPONSIVE ===== */
+      /* ===================== LOW STOCK ===================== */
+      .low-stock-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .ls-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 22px;
+        border-bottom: 1px solid var(--gray-100);
+        transition: background 0.18s;
+      }
+      .ls-item:last-child {
+        border-bottom: none;
+      }
+      .ls-item:hover {
+        background: #fff5f5;
+      }
+      .ls-item .ls-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-sm);
+        background: #fff5f5;
+        border: 1.5px solid #fecaca;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+      .ls-info {
+        flex: 1;
+      }
+      .ls-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-900);
+      }
+      .ls-cat {
+        font-size: 11.5px;
+        color: var(--gray-400);
+      }
+      .ls-right {
+        text-align: right;
+        flex-shrink: 0;
+      }
+      .ls-qty {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--danger);
+        line-height: 1;
+      }
+      .ls-max {
+        font-size: 11px;
+        color: var(--gray-300);
+      }
+      .ls-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 2px 8px;
+        border-radius: 99px;
+        font-size: 10.5px;
+        font-weight: 700;
+        background: #fff5f5;
+        color: var(--danger);
+        border: 1px solid #fecaca;
+        margin-top: 3px;
+      }
 
-      @media (max-width: 1000px) {
-        .main-dashboard-grid {
+      /* ===================== CHART PLACEHOLDERS ===================== */
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .chart-card {
+        background: var(--white);
+        border: 1.5px solid var(--gray-100);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        overflow: hidden;
+      }
+      .chart-body {
+        padding: 20px 22px;
+      }
+      .chart-placeholder {
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        color: var(--gray-300);
+        border: 2px dashed var(--gray-200);
+        border-radius: var(--radius-sm);
+        margin-top: 12px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .chart-placeholder i {
+        font-size: 28px;
+        color: var(--gray-200);
+      }
+      .chart-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .legend-dot {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11.5px;
+        color: var(--gray-500);
+        font-weight: 500;
+      }
+      .legend-dot span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: block;
+      }
+
+      /* ===================== PRODUCT CARDS GRID ===================== */
+      .product-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        padding: 20px 22px;
+      }
+      .product-card {
+        border: 1.5px solid var(--gray-100);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: var(--white);
+        transition: all 0.22s;
+      }
+      .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--blue-200);
+      }
+      .product-card-img {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        background: linear-gradient(135deg, var(--blue-50), var(--gray-50));
+        position: relative;
+      }
+      .product-card-img .stock-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+      }
+      .product-card-body {
+        padding: 13px 14px;
+      }
+      .pc-name {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gray-900);
+        margin-bottom: 3px;
+      }
+      .pc-cat {
+        font-size: 11px;
+        color: var(--gray-400);
+        margin-bottom: 10px;
+      }
+      .pc-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .pc-qty {
+        font-size: 11.5px;
+        color: var(--gray-500);
+        font-weight: 500;
+      }
+      .pc-price {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gray-900);
+      }
+      .pc-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .pc-btn {
+        flex: 1;
+        padding: 7px 0;
+        border-radius: var(--radius-sm);
+        font-size: 11.5px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .pc-btn.primary {
+        background: var(--blue-600);
+        color: var(--white);
+      }
+      .pc-btn.primary:hover {
+        background: var(--blue-700);
+      }
+      .pc-btn.secondary {
+        background: var(--gray-100);
+        color: var(--gray-600);
+      }
+      .pc-btn.secondary:hover {
+        background: var(--gray-200);
+      }
+
+      /* ===================== MODALS ===================== */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 22, 40, 0.45);
+        backdrop-filter: blur(6px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        width: 100%;
+        max-width: 460px;
+        padding: 0;
+        box-shadow: var(--shadow-lg);
+        transform: scale(0.95) translateY(20px);
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow: hidden;
+      }
+      .modal-overlay.active .modal {
+        transform: scale(1) translateY(0);
+      }
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1.5px solid var(--gray-100);
+      }
+      .modal-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--gray-900);
+      }
+      .modal-close {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--gray-100);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-500);
+        font-size: 14px;
+        transition: all 0.18s;
+      }
+      .modal-close:hover {
+        background: #fecaca;
+        color: var(--danger);
+      }
+      .modal-body {
+        padding: 24px;
+      }
+      .form-row {
+        margin-bottom: 16px;
+      }
+      .form-label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gray-600);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .form-input {
+        width: 100%;
+        padding: 10px 13px;
+        border-radius: var(--radius-sm);
+        border: 1.5px solid var(--gray-200);
+        background: var(--gray-50);
+        font-size: 13px;
+        color: var(--gray-900);
+        transition: all 0.2s;
+      }
+      .form-input:focus {
+        border-color: var(--blue-400);
+        background: var(--white);
+        box-shadow: 0 0 0 3px rgba(62, 142, 244, 0.12);
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .modal-footer {
+        padding: 16px 24px;
+        border-top: 1.5px solid var(--gray-100);
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+      .btn {
+        padding: 10px 20px;
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-primary {
+        background: var(--blue-600);
+        color: var(--white);
+        box-shadow: 0 2px 8px rgba(39, 111, 233, 0.3);
+      }
+      .btn-primary:hover {
+        background: var(--blue-700);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(39, 111, 233, 0.4);
+      }
+      .btn-ghost {
+        background: var(--gray-100);
+        color: var(--gray-700);
+      }
+      .btn-ghost:hover {
+        background: var(--gray-200);
+      }
+
+      /* ===================== SECTION HEADER ===================== */
+      .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .section-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--gray-900);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .section-title i {
+        color: var(--blue-500);
+      }
+
+      /* ===================== RESPONSIVE ===================== */
+      @media (max-width: 1200px) {
+        .stat-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .product-cards-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 992px) {
+        .two-col,
+        .col-7-5,
+        .three-col {
+          grid-template-columns: 1fr;
+        }
+        .chart-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .qa-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .main-wrap {
+          padding: 16px 14px 40px;
+          gap: 18px;
+        }
+        .stat-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .chart-grid {
+          grid-template-columns: 1fr;
+        }
+        .product-cards-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .qa-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .welcome-section {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
+        }
+        .welcome-meta {
+          justify-content: center;
+        }
+        .welcome-right {
+          text-align: center;
+        }
+        .topbar {
+          padding: 0 14px;
+        }
+        .topbar-title {
+          display: none;
+        }
+        .table-wrap {
+          overflow-x: auto;
+        }
+        .modal {
+          max-width: 90%;
+          margin: 0 16px;
+        }
+        .form-grid {
           grid-template-columns: 1fr;
         }
       }
-
-      @media (max-width: 700px) {
-        .dashboard-hero {
-          flex-direction: column;
-          align-items: flex-start;
+      @media (max-width: 480px) {
+        .stat-grid {
+          grid-template-columns: 1fr;
         }
-
-        .hero-right {
-          width: 100%;
+        .product-cards-grid {
+          grid-template-columns: 1fr;
         }
-
-        .hero-meta-card {
-          flex: 1;
+        .qa-grid {
+          grid-template-columns: 1fr 1fr;
         }
+      }
 
-        .table-actions {
-          width: 100%;
-          flex-direction: column;
+      /* ===================== ANIMATIONS ===================== */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .anim {
+        animation: fadeUp 0.4s ease both;
+      }
+      .anim-d1 {
+        animation-delay: 0.05s;
+      }
+      .anim-d2 {
+        animation-delay: 0.1s;
+      }
+      .anim-d3 {
+        animation-delay: 0.15s;
+      }
+      .anim-d4 {
+        animation-delay: 0.2s;
+      }
+      .anim-d5 {
+        animation-delay: 0.25s;
+      }
+      .anim-d6 {
+        animation-delay: 0.3s;
       }
     </style>
   </head>
   <body>
-    <!-- ===== DASHBOARD ROOT ===== -->
-    <main class="dashboard-root">
-      <!-- ===== WELCOME HEADER ===== -->
-      <section class="dashboard-hero">
-        <div class="hero-left">
-          <p class="hero-label">Inventory Overview</p>
-          <h1>Good Morning, Admin 👋</h1>
-          <p class="hero-text">
-            Monitor inventory, track staff activity, and manage stock updates in
-            real time.
-          </p>
+    <!-- ===================== TOPBAR ===================== -->
+    <header class="topbar">
+      <div class="topbar-logo">
+        <div class="logo-icon"><i class="fa-solid fa-droplet"></i></div>
+        <div class="brand">
+          Triple Oak Stores<span>Water Distribution</span>
         </div>
+      </div>
+      <div class="topbar-title">
+        <i class="fa-solid fa-gauge-high"></i> Inventory Dashboard
+      </div>
+      <div class="topbar-actions">
+        <div class="icon-btn" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div
+          class="icon-btn"
+          title="Notifications"
+          onclick="toggleModal('notif-modal')"
+        >
+          <i class="fa-solid fa-bell"></i>
+          <span class="badge"></span>
+        </div>
+        <div class="icon-btn" title="Settings">
+          <i class="fa-solid fa-gear"></i>
+        </div>
+        <div class="topbar-user">
+          <div class="avatar">AD</div>
+          <span class="uname">Admin</span>
+        </div>
+        <button class="logout-btn">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </div>
+    </header>
 
-        <div class="hero-right">
-          <div class="hero-meta-card">
-            <span>Last Updated</span>
-            <strong>2 mins ago</strong>
+    <!-- ===================== MAIN ===================== -->
+    <div class="main-wrap">
+      <!-- WELCOME -->
+      <section class="welcome-section anim">
+        <div class="welcome-left">
+          <h1>Good Morning, Admin 👋</h1>
+          <p class="sub">Here's what's happening at Triple Oak Stores today.</p>
+          <div class="welcome-meta">
+            <div class="meta-pill">
+              <i class="fa-solid fa-rotate-right"></i> Last updated: 2 mins ago
+            </div>
+            <div class="meta-pill">
+              <i class="fa-solid fa-circle-check"></i> All systems normal
+            </div>
           </div>
-
-          <div class="hero-meta-card">
-            <span>Today's Activity</span>
-            <strong>24 Updates</strong>
-          </div>
+        </div>
+        <div class="welcome-right">
+          <div class="big-date" id="today-date">—</div>
+          <div class="date-sub" id="today-day">Loading...</div>
         </div>
       </section>
 
-      <!-- ===== ALERT BANNER ===== -->
-      <div class="dashboard-alert">
-        <span>⚠</span>
-        <p>
-          3 products are currently below minimum stock threshold and need
-          restocking.
-        </p>
+      <!-- STAT CARDS -->
+      <div class="stat-grid">
+        <div class="stat-card blue anim anim-d1">
+          <div class="stat-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <div class="stat-num">148</div>
+          <div class="stat-label">Total Products</div>
+          <div class="stat-trend up">
+            <i class="fa-solid fa-arrow-trend-up"></i> +12 this month
+          </div>
+        </div>
+        <div class="stat-card teal anim anim-d2">
+          <div class="stat-icon"><i class="fa-solid fa-cubes"></i></div>
+          <div class="stat-num">32,540</div>
+          <div class="stat-label">Total Units</div>
+          <div class="stat-trend up">
+            <i class="fa-solid fa-arrow-trend-up"></i> +4.2% vs last week
+          </div>
+        </div>
+        <div class="stat-card green anim anim-d3">
+          <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div class="stat-num">112</div>
+          <div class="stat-label">In Stock</div>
+          <div class="stat-trend up">
+            <i class="fa-solid fa-arrow-trend-up"></i> 75.6% of catalog
+          </div>
+        </div>
+        <div class="stat-card yellow anim anim-d4">
+          <div class="stat-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div class="stat-num">23</div>
+          <div class="stat-label">Low Stock</div>
+          <div class="stat-trend down">
+            <i class="fa-solid fa-arrow-trend-down"></i> 5 critical items
+          </div>
+        </div>
+        <div class="stat-card red anim anim-d5">
+          <div class="stat-icon"><i class="fa-solid fa-ban"></i></div>
+          <div class="stat-num">13</div>
+          <div class="stat-label">Out of Stock</div>
+          <div class="stat-trend neutral">
+            <i class="fa-solid fa-minus"></i> Needs restocking
+          </div>
+        </div>
+        <div class="stat-card purple anim anim-d6">
+          <div class="stat-icon"><i class="fa-solid fa-naira-sign"></i></div>
+          <div class="stat-num">₦4.8M</div>
+          <div class="stat-label">Stock Value</div>
+          <div class="stat-trend up">
+            <i class="fa-solid fa-arrow-trend-up"></i> +₦320k today
+          </div>
+        </div>
       </div>
 
-      <!-- ===== SUMMARY CARDS ===== -->
-      <section class="summary-grid">
-        <div class="summary-card">
-          <div class="summary-icon blue">📦</div>
-
-          <div class="summary-content">
-            <p>Total Products</p>
-            <h2>24</h2>
-            <span>+3 added this week</span>
-          </div>
+      <!-- QUICK ACTIONS -->
+      <div class="card anim">
+        <div class="card-header">
+          <span class="card-title"
+            ><i class="fa-solid fa-bolt"></i> Quick Actions</span
+          >
         </div>
-
-        <div class="summary-card">
-          <div class="summary-icon green">📈</div>
-
-          <div class="summary-content">
-            <p>Total Units</p>
-            <h2>3,240</h2>
-            <span>Healthy inventory</span>
-          </div>
-        </div>
-
-        <div class="summary-card">
-          <div class="summary-icon orange">⚠</div>
-
-          <div class="summary-content">
-            <p>Low Stock</p>
-            <h2>4</h2>
-            <span>Needs attention</span>
-          </div>
-        </div>
-
-        <div class="summary-card">
-          <div class="summary-icon red">⛔</div>
-
-          <div class="summary-content">
-            <p>Out Of Stock</p>
-            <h2>2</h2>
-            <span>Restock immediately</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== QUICK ACTIONS ===== -->
-      <section class="quick-actions">
-        <button class="quick-btn">➕ Add Product</button>
-
-        <button class="quick-btn">🔄 Restock Product</button>
-
-        <button class="quick-btn">📤 Export Report</button>
-
-        <button class="quick-btn">👥 Add Staff</button>
-      </section>
-
-      <!-- ===== MAIN GRID ===== -->
-      <section class="main-dashboard-grid">
-        <!-- ===== LEFT SIDE ===== -->
-        <div class="dashboard-left">
-          <!-- ===== INVENTORY HEALTH ===== -->
-          <div class="dashboard-panel">
-            <div class="panel-header">
-              <h3>Inventory Health</h3>
-              <span>82% Healthy</span>
+        <div class="qa-grid">
+          <button class="qa-btn" onclick="toggleModal('add-product-modal')">
+            <div class="qa-icon"><i class="fa-solid fa-plus"></i></div>
+            Add Product
+          </button>
+          <button class="qa-btn" onclick="toggleModal('restock-modal')">
+            <div class="qa-icon">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
             </div>
+            Restock
+          </button>
+          <button class="qa-btn">
+            <div class="qa-icon"><i class="fa-solid fa-file-export"></i></div>
+            Export Report
+          </button>
+          <button class="qa-btn">
+            <div class="qa-icon"><i class="fa-solid fa-user-plus"></i></div>
+            Add Staff
+          </button>
+          <button class="qa-btn danger">
+            <div class="qa-icon"><i class="fa-solid fa-bell"></i></div>
+            View Alerts
+          </button>
+        </div>
+      </div>
 
-            <div class="health-progress">
-              <div class="health-bar"></div>
-            </div>
-
-            <div class="health-stats">
+      <!-- INVENTORY HEALTH + LOW STOCK -->
+      <div class="col-7-5">
+        <!-- HEALTH -->
+        <div class="card anim">
+          <div class="card-header">
+            <span class="card-title"
+              ><i class="fa-solid fa-heart-pulse"></i> Inventory Health</span
+            >
+            <span class="card-link"
+              >Full Report <i class="fa-solid fa-arrow-right"></i
+            ></span>
+          </div>
+          <div class="card-body">
+            <div class="health-row">
               <div class="health-item">
-                <span class="dot green"></span>
-                <p>18 Healthy Products</p>
+                <div class="health-item-top">
+                  <span class="hlabel"
+                    ><span class="dot" style="background: var(--success)"></span
+                    >Healthy Stock</span
+                  >
+                  <span class="hpct" style="color: var(--success)">75.6%</span>
+                </div>
+                <div class="health-bar">
+                  <div
+                    class="hfill"
+                    style="width: 75.6%; background: var(--success)"
+                  ></div>
+                </div>
               </div>
-
               <div class="health-item">
-                <span class="dot orange"></span>
-                <p>4 Low Stock</p>
+                <div class="health-item-top">
+                  <span class="hlabel"
+                    ><span class="dot" style="background: var(--warning)"></span
+                    >Low Stock</span
+                  >
+                  <span class="hpct" style="color: var(--warning)">15.5%</span>
+                </div>
+                <div class="health-bar">
+                  <div
+                    class="hfill"
+                    style="width: 15.5%; background: var(--warning)"
+                  ></div>
+                </div>
               </div>
-
               <div class="health-item">
-                <span class="dot red"></span>
-                <p>2 Critical</p>
+                <div class="health-item-top">
+                  <span class="hlabel"
+                    ><span class="dot" style="background: var(--danger)"></span
+                    >Out of Stock</span
+                  >
+                  <span class="hpct" style="color: var(--danger)">8.9%</span>
+                </div>
+                <div class="health-bar">
+                  <div
+                    class="hfill"
+                    style="width: 8.9%; background: var(--danger)"
+                  ></div>
+                </div>
+              </div>
+              <div class="health-item">
+                <div class="health-item-top">
+                  <span class="hlabel"
+                    ><span
+                      class="dot"
+                      style="background: var(--blue-500)"
+                    ></span
+                    >Overstocked</span
+                  >
+                  <span class="hpct" style="color: var(--blue-500)">12%</span>
+                </div>
+                <div class="health-bar">
+                  <div
+                    class="hfill"
+                    style="width: 12%; background: var(--blue-500)"
+                  ></div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <!-- ===== TABLE PANEL ===== -->
-          <div class="dashboard-panel">
-            <div class="panel-header">
-              <h3>Inventory Table</h3>
-
-              <div class="table-actions">
-                <input type="text" placeholder="Search products..." />
-                <button>Filter</button>
+            <div class="alert-pills">
+              <div class="alert-pill critical">
+                <i class="fa-solid fa-triangle-exclamation"></i> 5 products
+                critically low — restock urgently
               </div>
-            </div>
-
-            <div class="table-wrap">
-              <table class="inventory-table">
-                <thead>
-                  <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                    <th>Price</th>
-                    <th>Updated</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr>
-                    <td>Eva Water 75cl</td>
-                    <td>320</td>
-                    <td>
-                      <span class="status success"> In Stock </span>
-                    </td>
-                    <td>₦4,500</td>
-                    <td>2 mins ago</td>
-                  </tr>
-
-                  <tr>
-                    <td>CWAY 750ml</td>
-                    <td>12</td>
-                    <td>
-                      <span class="status warning"> Low Stock </span>
-                    </td>
-                    <td>₦5,200</td>
-                    <td>10 mins ago</td>
-                  </tr>
-
-                  <tr>
-                    <td>Refill Bottle</td>
-                    <td>0</td>
-                    <td>
-                      <span class="status danger"> Out Of Stock </span>
-                    </td>
-                    <td>₦2,000</td>
-                    <td>1 hour ago</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- ===== CHART PLACEHOLDER ===== -->
-          <div class="dashboard-panel">
-            <div class="panel-header">
-              <h3>Weekly Inventory Trends</h3>
-            </div>
-
-            <div class="chart-placeholder">
-              <p>Chart Placeholder</p>
+              <div class="alert-pill warn">
+                <i class="fa-solid fa-clock"></i> 8 products reach threshold by
+                end of week
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- ===== RIGHT SIDE ===== -->
-        <div class="dashboard-right">
-          <!-- ===== RECENT ACTIVITY ===== -->
-          <div class="dashboard-panel">
-            <div class="panel-header">
-              <h3>Recent Activity</h3>
-            </div>
-
-            <div class="activity-list">
-              <div class="activity-item">
-                <div class="activity-icon blue">📦</div>
-
-                <div>
-                  <strong>Admin updated Eva Water stock</strong>
-                  <p>2 mins ago</p>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon green">✅</div>
-
-                <div>
-                  <strong>John restocked CWAY bottles</strong>
-                  <p>10 mins ago</p>
-                </div>
-              </div>
-
-              <div class="activity-item">
-                <div class="activity-icon red">⚠</div>
-
-                <div>
-                  <strong>Low stock alert triggered</strong>
-                  <p>30 mins ago</p>
-                </div>
-              </div>
-            </div>
+        <!-- LOW STOCK -->
+        <div class="card anim">
+          <div class="card-header">
+            <span class="card-title"
+              ><i
+                class="fa-solid fa-exclamation-circle"
+                style="color: var(--danger)"
+              ></i>
+              Low Stock Alerts</span
+            >
+            <span class="card-link" style="color: var(--danger)"
+              >See All <i class="fa-solid fa-arrow-right"></i
+            ></span>
           </div>
-
-          <!-- ===== STAFF PERFORMANCE ===== -->
-          <div class="dashboard-panel">
-            <div class="panel-header">
-              <h3>Staff Performance</h3>
-            </div>
-
-            <div class="staff-list">
-              <div class="staff-item">
-                <div class="staff-avatar">J</div>
-
-                <div class="staff-info">
-                  <strong>John</strong>
-                  <p>23 actions today</p>
-                </div>
+          <div class="low-stock-list">
+            <div class="ls-item">
+              <div class="ls-icon">🛢️</div>
+              <div class="ls-info">
+                <div class="ls-name">20L Dispenser Drum</div>
+                <div class="ls-cat">Drums &amp; Containers</div>
               </div>
-
-              <div class="staff-item">
-                <div class="staff-avatar">S</div>
-
-                <div class="staff-info">
-                  <strong>Sarah</strong>
-                  <p>18 actions today</p>
+              <div class="ls-right">
+                <div class="ls-qty">4</div>
+                <div class="ls-max">Min: 30</div>
+                <div class="ls-badge">
+                  <i class="fa-solid fa-circle-exclamation"></i> CRITICAL
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- ===== LOW STOCK PANEL ===== -->
-          <div class="dashboard-panel low-stock-panel">
-            <div class="panel-header">
-              <h3>Critical Alerts</h3>
-            </div>
-
-            <div class="low-stock-list">
-              <div class="low-stock-item">
-                <p>CWAY 750ml</p>
-                <span>12 left</span>
+            <div class="ls-item">
+              <div class="ls-icon">💧</div>
+              <div class="ls-info">
+                <div class="ls-name">Pure Water Sachet (1 Carton)</div>
+                <div class="ls-cat">Sachets</div>
               </div>
-
-              <div class="low-stock-item">
-                <p>Refill Bottle</p>
-                <span>0 left</span>
+              <div class="ls-right">
+                <div class="ls-qty">11</div>
+                <div class="ls-max">Min: 50</div>
+                <div class="ls-badge">
+                  <i class="fa-solid fa-circle-exclamation"></i> CRITICAL
+                </div>
+              </div>
+            </div>
+            <div class="ls-item">
+              <div class="ls-icon">🍶</div>
+              <div class="ls-info">
+                <div class="ls-name">1.5L Bottled Water (Crate)</div>
+                <div class="ls-cat">Bottles</div>
+              </div>
+              <div class="ls-right">
+                <div class="ls-qty">18</div>
+                <div class="ls-max">Min: 40</div>
+                <div class="ls-badge">
+                  <i class="fa-solid fa-triangle-exclamation"></i> LOW
+                </div>
+              </div>
+            </div>
+            <div class="ls-item">
+              <div class="ls-icon">🧴</div>
+              <div class="ls-info">
+                <div class="ls-name">500ml Bottled Water (Crate)</div>
+                <div class="ls-cat">Bottles</div>
+              </div>
+              <div class="ls-right">
+                <div class="ls-qty">22</div>
+                <div class="ls-max">Min: 60</div>
+                <div class="ls-badge">
+                  <i class="fa-solid fa-triangle-exclamation"></i> LOW
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+      <!-- /col-7-5 -->
+
+      <!-- CHART SECTION -->
+      <div>
+        <div class="section-header">
+          <span class="section-title"
+            ><i class="fa-solid fa-chart-line"></i> Analytics Overview</span
+          >
+          <span class="card-link"
+            >Expand <i class="fa-solid fa-arrow-right"></i
+          ></span>
+        </div>
+        <div class="chart-grid">
+          <div class="chart-card">
+            <div class="card-header">
+              <span class="card-title"
+                ><i class="fa-solid fa-chart-bar"></i> Stock Quantity</span
+              >
+            </div>
+            <div class="chart-body">
+              <div class="chart-placeholder">
+                <i class="fa-solid fa-chart-bar"></i>
+                Chart.js Bar Chart
+              </div>
+              <div class="chart-legend">
+                <div class="legend-dot">
+                  <span style="background: var(--blue-500)"></span> In Stock
+                </div>
+                <div class="legend-dot">
+                  <span style="background: var(--warning)"></span> Low Stock
+                </div>
+                <div class="legend-dot">
+                  <span style="background: var(--danger)"></span> Out
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="card-header">
+              <span class="card-title"
+                ><i class="fa-solid fa-chart-line"></i> Weekly Trends</span
+              >
+            </div>
+            <div class="chart-body">
+              <div class="chart-placeholder">
+                <i class="fa-solid fa-chart-line"></i>
+                Chart.js Line Chart
+              </div>
+              <div class="chart-legend">
+                <div class="legend-dot">
+                  <span style="background: var(--success)"></span> Restocked
+                </div>
+                <div class="legend-dot">
+                  <span style="background: var(--blue-500)"></span> Sold
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="card-header">
+              <span class="card-title"
+                ><i class="fa-solid fa-chart-pie"></i> Category Split</span
+              >
+            </div>
+            <div class="chart-body">
+              <div class="chart-placeholder">
+                <i class="fa-solid fa-chart-pie"></i>
+                Chart.js Doughnut Chart
+              </div>
+              <div class="chart-legend">
+                <div class="legend-dot">
+                  <span style="background: #8b5cf6"></span> Bottles
+                </div>
+                <div class="legend-dot">
+                  <span style="background: var(--blue-500)"></span> Drums
+                </div>
+                <div class="legend-dot">
+                  <span style="background: var(--success)"></span> Sachets
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCT TABLE -->
+      <div class="card anim">
+        <div class="card-header">
+          <span class="card-title"
+            ><i class="fa-solid fa-table-list"></i> Product Inventory</span
+          >
+          <div style="display: flex; gap: 8px">
+            <span class="badge in-stock">112 In Stock</span>
+            <span class="badge low-stock">23 Low</span>
+            <span class="badge out-stock">13 Out</span>
+          </div>
+        </div>
+        <div class="table-toolbar">
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              placeholder="Search products..."
+              id="tableSearch"
+              oninput="filterTable()"
+            />
+          </div>
+          <select class="filter-select" onchange="filterTable()" id="catFilter">
+            <option value="">All Categories</option>
+            <option>Drums &amp; Containers</option>
+            <option>Bottles</option>
+            <option>Sachets</option>
+            <option>Dispensers</option>
+          </select>
+          <select
+            class="filter-select"
+            onchange="filterTable()"
+            id="statusFilter"
+          >
+            <option value="">All Statuses</option>
+            <option>In Stock</option>
+            <option>Low Stock</option>
+            <option>Out of Stock</option>
+          </select>
+          <button class="sort-btn">
+            <i class="fa-solid fa-sort"></i> Sort
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">🛢️</div>
+                    <div>
+                      <div class="product-name">20L Dispenser Drum</div>
+                      <div class="product-sku">SKU: TOD-001</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Drums &amp; Containers</td>
+                <td><strong>4</strong></td>
+                <td><span class="badge out-stock">Out of Stock</span></td>
+                <td>₦1,800</td>
+                <td>Today, 09:14 AM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">💧</div>
+                    <div>
+                      <div class="product-name">Pure Water Sachet (Carton)</div>
+                      <div class="product-sku">SKU: TOD-002</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Sachets</td>
+                <td><strong>11</strong></td>
+                <td><span class="badge low-stock">Low Stock</span></td>
+                <td>₦350</td>
+                <td>Today, 08:55 AM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">🍶</div>
+                    <div>
+                      <div class="product-name">1.5L Bottled Water (Crate)</div>
+                      <div class="product-sku">SKU: TOD-003</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Bottles</td>
+                <td><strong>18</strong></td>
+                <td><span class="badge low-stock">Low Stock</span></td>
+                <td>₦2,200</td>
+                <td>Yesterday, 4:30 PM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">🧴</div>
+                    <div>
+                      <div class="product-name">
+                        500ml Bottled Water (Crate)
+                      </div>
+                      <div class="product-sku">SKU: TOD-004</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Bottles</td>
+                <td><strong>84</strong></td>
+                <td><span class="badge in-stock">In Stock</span></td>
+                <td>₦1,500</td>
+                <td>Today, 07:10 AM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">🚰</div>
+                    <div>
+                      <div class="product-name">Water Dispenser (Table)</div>
+                      <div class="product-sku">SKU: TOD-005</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Dispensers</td>
+                <td><strong>43</strong></td>
+                <td><span class="badge in-stock">In Stock</span></td>
+                <td>₦24,500</td>
+                <td>Jun 1, 11:00 AM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="td-product">
+                    <div class="product-img">🫙</div>
+                    <div>
+                      <div class="product-name">10L Jerry Can</div>
+                      <div class="product-sku">SKU: TOD-006</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Drums &amp; Containers</td>
+                <td><strong>0</strong></td>
+                <td><span class="badge out-stock">Out of Stock</span></td>
+                <td>₦950</td>
+                <td>May 30, 3:22 PM</td>
+                <td>
+                  <div class="actions-cell">
+                    <button
+                      class="action-icon-btn"
+                      title="Edit"
+                      onclick="toggleModal('edit-modal')"
+                    >
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="action-icon-btn" title="Restock">
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </button>
+                    <button class="action-icon-btn del" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ACTIVITY + STAFF -->
+      <div class="two-col">
+        <!-- ACTIVITY -->
+        <div class="card anim">
+          <div class="card-header">
+            <span class="card-title"
+              ><i class="fa-solid fa-clock-rotate-left"></i> Recent
+              Activity</span
+            >
+            <span class="card-link"
+              >View All <i class="fa-solid fa-arrow-right"></i
+            ></span>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon green">
+                <i class="fa-solid fa-arrow-up"></i>
+              </div>
+              <div class="activity-content">
+                <div class="auser">Chukwuemeka I.</div>
+                <div class="adesc">
+                  Restocked 500ml Bottled Water — +200 units added
+                </div>
+                <div class="atime">Today, 9:20 AM</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon blue">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+              <div class="activity-content">
+                <div class="auser">Admin</div>
+                <div class="adesc">
+                  Added new product: 10L Jerry Can (SKU: TOD-006)
+                </div>
+                <div class="atime">Today, 8:55 AM</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon yellow">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div class="activity-content">
+                <div class="auser">System Alert</div>
+                <div class="adesc">
+                  Pure Water Sachet dropped below minimum threshold
+                </div>
+                <div class="atime">Today, 8:10 AM</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon red">
+                <i class="fa-solid fa-ban"></i>
+              </div>
+              <div class="activity-content">
+                <div class="auser">System Alert</div>
+                <div class="adesc">
+                  20L Dispenser Drum marked Out of Stock automatically
+                </div>
+                <div class="atime">Yesterday, 6:45 PM</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon blue">
+                <i class="fa-solid fa-pen"></i>
+              </div>
+              <div class="activity-content">
+                <div class="auser">Ngozi A.</div>
+                <div class="adesc">
+                  Updated price of 1.5L Bottled Water from ₦2,000 → ₦2,200
+                </div>
+                <div class="atime">Yesterday, 3:12 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STAFF -->
+        <div class="card anim">
+          <div class="card-header">
+            <span class="card-title"
+              ><i class="fa-solid fa-users"></i> Staff Performance</span
+            >
+            <span class="card-link"
+              >Manage <i class="fa-solid fa-arrow-right"></i
+            ></span>
+          </div>
+          <div class="staff-list">
+            <div class="staff-item">
+              <div
+                class="staff-av"
+                style="background: linear-gradient(135deg, #276fe9, #62aef8)"
+              >
+                CE
+              </div>
+              <div class="staff-info">
+                <div class="staff-name">Chukwuemeka I.</div>
+                <div class="staff-role">Warehouse Manager</div>
+              </div>
+              <div class="staff-meta">
+                <div class="staff-actions-count">48 actions</div>
+                <div class="staff-productivity">
+                  <div class="prod-bar">
+                    <div
+                      class="prod-fill"
+                      style="width: 92%; background: var(--success)"
+                    ></div>
+                  </div>
+                  <span class="prod-pct">92%</span>
+                </div>
+              </div>
+            </div>
+            <div class="staff-item">
+              <div
+                class="staff-av"
+                style="background: linear-gradient(135deg, #10b981, #34d399)"
+              >
+                NA
+              </div>
+              <div class="staff-info">
+                <div class="staff-name">Ngozi Adaeze</div>
+                <div class="staff-role">Inventory Officer</div>
+              </div>
+              <div class="staff-meta">
+                <div class="staff-actions-count">36 actions</div>
+                <div class="staff-productivity">
+                  <div class="prod-bar">
+                    <div
+                      class="prod-fill"
+                      style="width: 78%; background: var(--blue-500)"
+                    ></div>
+                  </div>
+                  <span class="prod-pct">78%</span>
+                </div>
+              </div>
+            </div>
+            <div class="staff-item">
+              <div
+                class="staff-av"
+                style="background: linear-gradient(135deg, #8b5cf6, #a78bfa)"
+              >
+                TK
+              </div>
+              <div class="staff-info">
+                <div class="staff-name">Tunde Kola</div>
+                <div class="staff-role">Sales Assistant</div>
+              </div>
+              <div class="staff-meta">
+                <div class="staff-actions-count">21 actions</div>
+                <div class="staff-productivity">
+                  <div class="prod-bar">
+                    <div
+                      class="prod-fill"
+                      style="width: 60%; background: var(--warning)"
+                    ></div>
+                  </div>
+                  <span class="prod-pct">60%</span>
+                </div>
+              </div>
+            </div>
+            <div class="staff-item">
+              <div
+                class="staff-av"
+                style="background: linear-gradient(135deg, #f59e0b, #fcd34d)"
+              >
+                FO
+              </div>
+              <div class="staff-info">
+                <div class="staff-name">Fatima Okoro</div>
+                <div class="staff-role">Dispatch Coordinator</div>
+              </div>
+              <div class="staff-meta">
+                <div class="staff-actions-count">29 actions</div>
+                <div class="staff-productivity">
+                  <div class="prod-bar">
+                    <div
+                      class="prod-fill"
+                      style="width: 70%; background: #14b8a6"
+                    ></div>
+                  </div>
+                  <span class="prod-pct">70%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCT CARDS GRID -->
+      <div class="card anim">
+        <div class="card-header">
+          <span class="card-title"
+            ><i class="fa-solid fa-grip"></i> Product Cards View</span
+          >
+          <span class="card-link"
+            >View All 148 <i class="fa-solid fa-arrow-right"></i
+          ></span>
+        </div>
+        <div class="product-cards-grid">
+          <div class="product-card">
+            <div class="product-card-img">
+              🛢️<span class="badge out-stock stock-badge">Out of Stock</span>
+            </div>
+            <div class="product-card-body">
+              <div class="pc-name">20L Dispenser Drum</div>
+              <div class="pc-cat">Drums &amp; Containers</div>
+              <div class="pc-footer">
+                <span class="pc-qty">4 units left</span>
+                <span class="pc-price">₦1,800</span>
+              </div>
+              <div class="pc-actions">
+                <button
+                  class="pc-btn primary"
+                  onclick="toggleModal('restock-modal')"
+                >
+                  Restock
+                </button>
+                <button class="pc-btn secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-img">
+              💧<span class="badge low-stock stock-badge">Low Stock</span>
+            </div>
+            <div class="product-card-body">
+              <div class="pc-name">Pure Water Sachet</div>
+              <div class="pc-cat">Sachets</div>
+              <div class="pc-footer">
+                <span class="pc-qty">11 cartons left</span>
+                <span class="pc-price">₦350</span>
+              </div>
+              <div class="pc-actions">
+                <button
+                  class="pc-btn primary"
+                  onclick="toggleModal('restock-modal')"
+                >
+                  Restock
+                </button>
+                <button class="pc-btn secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-img">
+              🍶<span class="badge in-stock stock-badge">In Stock</span>
+            </div>
+            <div class="product-card-body">
+              <div class="pc-name">1.5L Bottled Water</div>
+              <div class="pc-cat">Bottles</div>
+              <div class="pc-footer">
+                <span class="pc-qty">68 crates</span>
+                <span class="pc-price">₦2,200</span>
+              </div>
+              <div class="pc-actions">
+                <button class="pc-btn primary">Manage</button>
+                <button class="pc-btn secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-card-img">
+              🚰<span class="badge in-stock stock-badge">In Stock</span>
+            </div>
+            <div class="product-card-body">
+              <div class="pc-name">Water Dispenser (Table)</div>
+              <div class="pc-cat">Dispensers</div>
+              <div class="pc-footer">
+                <span class="pc-qty">43 units</span>
+                <span class="pc-price">₦24,500</span>
+              </div>
+              <div class="pc-actions">
+                <button class="pc-btn primary">Manage</button>
+                <button class="pc-btn secondary">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /main-wrap -->
+
+    <!-- ===================== MODALS ===================== -->
+
+    <!-- ADD PRODUCT MODAL -->
+    <div class="modal-overlay" id="add-product-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title"
+            ><i
+              class="fa-solid fa-plus"
+              style="color: var(--blue-500); margin-right: 8px"
+            ></i
+            >Add New Product</span
+          >
+          <button
+            class="modal-close"
+            onclick="toggleModal('add-product-modal')"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <label class="form-label">Product Name</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="e.g. 20L Dispenser Drum"
+            />
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Category</label>
+              <select class="form-input filter-select" style="width: 100%">
+                <option>Drums &amp; Containers</option>
+                <option>Bottles</option>
+                <option>Sachets</option>
+                <option>Dispensers</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">SKU</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="e.g. TOD-007"
+              />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Quantity</label>
+              <input type="number" class="form-input" placeholder="0" />
+            </div>
+            <div class="form-row">
+              <label class="form-label">Price (₦)</label>
+              <input type="number" class="form-input" placeholder="0.00" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Minimum Stock Level</label>
+            <input type="number" class="form-input" placeholder="e.g. 30" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-ghost"
+            onclick="toggleModal('add-product-modal')"
+          >
+            Cancel
+          </button>
+          <button class="btn btn-primary">
+            <i class="fa-solid fa-check"></i> Add Product
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTOCK MODAL -->
+    <div class="modal-overlay" id="restock-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title"
+            ><i
+              class="fa-solid fa-arrow-up-from-bracket"
+              style="color: var(--success); margin-right: 8px"
+            ></i
+            >Restock Product</span
+          >
+          <button class="modal-close" onclick="toggleModal('restock-modal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <label class="form-label">Select Product</label>
+            <select class="form-input filter-select" style="width: 100%">
+              <option>20L Dispenser Drum (4 units)</option>
+              <option>Pure Water Sachet (11 cartons)</option>
+              <option>10L Jerry Can (0 units)</option>
+            </select>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Qty to Add</label>
+              <input type="number" class="form-input" placeholder="0" />
+            </div>
+            <div class="form-row">
+              <label class="form-label">Supplier</label>
+              <input
+                type="text"
+                class="form-input"
+                placeholder="Supplier name"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Notes (optional)</label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="e.g. Emergency restock"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="toggleModal('restock-modal')">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            style="
+              background: var(--success);
+              box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+            "
+          >
+            <i class="fa-solid fa-arrow-up"></i> Confirm Restock
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT STOCK MODAL -->
+    <div class="modal-overlay" id="edit-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title"
+            ><i
+              class="fa-solid fa-pen"
+              style="color: var(--blue-500); margin-right: 8px"
+            ></i
+            >Edit Product</span
+          >
+          <button class="modal-close" onclick="toggleModal('edit-modal')">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-input" value="20L Dispenser Drum" />
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Current Qty</label>
+              <input type="number" class="form-input" value="4" />
+            </div>
+            <div class="form-row">
+              <label class="form-label">Price (₦)</label>
+              <input type="number" class="form-input" value="1800" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label class="form-label">Category</label>
+              <select class="form-input filter-select" style="width: 100%">
+                <option selected>Drums &amp; Containers</option>
+                <option>Bottles</option>
+                <option>Sachets</option>
+                <option>Dispensers</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label class="form-label">Min Stock Level</label>
+              <input type="number" class="form-input" value="30" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="toggleModal('edit-modal')">
+            Cancel
+          </button>
+          <button class="btn btn-primary">
+            <i class="fa-solid fa-check"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== JS ===================== -->
+    <script>
+      // DATE
+      const d = new Date();
+      const days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      document.getElementById("today-date").textContent =
+        `${d.getDate()} ${months[d.getMonth()]}`;
+      document.getElementById("today-day").textContent =
+        `${days[d.getDay()]}, ${d.getFullYear()}`;
+
+      // MODALS
+      function toggleModal(id) {
+        const el = document.getElementById(id);
+        el.classList.toggle("active");
+      }
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) overlay.classList.remove("active");
+        });
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          document
+            .querySelectorAll(".modal-overlay.active")
+            .forEach((m) => m.classList.remove("active"));
+        }
+      });
+
+      // TABLE FILTER
+      function filterTable() {
+        const search = document
+          .getElementById("tableSearch")
+          .value.toLowerCase();
+        const cat = document.getElementById("catFilter").value.toLowerCase();
+        const status = document
+          .getElementById("statusFilter")
+          .value.toLowerCase();
+        const rows = document.querySelectorAll("#productTable tbody tr");
+        rows.forEach((row) => {
+          const name = row.cells[0].textContent.toLowerCase();
+          const rowCat = row.cells[1].textContent.toLowerCase();
+          const rowStatus = row.cells[3].textContent.toLowerCase();
+          const matchSearch = !search || name.includes(search);
+          const matchCat = !cat || rowCat.includes(cat);
+          const matchStatus = !status || rowStatus.includes(status);
+          row.style.display =
+            matchSearch && matchCat && matchStatus ? "" : "none";
+        });
+      }
+    </script>
   </body>
 </html>
