@@ -28,12 +28,10 @@ const updateStockBtn = document.querySelector(".btn-update-stock");
 const cancelUpdateBtn = document.querySelector(".btn-cancel-update");
 const cancelEditBtn = document.querySelector(".btn-cancel-edit");
 
-// ── Auth listeners ──
 document.querySelector(".btn-primary").addEventListener("click", handleLogin);
 document.querySelector(".guest-btn").addEventListener("click", guestAccount);
 document.querySelector(".btn-logout").addEventListener("click", handleLogout);
 
-// ── persons ──
 const waters = [
   {
     image: "",
@@ -252,7 +250,6 @@ async function saveToStorage() {
     });
 
     await batch.commit();
-    console.log("✅ all 16 saved in one batch!");
   } catch (error) {
     console.error("❌ batch failed:", error);
   }
@@ -286,7 +283,6 @@ function closeEditModal() {
 
 // ── Render ──
 function generateHTML(isGuest = false) {
-  console.log("product is loaded");
   let productHTML = "";
   products.forEach((bottleWater) => {
     const stock = getStockStatus(bottleWater.quantity);

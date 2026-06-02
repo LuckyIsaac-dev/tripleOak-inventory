@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* ===== DASHBOARD HERO ===== */
+
+      .dashboard-hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+
+      .hero-label {
+        color: var(--blue-500);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .dashboard-hero h1 {
+        font-size: 2rem;
+        color: var(--blue-950);
+        margin-bottom: 10px;
+      }
+
+      .hero-text {
+        color: var(--gray-500);
+        max-width: 600px;
+        line-height: 1.6;
+      }
+
+      .hero-right {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .hero-meta-card {
+        background: white;
+        border: 1px solid var(--gray-100);
+        border-radius: var(--radius-md);
+        padding: 16px 18px;
+        min-width: 150px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .hero-meta-card span {
+        display: block;
+        color: var(--gray-400);
+        font-size: 0.75rem;
+        margin-bottom: 6px;
+      }
+
+      .hero-meta-card strong {
+        color: var(--blue-900);
+        font-size: 1rem;
+      }
+
+      /* ===== ALERT ===== */
+
+      .dashboard-alert {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: #fff8e8;
+        border: 1px solid #fde7b0;
+        color: #9a6700;
+        padding: 14px 18px;
+        border-radius: var(--radius-md);
+        margin-bottom: 24px;
+      }
+
+      /* ===== SUMMARY GRID ===== */
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+
+      .summary-card {
+        background: white;
+        border-radius: var(--radius-md);
+        padding: 24px;
+        border: 1px solid var(--gray-100);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: var(--shadow-sm);
+        transition: 0.25s ease;
+      }
+
+      .summary-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .summary-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+      }
+
+      .summary-icon.blue {
+        background: var(--blue-50);
+      }
+
+      .summary-icon.green {
+        background: #ecfdf5;
+      }
+
+      .summary-icon.orange {
+        background: #fff7ed;
+      }
+
+      .summary-icon.red {
+        background: #fff1f2;
+      }
+
+      .summary-content p {
+        color: var(--gray-500);
+        margin-bottom: 6px;
+      }
+
+      .summary-content h2 {
+        color: var(--blue-900);
+        font-size: 1.8rem;
+      }
+
+      .summary-content span {
+        color: var(--gray-400);
+        font-size: 0.8rem;
+      }
+
+      /* ===== QUICK ACTIONS ===== */
+
+      .quick-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+
+      .quick-btn {
+        background: white;
+        border: 1px solid var(--gray-100);
+        border-radius: 12px;
+        padding: 12px 18px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 600;
+        transition: 0.2s ease;
+      }
+
+      .quick-btn:hover {
+        background: var(--blue-500);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* ===== MAIN GRID ===== */
+
+      .main-dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 20px;
+      }
+
+      .dashboard-left,
+      .dashboard-right {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* ===== PANEL ===== */
+
+      .dashboard-panel {
+        background: white;
+        border-radius: var(--radius-md);
+        padding: 22px;
+        border: 1px solid var(--gray-100);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .panel-header h3 {
+        color: var(--blue-900);
+        font-size: 1rem;
+      }
+
+      /* ===== HEALTH ===== */
+
+      .health-progress {
+        width: 100%;
+        height: 10px;
+        background: var(--gray-100);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 18px;
+      }
+
+      .health-bar {
+        width: 82%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--blue-500), var(--accent));
+      }
+
+      .health-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .health-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .dot.green {
+        background: var(--success);
+      }
+
+      .dot.orange {
+        background: var(--warning);
+      }
+
+      .dot.red {
+        background: var(--danger);
+      }
+
+      /* ===== TABLE ===== */
+
+      .table-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .table-actions input {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--gray-200);
+        outline: none;
+      }
+
+      .table-actions button {
+        padding: 10px 16px;
+        border: none;
+        background: var(--blue-500);
+        color: white;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      .inventory-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .inventory-table th {
+        text-align: left;
+        padding-bottom: 16px;
+        color: var(--gray-400);
+        font-size: 0.8rem;
+      }
+
+      .inventory-table td {
+        padding: 18px 0;
+        border-top: 1px solid var(--gray-100);
+      }
+
+      .status {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .status.success {
+        background: #ecfdf5;
+        color: #047857;
+      }
+
+      .status.warning {
+        background: #fff7ed;
+        color: #c2410c;
+      }
+
+      .status.danger {
+        background: #fff1f2;
+        color: #be123c;
+      }
+
+      /* ===== CHART ===== */
+
+      .chart-placeholder {
+        height: 260px;
+        border-radius: 14px;
+        background: var(--gray-50);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gray-400);
+      }
+
+      /* ===== ACTIVITY ===== */
+
+      .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .activity-item {
+        display: flex;
+        gap: 12px;
+      }
+
+      .activity-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .activity-icon.blue {
+        background: var(--blue-50);
+      }
+
+      .activity-icon.green {
+        background: #ecfdf5;
+      }
+
+      .activity-icon.red {
+        background: #fff1f2;
+      }
+
+      /* ===== STAFF ===== */
+
+      .staff-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .staff-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .staff-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--blue-100);
+        color: var(--blue-700);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+
+      .staff-info p {
+        color: var(--gray-400);
+        font-size: 0.8rem;
+      }
+
+      /* ===== LOW STOCK ===== */
+
+      .low-stock-panel {
+        border: 1px solid #ffd5d5;
+      }
+
+      .low-stock-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 14px 0;
+        border-top: 1px solid var(--gray-100);
+      }
+
+      .low-stock-item span {
+        color: var(--danger);
+        font-weight: 700;
+      }
+
+      /* ===== RESPONSIVE ===== */
+
+      @media (max-width: 1000px) {
+        .main-dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .dashboard-hero {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-right {
+          width: 100%;
+        }
+
+        .hero-meta-card {
+          flex: 1;
+        }
+
+        .table-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== DASHBOARD ROOT ===== -->
+    <main class="dashboard-root">
+      <!-- ===== WELCOME HEADER ===== -->
+      <section class="dashboard-hero">
+        <div class="hero-left">
+          <p class="hero-label">Inventory Overview</p>
+          <h1>Good Morning, Admin 👋</h1>
+          <p class="hero-text">
+            Monitor inventory, track staff activity, and manage stock updates in
+            real time.
+          </p>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-meta-card">
+            <span>Last Updated</span>
+            <strong>2 mins ago</strong>
+          </div>
+
+          <div class="hero-meta-card">
+            <span>Today's Activity</span>
+            <strong>24 Updates</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ALERT BANNER ===== -->
+      <div class="dashboard-alert">
+        <span>⚠</span>
+        <p>
+          3 products are currently below minimum stock threshold and need
+          restocking.
+        </p>
+      </div>
+
+      <!-- ===== SUMMARY CARDS ===== -->
+      <section class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-icon blue">📦</div>
+
+          <div class="summary-content">
+            <p>Total Products</p>
+            <h2>24</h2>
+            <span>+3 added this week</span>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon green">📈</div>
+
+          <div class="summary-content">
+            <p>Total Units</p>
+            <h2>3,240</h2>
+            <span>Healthy inventory</span>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon orange">⚠</div>
+
+          <div class="summary-content">
+            <p>Low Stock</p>
+            <h2>4</h2>
+            <span>Needs attention</span>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon red">⛔</div>
+
+          <div class="summary-content">
+            <p>Out Of Stock</p>
+            <h2>2</h2>
+            <span>Restock immediately</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== QUICK ACTIONS ===== -->
+      <section class="quick-actions">
+        <button class="quick-btn">➕ Add Product</button>
+
+        <button class="quick-btn">🔄 Restock Product</button>
+
+        <button class="quick-btn">📤 Export Report</button>
+
+        <button class="quick-btn">👥 Add Staff</button>
+      </section>
+
+      <!-- ===== MAIN GRID ===== -->
+      <section class="main-dashboard-grid">
+        <!-- ===== LEFT SIDE ===== -->
+        <div class="dashboard-left">
+          <!-- ===== INVENTORY HEALTH ===== -->
+          <div class="dashboard-panel">
+            <div class="panel-header">
+              <h3>Inventory Health</h3>
+              <span>82% Healthy</span>
+            </div>
+
+            <div class="health-progress">
+              <div class="health-bar"></div>
+            </div>
+
+            <div class="health-stats">
+              <div class="health-item">
+                <span class="dot green"></span>
+                <p>18 Healthy Products</p>
+              </div>
+
+              <div class="health-item">
+                <span class="dot orange"></span>
+                <p>4 Low Stock</p>
+              </div>
+
+              <div class="health-item">
+                <span class="dot red"></span>
+                <p>2 Critical</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== TABLE PANEL ===== -->
+          <div class="dashboard-panel">
+            <div class="panel-header">
+              <h3>Inventory Table</h3>
+
+              <div class="table-actions">
+                <input type="text" placeholder="Search products..." />
+                <button>Filter</button>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="inventory-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Updated</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Eva Water 75cl</td>
+                    <td>320</td>
+                    <td>
+                      <span class="status success"> In Stock </span>
+                    </td>
+                    <td>₦4,500</td>
+                    <td>2 mins ago</td>
+                  </tr>
+
+                  <tr>
+                    <td>CWAY 750ml</td>
+                    <td>12</td>
+                    <td>
+                      <span class="status warning"> Low Stock </span>
+                    </td>
+                    <td>₦5,200</td>
+                    <td>10 mins ago</td>
+                  </tr>
+
+                  <tr>
+                    <td>Refill Bottle</td>
+                    <td>0</td>
+                    <td>
+                      <span class="status danger"> Out Of Stock </span>
+                    </td>
+                    <td>₦2,000</td>
+                    <td>1 hour ago</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ===== CHART PLACEHOLDER ===== -->
+          <div class="dashboard-panel">
+            <div class="panel-header">
+              <h3>Weekly Inventory Trends</h3>
+            </div>
+
+            <div class="chart-placeholder">
+              <p>Chart Placeholder</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== RIGHT SIDE ===== -->
+        <div class="dashboard-right">
+          <!-- ===== RECENT ACTIVITY ===== -->
+          <div class="dashboard-panel">
+            <div class="panel-header">
+              <h3>Recent Activity</h3>
+            </div>
+
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon blue">📦</div>
+
+                <div>
+                  <strong>Admin updated Eva Water stock</strong>
+                  <p>2 mins ago</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon green">✅</div>
+
+                <div>
+                  <strong>John restocked CWAY bottles</strong>
+                  <p>10 mins ago</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon red">⚠</div>
+
+                <div>
+                  <strong>Low stock alert triggered</strong>
+                  <p>30 mins ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== STAFF PERFORMANCE ===== -->
+          <div class="dashboard-panel">
+            <div class="panel-header">
+              <h3>Staff Performance</h3>
+            </div>
+
+            <div class="staff-list">
+              <div class="staff-item">
+                <div class="staff-avatar">J</div>
+
+                <div class="staff-info">
+                  <strong>John</strong>
+                  <p>23 actions today</p>
+                </div>
+              </div>
+
+              <div class="staff-item">
+                <div class="staff-avatar">S</div>
+
+                <div class="staff-info">
+                  <strong>Sarah</strong>
+                  <p>18 actions today</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== LOW STOCK PANEL ===== -->
+          <div class="dashboard-panel low-stock-panel">
+            <div class="panel-header">
+              <h3>Critical Alerts</h3>
+            </div>
+
+            <div class="low-stock-list">
+              <div class="low-stock-item">
+                <p>CWAY 750ml</p>
+                <span>12 left</span>
+              </div>
+
+              <div class="low-stock-item">
+                <p>Refill Bottle</p>
+                <span>0 left</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

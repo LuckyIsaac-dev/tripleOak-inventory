@@ -961,7 +961,7 @@ td.admin-only {
 #dashboard-page {
   display: none;
 }
-
+/* 
 .topbar {
   position: sticky;
   top: 0;
@@ -973,7 +973,7 @@ td.admin-only {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
+} */
 
 .topbar-left {
   display: flex;
