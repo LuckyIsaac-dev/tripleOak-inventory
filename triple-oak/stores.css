@@ -369,7 +369,7 @@ body {
 .user-name {
   font-size: 14px;
   font-weight: 500;
-  color: var(--gray-700);
+  color: var(--blue-700);
 }
 
 .btn-logout {
@@ -378,7 +378,7 @@ body {
   font-weight: 500;
   padding: 7px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--gray-500);
   background: var(--white);
   color: var(--gray-600);
   cursor: pointer;
@@ -387,10 +387,10 @@ body {
     color 0.15s;
 }
 
-.btn-logout:hover {
+/* .btn-logout:hover {
   background: var(--gray-100);
   color: var(--gray-900);
-}
+} */
 
 .topbar-right {
   display: flex;
@@ -427,23 +427,10 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
-.btn-logout {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.7);
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.8rem;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-
 .btn-logout:hover {
-  background: rgba(255, 255, 255, 0.14);
-  color: white;
+  border: 1px solid var(--blue-500);
+  background: var(--blue-500);
+  color: var(--white);
 }
 
 .btn-add {

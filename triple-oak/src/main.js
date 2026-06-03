@@ -66,7 +66,7 @@ const waters = [
     brand: "CWAY",
     name: "Cway 750ml",
     price: 3600,
-    quantity: 0,
+    quantity: 120,
     type: "bottle water",
     id: "4",
   },
@@ -147,7 +147,7 @@ const waters = [
     brand: "CWAY",
     name: "Cway Refill",
     price: 3600,
-    quantity: 0,
+    quantity: 50,
     type: "refill",
     id: "13",
   },
@@ -165,7 +165,7 @@ const waters = [
     brand: "JASMINE",
     name: "Jasmine 75cl",
     price: 3600,
-    quantity: 0,
+    quantity: 60,
     type: "bottle water",
     id: "15",
   },
@@ -174,7 +174,7 @@ const waters = [
     brand: "BRACO",
     name: "Braco 100cl",
     price: 3600,
-    quantity: 0,
+    quantity: 80,
     type: "bottle water",
     id: "16",
   },
@@ -260,19 +260,39 @@ function getStockStatus(quantity) {
 }
 
 function alertPill() {
+  let found = false;
+  let newValue;
   let outOfStock = 0;
   let lowStock = 0;
-
+  let inStock = 0;
+  let totalQuantity = 0;
+  let totalProduct = [];
   let stockValue = 0;
+  let brand1 = "";
   products.forEach((product) => {
+    //
+    brand1 = product.brand;
+
+    totalQuantity += product.quantity;
     stockValue += product.price * product.quantity;
+
     if (product.quantity === 0) {
       outOfStock++;
     } else if (product.quantity <= 10) {
       lowStock++;
+    } else {
+      inStock++;
     }
+
+    //
+
+    //
   });
-  console.log(stockValue);
+
+  console.log(totalProduct);
+  document.querySelector(".total-quantity").innerHTML = totalQuantity;
+  document.querySelector(".in-stock").innerHTML = inStock;
+  document.querySelector(".stock-value").innerHTML += `${stockValue}K`;
   document.querySelector(".low-stock").innerHTML = lowStock;
   document.querySelector(".out-of-stock").innerHTML = outOfStock;
 
