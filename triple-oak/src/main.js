@@ -27,10 +27,11 @@ const productGrid = document.querySelector(".products-grid");
 const updateStockBtn = document.querySelector(".btn-update-stock");
 const cancelUpdateBtn = document.querySelector(".btn-cancel-update");
 const cancelEditBtn = document.querySelector(".btn-cancel-edit");
-
 document.querySelector(".btn-primary").addEventListener("click", handleLogin);
 document.querySelector(".guest-btn").addEventListener("click", guestAccount);
 document.querySelector(".btn-logout").addEventListener("click", handleLogout);
+const criticalAlert = document.querySelector(".critical");
+const warnAlert = document.querySelector(".warn");
 
 const waters = [
   {
@@ -47,7 +48,7 @@ const waters = [
     brand: "Eva",
     name: "Eva 150cl",
     price: 3600,
-    quantity: 10,
+    quantity: 0,
     type: "bottle water",
     id: "2",
   },
@@ -155,7 +156,7 @@ const waters = [
     brand: "BIMO",
     name: "Bimo Refill",
     price: 3600,
-    quantity: 0,
+    quantity: 20,
     type: "refill",
     id: "14",
   },
@@ -215,18 +216,15 @@ async function guestAccount() {
 
 async function loadProducts(isGuest) {
   const snapshot = await getDocs(collection(db, "product"));
-  console.log("snapshot empty", snapshot.empty);
-  console.log("docs", snapshot.docs);
+
   if (snapshot.empty) {
     products = waters.map((w) => new Water(w));
-    console.log("products seeded", products);
+    alertPill();
     generateHTML(isGuest);
     await saveToStorage();
   } else {
     products = snapshot.docs.map((d) => new Water(d.data()));
 
-    console.log("products from firestore", products);
-    console.log("total product", products.length);
     generateHTML(isGuest);
   }
 }
@@ -261,8 +259,41 @@ function getStockStatus(quantity) {
   return { label: "In Stock", class: "in-stock" };
 }
 
+function alertPill() {
+  let outOfStock = 0;
+  let lowStock = 0;
+
+  let stockValue = 0;
+  products.forEach((product) => {
+    stockValue += product.price * product.quantity;
+    if (product.quantity === 0) {
+      outOfStock++;
+    } else if (product.quantity <= 10) {
+      lowStock++;
+    }
+  });
+  console.log(stockValue);
+  document.querySelector(".low-stock").innerHTML = lowStock;
+  document.querySelector(".out-of-stock").innerHTML = outOfStock;
+
+  if (lowStock === 0) {
+    return;
+  } else {
+    warnAlert.style.display = "flex";
+    warnAlert.innerHTML += ` ${lowStock}  products reach threshold by end of week`;
+  }
+
+  if (outOfStock === 0) {
+    return;
+  } else {
+    criticalAlert.style.display = "flex";
+    criticalAlert.innerHTML += ` ${outOfStock}  products critically low — restock urgently`;
+  }
+}
+
 function quantityWarning(quantity) {
   if (quantity === 0) return "empty";
+
   if (quantity <= 10) return "low";
   return "";
 }
@@ -363,7 +394,9 @@ function editStock(productId) {
       const value = Number(editQtyInput.value);
       const product = getProduct(productId);
       product.editQuantity(value, productId);
+
       editModal.close();
+      alertPill();
       editQtyInput.value = "";
       generateHTML();
       saveToStorage();
@@ -380,6 +413,7 @@ function updateStock(productId) {
       const product = getProduct(productId);
       product.updateQuantity(newQuantity, productId);
       updateModal.close();
+      alertPill();
       generateHTML();
       updateQtyInput.value = "";
       saveToStorage();

@@ -9,6 +9,10 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="dashboard.css" />
     <link rel="stylesheet" href="stores.css" />
     <title>store</title>
@@ -71,6 +75,7 @@
         </div>
       </div>
     </div>
+
     <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
       <div class="modal-header">
         <div>
@@ -144,6 +149,7 @@
         <button class="btn-save btn-update-stock">Update Quantity</button>
       </div>
     </dialog>
+
     <nav class="topbar">
       <div class="topbar-left">
         <div class="topbar-logo">🛒</div>
@@ -157,6 +163,7 @@
         <button class="btn-logout">Sign Out</button>
       </div>
     </nav>
+
     <div class="main-wrap">
       <section class="welcome-section anim">
         <div class="welcome-left">
@@ -176,6 +183,14 @@
           <div class="date-sub" id="today-day">Wednesday, 2026</div>
         </div>
       </section>
+      <div style="margin: 0" class="alert-pills">
+        <div class="alert-pill critical">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="alert-pill warn">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+      </div>
 
       <div class="stat-grid">
         <div class="stat-card blue anim anim-d1">
@@ -206,7 +221,7 @@
           <div class="stat-icon">
             <i class="fa-solid fa-triangle-exclamation"></i>
           </div>
-          <div class="stat-num">23</div>
+          <div class="stat-num low-stock">0</div>
           <div class="stat-label">Low Stock</div>
           <div class="stat-trend down">
             <i class="fa-solid fa-arrow-trend-down"></i> 5 critical items
@@ -214,7 +229,7 @@
         </div>
         <div class="stat-card red anim anim-d5">
           <div class="stat-icon"><i class="fa-solid fa-ban"></i></div>
-          <div class="stat-num">13</div>
+          <div class="stat-num out-of-stock">13</div>
           <div class="stat-label">Out of Stock</div>
           <div class="stat-trend neutral">
             <i class="fa-solid fa-minus"></i> Needs restocking
@@ -229,6 +244,7 @@
           </div>
         </div>
       </div>
+
       <main class="products-grid"></main>
     </div>
 
