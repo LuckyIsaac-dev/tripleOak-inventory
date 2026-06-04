@@ -225,7 +225,7 @@ async function loadProducts(isGuest) {
     await saveToStorage();
   } else {
     products = snapshot.docs.map((d) => new Water(d.data()));
-
+    alertPill();
     generateHTML(isGuest);
   }
 }
@@ -273,7 +273,6 @@ function alertPill() {
 
     if (!brandName.includes(product.brand)) {
       brandName.push(product.brand);
-      // return;
     }
     totalQuantity += product.quantity;
     stockValue += product.price * product.quantity;
@@ -285,16 +284,12 @@ function alertPill() {
     } else {
       inStock++;
     }
-
-    //
-
-    //
   });
 
   document.querySelector(".total-product").innerHTML = brandName.length;
   document.querySelector(".total-quantity").innerHTML = totalQuantity;
   document.querySelector(".in-stock").innerHTML = inStock;
-  document.querySelector(".stock-value").innerHTML += `${stockValue}K`;
+  document.querySelector(".stock-value").innerHTML = `${stockValue}K`;
   document.querySelector(".low-stock").innerHTML = lowStock;
   document.querySelector(".out-of-stock").innerHTML = outOfStock;
 
