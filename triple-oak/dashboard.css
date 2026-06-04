@@ -1270,10 +1270,23 @@ td {
     flex-direction: column;
     gap: 16px;
     text-align: center;
+    padding: 15px;
   }
-  .welcome-meta {
+  .meta-pill {
+    padding: 0;
+    display: flex;
+  }
+  .welcome-meta .meta-pill {
+    padding: 2px 4px;
+    font-size: 12px;
+  }
+  .welcome-right .big-date {
+    font-size: 25px;
+  }
+
+  /* .welcome-meta {
     justify-content: center;
-  }
+  } */
   .welcome-right {
     text-align: center;
   }
@@ -1286,10 +1299,7 @@ td {
   .table-wrap {
     overflow-x: auto;
   }
-  .modal {
-    max-width: 90%;
-    margin: 0 16px;
-  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
