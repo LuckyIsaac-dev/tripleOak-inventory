@@ -352,6 +352,9 @@ body {
   border-radius: 10px;
   background-color: var(--gray-50);
 }
+.search-input:focus {
+  background-color: white;
+}
 .user-badge {
   display: flex;
   align-items: center;

@@ -32,6 +32,7 @@ document.querySelector(".guest-btn").addEventListener("click", guestAccount);
 document.querySelector(".btn-logout").addEventListener("click", handleLogout);
 const criticalAlert = document.querySelector(".critical");
 const warnAlert = document.querySelector(".warn");
+const searchInput = document.querySelector(".search-input");
 
 const waters = [
   {
@@ -222,11 +223,13 @@ async function loadProducts(isGuest) {
     alertPill();
 
     generateHTML(isGuest);
+    renderSearchResult(isGuest);
     await saveToStorage();
   } else {
     products = snapshot.docs.map((d) => new Water(d.data()));
     alertPill();
     generateHTML(isGuest);
+    renderSearchResult(isGuest);
   }
 }
 
@@ -289,7 +292,8 @@ function alertPill() {
   document.querySelector(".total-product").innerHTML = brandName.length;
   document.querySelector(".total-quantity").innerHTML = totalQuantity;
   document.querySelector(".in-stock").innerHTML = inStock;
-  document.querySelector(".stock-value").innerHTML = `${stockValue}K`;
+  document.querySelector(".stock-value").innerHTML =
+    `${formatValue(stockValue)}`;
   document.querySelector(".low-stock").innerHTML = lowStock;
   document.querySelector(".out-of-stock").innerHTML = outOfStock;
 
@@ -306,6 +310,65 @@ function alertPill() {
     criticalAlert.style.display = "flex";
     criticalAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${outOfStock}  products critically low — restock urgently`;
   }
+}
+
+function renderSearchResult(isGuest = false) {
+  let searchResult = [];
+
+  searchInput.addEventListener("input", (e) => {
+    let userInput = searchInput.value.toLowerCase().trim();
+    searchResult = products.filter((product) => {
+      let productBrand = product.brand.toLowerCase();
+      return productBrand.includes(userInput);
+    });
+    if (searchResult.length === 0) {
+    }
+
+    let productHTML = "";
+    searchResult.forEach((bottleWater) => {
+      const stock = getStockStatus(bottleWater.quantity);
+      const quantity = quantityWarning(bottleWater.quantity);
+      productHTML += `
+      <div class="product-card" style="animation-delay: 0s">
+        <div class="card-image-wrap">
+          <img
+            src="${bottleWater.image}"
+            alt="${bottleWater.name}"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            style="display: none"
+          />
+          <div class="placeholder-img" style="display: flex">💧</div>
+          <span class="stock-badge ${stock.class}">${stock.label}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-brand">${bottleWater.brand}</div>
+          <div class="card-name">${bottleWater.name}</div>
+          <div class="card-stats">
+            <div class="card-stat">
+              <div class="stat-label">Quantity</div>
+              <div class="stat-value ${quantity}">${bottleWater.quantity}</div>
+            </div>
+            <div class="card-stat">
+              <div class="stat-label">Price / Pack</div>
+              <div class="stat-value">₦${bottleWater.price.toLocaleString()}</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            ${
+              isGuest
+                ? `<p class="guest-account"> View only</p>`
+                : `
+              <button class="btn-card btn-edit" data-product-id="${bottleWater.id}">Edit</button>
+              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Restock</button>
+            `
+            }
+          </div>
+        </div>
+      </div>`;
+    });
+    document.querySelector(".products-grid").innerHTML = productHTML;
+    // console.log(productHTML);
+  });
 }
 
 function quantityWarning(quantity) {
@@ -439,12 +502,12 @@ function updateStock(productId) {
   );
 }
 
-// function formatValue(value) {
-//   if (value >= 1_000_000) {
-//     return `₦${(value / 1_000_000).toFixed(1)}M`;
-//   } else if (value >= 1_000) {
-//     return `₦${(value / 1_000).toFixed(1)}K`;
-//   } else {
-//     return `₦${value.toLocaleString()}`;
-//   }
-// }
+function formatValue(value) {
+  if (value >= 1_000_000) {
+    return `₦${(value / 1_000_000).toFixed(1)}M`;
+  } else if (value >= 1_000) {
+    return `₦${(value / 1_000).toFixed(1)}K`;
+  } else {
+    return `₦${value.toLocaleString()}`;
+  }
+}
