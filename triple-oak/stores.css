@@ -346,7 +346,12 @@ body {
   align-items: center;
   gap: 12px;
 }
-
+.search-input {
+  padding: 10px;
+  border: 1px solid var(--gray-100);
+  border-radius: 10px;
+  background-color: var(--gray-50);
+}
 .user-badge {
   display: flex;
   align-items: center;

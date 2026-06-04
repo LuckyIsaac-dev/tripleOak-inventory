@@ -1270,7 +1270,7 @@ td {
     flex-direction: column;
     gap: 16px;
     text-align: center;
-    padding: 15px;
+    padding: 10px;
   }
   .meta-pill {
     padding: 0;
@@ -1313,6 +1313,28 @@ td {
   }
   .qa-grid {
     grid-template-columns: 1fr 1fr;
+  }
+  .welcome-left h1 {
+    font-size: 15px;
+  }
+  .welcome-left .sub {
+    font-size: 10px;
+  }
+  .welcome-section {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 18px;
+  }
+  .welcome-meta {
+    justify-content: center;
+  }
+  .welcome-meta .meta-pill {
+    padding: 2px 4px;
+    font-size: 8px;
+  }
+  .welcome-right .big-date {
+    font-size: 20px;
   }
 }
 

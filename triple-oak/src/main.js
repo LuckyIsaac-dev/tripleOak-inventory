@@ -297,16 +297,15 @@ function alertPill() {
     return;
   } else {
     warnAlert.style.display = "flex";
-    warnAlert.innerHTML += ` ${lowStock}  products reach threshold by end of week`;
+    warnAlert.innerHTML = `<i class="fa-solid fa-clock"></i> ${lowStock}  products reach threshold by end of week`;
   }
 
   if (outOfStock === 0) {
     return;
   } else {
     criticalAlert.style.display = "flex";
-    criticalAlert.innerHTML += ` ${outOfStock}  products critically low — restock urgently`;
+    criticalAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${outOfStock}  products critically low — restock urgently`;
   }
-  console.log(brandName);
 }
 
 function quantityWarning(quantity) {
@@ -439,3 +438,13 @@ function updateStock(productId) {
     { once: true },
   );
 }
+
+// function formatValue(value) {
+//   if (value >= 1_000_000) {
+//     return `₦${(value / 1_000_000).toFixed(1)}M`;
+//   } else if (value >= 1_000) {
+//     return `₦${(value / 1_000).toFixed(1)}K`;
+//   } else {
+//     return `₦${value.toLocaleString()}`;
+//   }
+// }
