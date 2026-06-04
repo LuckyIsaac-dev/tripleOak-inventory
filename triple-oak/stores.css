@@ -351,6 +351,9 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 0.5rem 0.8rem;
+  background-color: var(--gray-50);
+  border-radius: 10px;
 }
 
 .user-avatar {
@@ -369,7 +372,7 @@ body {
 .user-name {
   font-size: 14px;
   font-weight: 500;
-  color: var(--blue-700);
+  color: var(--gray-700);
 }
 
 .btn-logout {
@@ -387,27 +390,6 @@ body {
     color 0.15s;
 }
 
-/* .btn-logout:hover {
-  background: var(--gray-100);
-  color: var(--gray-900);
-} */
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.user-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 6px 14px 6px 8px;
-  border-radius: 100px;
-}
-
 .user-avatar {
   width: 28px;
   height: 28px;
@@ -421,11 +403,11 @@ body {
   color: white;
 }
 
-.user-name {
+/* .user-name {
   font-size: 0.85rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.85);
-}
+} */
 
 .btn-logout:hover {
   border: 1px solid var(--blue-500);
