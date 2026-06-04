@@ -174,7 +174,7 @@ const waters = [
     brand: "BRACO",
     name: "Braco 100cl",
     price: 3600,
-    quantity: 80,
+    quantity: 100,
     type: "bottle water",
     id: "16",
   },
