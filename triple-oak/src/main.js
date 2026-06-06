@@ -323,6 +323,8 @@ function renderSearchResult(isGuest = false) {
     });
     if (searchResult.length === 0) {
     }
+    console.log(userInput);
+    console.log(searchResult);
 
     let productHTML = "";
     searchResult.forEach((bottleWater) => {
