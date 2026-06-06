@@ -54,6 +54,7 @@ body {
   min-height: 100vh;
   font-size: 14px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;
@@ -239,11 +240,13 @@ select {
 }
 
 /* ===================== MAIN LAYOUT ===================== */
+
 .main-wrap {
+  display: none;
   max-width: 1440px;
   margin: 0 auto;
   padding: 28px 28px 60px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 28px;
 }
@@ -1315,22 +1318,22 @@ td {
     grid-template-columns: 1fr 1fr;
   }
   .welcome-left h1 {
-    font-size: 15px;
+    font-size: 20px;
   }
   .welcome-left .sub {
     font-size: 10px;
   }
   .welcome-section {
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
     text-align: center;
-    padding: 18px;
+    padding: 10px;
   }
   .welcome-meta {
     justify-content: center;
   }
   .welcome-meta .meta-pill {
-    padding: 2px 4px;
+    padding: 4px 8px;
     font-size: 8px;
   }
   .welcome-right .big-date {

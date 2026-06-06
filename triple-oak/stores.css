@@ -313,11 +313,11 @@ body {
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
   box-shadow: var(--shadow-sm);
-  display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
   height: 60px;
+  display: none;
 }
 
 .topbar-left {
@@ -453,8 +453,7 @@ body {
 }
 /* ── PRODUCT GRID ── */
 .products-grid {
-  display: none;
-  /* display: grid; */
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 18px;
 }

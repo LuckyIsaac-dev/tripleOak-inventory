@@ -196,14 +196,16 @@ async function handleLogin() {
 
 async function handleLogout() {
   await signOut(auth);
-  document.querySelector(".products-grid").style.display = "none";
+  document.querySelector(".main-wrap").style.display = "none";
+  document.querySelector(".topbar").style.display = "none";
   document.getElementById("login-page").style.display = "flex";
 }
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    document.querySelector(".products-grid").style.display = "grid";
+    document.querySelector(".main-wrap").style.display = "flex";
     document.getElementById("login-page").style.display = "none";
+    document.querySelector(".topbar").style.display = " flex";
     await loadProducts(false);
     renderPage();
   }
