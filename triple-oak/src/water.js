@@ -24,11 +24,15 @@ export class Water {
   }
 
   updateQuantity(value, productId) {
+    let refillEmpty;
     if (this.id === productId) {
       if (value <= 0) return;
       if (isNaN(value)) return;
+      refillEmpty = this.type === "refill";
+      refillEmpty ? true : "";
 
       this.quantity += value;
+      return refillEmpty;
     }
   }
 }

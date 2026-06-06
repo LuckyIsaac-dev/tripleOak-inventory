@@ -475,7 +475,15 @@ function editStock(productId) {
     () => {
       const value = Number(editQtyInput.value);
       const product = getProduct(productId);
-      product.editQuantity(value, productId);
+      let refill = product.editQuantity(value, productId);
+
+      if (refill) {
+        products.forEach((product) => {
+          if (product.type === "cway-empties") {
+            product.quantity += value;
+          }
+        });
+      }
 
       editModal.close();
       alertPill();
