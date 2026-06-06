@@ -483,6 +483,7 @@ function editStock(productId) {
       if (refill) {
         products.forEach((product) => {
           if (product.type === "cway-empties") {
+            console.log(product);
             product.quantity += value;
           }
         });
@@ -504,8 +505,18 @@ function updateStock(productId) {
     () => {
       const newQuantity = Number(updateQtyInput.value);
       const product = getProduct(productId);
-      product.updateQuantity(newQuantity, productId);
+      let refillEmpty = product.updateQuantity(newQuantity, productId);
+
+      if (refillEmpty) {
+        products.forEach((product) => {
+          if (product.type === "cway-empties") {
+            console.log(product);
+            product.quantity -= newQuantity;
+          }
+        });
+      }
       updateModal.close();
+      console.log();
       alertPill();
       generateHTML();
       updateQtyInput.value = "";
