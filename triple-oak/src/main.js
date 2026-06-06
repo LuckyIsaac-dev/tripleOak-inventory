@@ -205,14 +205,15 @@ onAuthStateChanged(auth, async (user) => {
   if (user) {
     document.querySelector(".main-wrap").style.display = "flex";
     document.getElementById("login-page").style.display = "none";
-    document.querySelector(".topbar").style.display = " flex";
+    document.querySelector(".topbar").style.display = "flex";
     await loadProducts(false);
     renderPage();
   }
 });
 
 async function guestAccount() {
-  document.querySelector(".products-grid").style.display = "grid";
+  document.querySelector(".main-wrap").style.display = "flex";
+  document.querySelector(".topbar").style.display = "flex";
   document.getElementById("login-page").style.display = "none";
   await loadProducts(true);
 }
