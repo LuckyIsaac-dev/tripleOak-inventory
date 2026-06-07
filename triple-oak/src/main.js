@@ -36,7 +36,7 @@ const searchInput = document.querySelector(".search-input");
 
 const waters = [
   {
-    image: "",
+    image: "./images/",
     brand: "Eva",
     name: "Eva 75cl",
     price: 3500,
@@ -45,7 +45,7 @@ const waters = [
     id: "1",
   },
   {
-    image: "",
+    image: "./images/IMG_20260605_190209_261.jpg",
     brand: "Eva",
     name: "Eva 150cl",
     price: 3600,
@@ -339,10 +339,9 @@ function renderSearchResult(isGuest = false) {
           <img
             src="${bottleWater.image}"
             alt="${bottleWater.name}"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            style="display: none"
+          
           />
-          <div class="placeholder-img" style="display: flex">💧</div>
+          
           <span class="stock-badge ${stock.class}">${stock.label}</span>
         </div>
         <div class="card-body">
