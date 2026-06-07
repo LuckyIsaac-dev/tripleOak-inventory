@@ -1001,6 +1001,12 @@ dialog {
   .topbar {
     padding: 0 1rem;
     justify-content: start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: white;
   }
   .btn-logout {
     display: none;
