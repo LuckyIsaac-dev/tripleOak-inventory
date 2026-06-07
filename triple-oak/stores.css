@@ -312,10 +312,9 @@ body {
   z-index: 1000;
   background: var(--white);
   border-bottom: 1px solid var(--gray-100);
-  /* box-shadow: var(--shadow-sm); */
+  box-shadow: var(--shadow-sm);
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   padding: 0 2rem;
   height: 60px;
   display: none;
@@ -982,7 +981,7 @@ dialog {
     place-items: center;
   }
   .product-card {
-    width: 310px;
+    width: 95%;
   }
   .login-brand {
     display: none;
