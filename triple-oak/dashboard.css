@@ -1308,6 +1308,9 @@ td {
   }
 }
 @media (max-width: 480px) {
+  .main-wrap {
+    padding-top: 90px;
+  }
   .stat-grid {
     grid-template-columns: 1fr;
   }
