@@ -51,7 +51,7 @@ body {
   font-family: "DM Sans", sans-serif;
   /* background: var(--gray-50);
   color: var(--gray-800); */
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 /* ── LOGIN PAGE ── */
@@ -1020,7 +1020,8 @@ dialog {
   .stat-grid {
     grid-template-columns: 1fr;
   }
-  .user-name {
+  .user-name,
+  .user-avatar {
     display: none;
   }
 }
