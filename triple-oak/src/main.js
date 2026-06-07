@@ -421,7 +421,7 @@ function generateHTML(isGuest = false) {
           <div class="card-stats">
             <div class="card-stat">
               <div class="stat-label">Quantity</div>
-              <div class="stat-value ${quantity}">${bottleWater.quantity}</div>
+              <div class="stat-value ${quantity}">${bottleWater.quantity} ${bottleWater.quantity > 1 ? "packs" : "pack"}</div>
             </div>
             <div class="card-stat">
               <div class="stat-label">Price / Pack</div>

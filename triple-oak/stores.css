@@ -999,7 +999,7 @@ dialog {
 @media (max-width: 600px) {
   .topbar {
     padding: 0 1rem;
-    justify-content: start;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
