@@ -338,9 +338,7 @@ function renderSearchResult(isGuest = false) {
         <div class="card-image-wrap">
           <img
             src="${bottleWater.image}"
-            alt="${bottleWater.name}"
-          
-          />
+            alt="${bottleWater.name}"/>
           
           <span class="stock-badge ${stock.class}">${stock.label}</span>
         </div>
