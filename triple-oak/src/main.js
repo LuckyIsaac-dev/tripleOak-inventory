@@ -408,7 +408,6 @@ function generateHTML(isGuest = false) {
             alt="${bottleWater.name}"
           
           />
-          <div class="placeholder-img" style="display: flex">💧</div>
           <span class="stock-badge ${stock.class}">${stock.label}</span>
         </div>
         <div class="card-body">
