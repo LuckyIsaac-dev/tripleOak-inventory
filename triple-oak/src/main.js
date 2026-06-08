@@ -406,8 +406,7 @@ function generateHTML(isGuest = false) {
           <img
             src="${bottleWater.image}"
             alt="${bottleWater.name}"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            style="display: none"
+          
           />
           <div class="placeholder-img" style="display: flex">💧</div>
           <span class="stock-badge ${stock.class}">${stock.label}</span>
