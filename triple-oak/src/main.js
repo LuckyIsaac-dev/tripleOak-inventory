@@ -33,153 +33,154 @@ document.querySelector(".btn-logout").addEventListener("click", handleLogout);
 const criticalAlert = document.querySelector(".critical");
 const warnAlert = document.querySelector(".warn");
 const searchInput = document.querySelector(".search-input");
+const toast = document.querySelector(".toast");
 
-const waters = [
-  {
-    image: "",
-    brand: "Eva",
-    name: "Eva 75cl",
-    price: 3500,
-    quantity: 10,
-    type: "bottle water",
-    id: "1",
-  },
-  {
-    image: "",
-    brand: "Eva",
-    name: "Eva 150cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "2",
-  },
-  {
-    image: "",
-    brand: "CWAY",
-    name: "Cway 600ml",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "3",
-  },
-  {
-    image: "",
-    brand: "CWAY",
-    name: "Cway 750ml",
-    price: 3600,
-    quantity: 120,
-    type: "bottle water",
-    id: "4",
-  },
-  {
-    image: "",
-    brand: "CWAY",
-    name: "Cway 1500ml",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "5",
-  },
-  {
-    image: "",
-    brand: "AQUAFINA",
-    name: "Aquafina 75cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "6",
-  },
-  {
-    image: "",
-    brand: "LASIEN",
-    name: "Lasien 50cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "7",
-  },
-  {
-    image: "",
-    brand: "LASIEN",
-    name: "Lasien 75cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "8",
-  },
-  {
-    image: "",
-    brand: "LASIEN",
-    name: "Lasien 150cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "9",
-  },
-  {
-    image: "",
-    brand: "NESTLE",
-    name: "Nestle Blue 60cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "10",
-  },
-  {
-    image: "",
-    brand: "NESTLE",
-    name: "Nestle Green 60cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "11",
-  },
-  {
-    image: "",
-    brand: "NESTLE",
-    name: "Nestle 150cl",
-    price: 3600,
-    quantity: 0,
-    type: "bottle water",
-    id: "12",
-  },
-  {
-    image: "",
-    brand: "CWAY",
-    name: "Cway Refill",
-    price: 3600,
-    quantity: 50,
-    type: "refill",
-    id: "13",
-  },
-  {
-    image: "",
-    brand: "BIMO",
-    name: "Bimo Refill",
-    price: 3600,
-    quantity: 20,
-    type: "refill",
-    id: "14",
-  },
-  {
-    image: "",
-    brand: "JASMINE",
-    name: "Jasmine 75cl",
-    price: 3600,
-    quantity: 60,
-    type: "bottle water",
-    id: "15",
-  },
-  {
-    image: "",
-    brand: "BRACO",
-    name: "Braco 100cl",
-    price: 3600,
-    quantity: 100,
-    type: "bottle water",
-    id: "16",
-  },
-];
+// const waters = [
+//   {
+//     image: "",
+//     brand: "Eva",
+//     name: "Eva 75cl",
+//     price: 3500,
+//     quantity: 10,
+//     type: "bottle water",
+//     id: "1",
+//   },
+//   {
+//     image: "",
+//     brand: "Eva",
+//     name: "Eva 150cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "2",
+//   },
+//   {
+//     image: "",
+//     brand: "CWAY",
+//     name: "Cway 600ml",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "3",
+//   },
+//   {
+//     image: "",
+//     brand: "CWAY",
+//     name: "Cway 750ml",
+//     price: 3600,
+//     quantity: 120,
+//     type: "bottle water",
+//     id: "4",
+//   },
+//   {
+//     image: "",
+//     brand: "CWAY",
+//     name: "Cway 1500ml",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "5",
+//   },
+//   {
+//     image: "",
+//     brand: "AQUAFINA",
+//     name: "Aquafina 75cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "6",
+//   },
+//   {
+//     image: "",
+//     brand: "LASIEN",
+//     name: "Lasien 50cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "7",
+//   },
+//   {
+//     image: "",
+//     brand: "LASIEN",
+//     name: "Lasien 75cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "8",
+//   },
+//   {
+//     image: "",
+//     brand: "LASIEN",
+//     name: "Lasien 150cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "9",
+//   },
+//   {
+//     image: "",
+//     brand: "NESTLE",
+//     name: "Nestle Blue 60cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "10",
+//   },
+//   {
+//     image: "",
+//     brand: "NESTLE",
+//     name: "Nestle Green 60cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "11",
+//   },
+//   {
+//     image: "",
+//     brand: "NESTLE",
+//     name: "Nestle 150cl",
+//     price: 3600,
+//     quantity: 0,
+//     type: "bottle water",
+//     id: "12",
+//   },
+//   {
+//     image: "",
+//     brand: "CWAY",
+//     name: "Cway Refill",
+//     price: 3600,
+//     quantity: 50,
+//     type: "refill",
+//     id: "13",
+//   },
+//   {
+//     image: "",
+//     brand: "BIMO",
+//     name: "Bimo Refill",
+//     price: 3600,
+//     quantity: 20,
+//     type: "refill",
+//     id: "14",
+//   },
+//   {
+//     image: "",
+//     brand: "JASMINE",
+//     name: "Jasmine 75cl",
+//     price: 3600,
+//     quantity: 60,
+//     type: "bottle water",
+//     id: "15",
+//   },
+//   {
+//     image: "",
+//     brand: "BRACO",
+//     name: "Braco 100cl",
+//     price: 3600,
+//     quantity: 100,
+//     type: "bottle water",
+//     id: "16",
+//   },
+// ];
 
 let products = [];
 
@@ -489,6 +490,11 @@ function editStock(productId) {
       editQtyInput.value = "";
       generateHTML();
       saveToStorage();
+      toast.innerHTML = "<p> Edit sucessful</p>";
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
     },
     { once: true },
   );
@@ -516,6 +522,11 @@ function updateStock(productId) {
       generateHTML();
       updateQtyInput.value = "";
       saveToStorage();
+      toast.innerHTML = "<p> Update sucessful</p>";
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2000);
     },
     { once: true },
   );
