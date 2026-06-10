@@ -36,7 +36,7 @@ const searchInput = document.querySelector(".search-input");
 
 const waters = [
   {
-    image: "./images/",
+    image: "",
     brand: "Eva",
     name: "Eva 75cl",
     price: 3500,
@@ -45,7 +45,7 @@ const waters = [
     id: "1",
   },
   {
-    image: "./images/IMG_20260605_190209_261.jpg",
+    image: "",
     brand: "Eva",
     name: "Eva 150cl",
     price: 3600,
