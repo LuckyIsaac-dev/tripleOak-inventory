@@ -705,7 +705,7 @@ dialog {
 
 .modal-header p {
   font-size: 0.85rem;
-  color: var(--gray-400);
+  color: var(--gray-600);
   margin-top: 4px;
 }
 
@@ -992,8 +992,8 @@ dialog {
   }
 }
 @media (max-width: 600px) {
-  dialog {
-    top: 25%;
+  .modal {
+    top: 35%;
   }
   .topbar {
     padding: 0 1rem;

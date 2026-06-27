@@ -13,8 +13,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-// make edit and update modal appear at the top instead of the center of the screen to aviod the keyboard covering it
-// make it trigger the keyboard on appearing
+// make edit and update modal appear at the top instead of the center of the screen to aviod the keyboard covering it DONE
+// make it trigger the keyboard on appearing DONE
 // make the toast and edit or update modal close only when a product has been sucessfully updated or edited
 // make the input red and render a error message when the users makes mistake when editing or updating
 // show the current quantity when updating or editing a product
@@ -43,6 +43,7 @@ const warnAlert = document.querySelector(".warn");
 const searchInput = document.querySelector(".search-input");
 const toast = document.querySelector(".toast");
 const productQuantity = document.getElementById("product-quantity");
+const restockQuantity = document.querySelector(".update-product-quantity");
 
 // const waters = [
 //   {
@@ -472,6 +473,7 @@ function renderPage() {
       const productId = updateBtn.dataset.productId;
       const product = getProduct(productId);
       updateModalName.innerHTML = product.name;
+      restockQuantity.innerHTML = product.quantity;
       updateModal.showModal();
       updateStock(productId);
     }
