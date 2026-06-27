@@ -13,6 +13,14 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+// make edit and update modal appear at the top instead of the center of the screen to aviod the keyboard covering it
+// make it trigger the keyboard on appearing
+// make the toast and edit or update modal close only when a product has been sucessfully updated or edited
+// make the input red and render a error message when the users makes mistake when editing or updating
+// show the current quantity when updating or editing a product
+// add the plus and minus buttons
+// DON'T USE THE MAIN FILE TO DO THIS USE THE PRACTICE ONE
+
 // ── DOM selectors ──
 const editQtyInput = document.querySelector(".edit-stock-input");
 const updateQtyInput = document.querySelector(".update-qty");
@@ -34,6 +42,7 @@ const criticalAlert = document.querySelector(".critical");
 const warnAlert = document.querySelector(".warn");
 const searchInput = document.querySelector(".search-input");
 const toast = document.querySelector(".toast");
+const productQuantity = document.getElementById("product-quantity");
 
 // const waters = [
 //   {
@@ -257,7 +266,7 @@ async function saveToStorage() {
 
     await batch.commit();
   } catch (error) {
-    console.error("❌ batch failed:", error);
+    console.error("batch failed:", error);
   }
 }
 
@@ -454,6 +463,7 @@ function renderPage() {
       const productId = editBtn.dataset.productId;
       const product = getProduct(productId);
       modalProductName.innerHTML = product.name;
+      productQuantity.innerHTML = `Current Quantity : ${product.quantity}`;
       editModal.showModal();
       editStock(productId);
     }

@@ -992,6 +992,9 @@ dialog {
   }
 }
 @media (max-width: 600px) {
+  dialog {
+    top: 25%;
+  }
   .topbar {
     padding: 0 1rem;
     justify-content: space-between;
