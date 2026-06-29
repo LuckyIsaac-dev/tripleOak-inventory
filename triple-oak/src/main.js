@@ -44,6 +44,8 @@ const searchInput = document.querySelector(".search-input");
 const toast = document.querySelector(".toast");
 const productQuantity = document.getElementById("product-quantity");
 const restockQuantity = document.querySelector(".update-product-quantity");
+const errorMessage = document.querySelector(".error-message");
+const stockHint = document.querySelector(".restock-hint");
 
 // const waters = [
 //   {
@@ -494,7 +496,9 @@ function editStock(productId) {
   matchingProduct = getProduct(productId);
   if (isNaN(value) || value <= 0 || matchingProduct.quantity - value < 0) {
     editQtyInput.classList.add("input-error-message");
+    errorMessage.classList.add("show");
   } else {
+    errorMessage.classList.remove("show");
     editQtyInput.classList.remove("input-error-message");
     editModal.close();
 
@@ -523,13 +527,15 @@ function updateStock(productId) {
   let matchingProduct = null;
   let newQuantity = Number(updateQtyInput.value);
   matchingProduct = getProduct(productId);
-  if (
-    isNaN(newQuantity) ||
-    newQuantity <= 0 ||
-    matchingProduct.quantity - newQuantity < 0
-  ) {
+  if (isNaN(newQuantity) || newQuantity <= 0) {
     updateQtyInput.classList.add("input-error-message");
+    stockHint.innerHTML = `Invalid input try again`;
+    stockHint.classList.add("error-message");
+    stockHint.classList.add("show");
   } else {
+    stockHint.innerHTML = `New total will update automatically`;
+    stockHint.classList.remove("error-message");
+    stockHint.classList.remove("show");
     updateQtyInput.classList.remove("input-error-message");
     matchingProduct = getProduct(productId);
 
