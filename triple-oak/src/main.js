@@ -468,7 +468,6 @@ function renderPage() {
       modalProductName.innerHTML = product.name;
       productQuantity.innerHTML = `Current Quantity : ${product.quantity}`;
       editModal.showModal();
-      editStock(productId);
     }
 
     if (updateBtn) {
@@ -477,7 +476,6 @@ function renderPage() {
       updateModalName.innerHTML = product.name;
       restockQuantity.innerHTML = product.quantity;
       updateModal.showModal();
-      updateStock(productId);
     }
   });
 
@@ -498,9 +496,10 @@ function editStock(productId) {
     editQtyInput.classList.add("input-error-message");
   } else {
     editQtyInput.classList.remove("input-error-message");
+    editModal.close();
+
     let refill = matchingProduct.editQuantity(value, productId);
 
-    editModal.close();
     if (refill) {
       products.forEach((product) => {
         if (product.type === "cway-empties") {
@@ -509,41 +508,52 @@ function editStock(productId) {
       });
     }
     editQtyInput.value = "";
+    alertPill();
     generateHTML();
     saveToStorage();
+    toast.innerHTML = "<p> Edit sucessful</p>";
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
   }
 }
 
 function updateStock(productId) {
-  updateStockBtn.addEventListener(
-    "click",
-    () => {
-      const newQuantity = Number(updateQtyInput.value);
-      const product = getProduct(productId);
-      let refillEmpty = product.updateQuantity(newQuantity, productId);
+  let matchingProduct = null;
+  let newQuantity = Number(updateQtyInput.value);
+  matchingProduct = getProduct(productId);
+  if (
+    isNaN(newQuantity) ||
+    newQuantity <= 0 ||
+    matchingProduct.quantity - newQuantity < 0
+  ) {
+    updateQtyInput.classList.add("input-error-message");
+  } else {
+    updateQtyInput.classList.remove("input-error-message");
+    matchingProduct = getProduct(productId);
 
-      if (refillEmpty) {
-        products.forEach((product) => {
-          if (product.type === "cway-empties") {
-            console.log(product);
-            product.quantity -= newQuantity;
-          }
-        });
-      }
-      updateModal.close();
-      console.log();
-      alertPill();
-      generateHTML();
-      updateQtyInput.value = "";
-      saveToStorage();
-      toast.innerHTML = "<p> Update sucessful</p>";
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2000);
-    },
-    { once: true },
-  );
+    let refillEmpty = matchingProduct.updateQuantity(newQuantity, productId);
+
+    //
+    if (refillEmpty) {
+      products.forEach((product) => {
+        if (product.type === "cway-empties") {
+          product.quantity -= newQuantity;
+        }
+      });
+    }
+    updateModal.close();
+    generateHTML();
+    alertPill;
+    updateQtyInput.value = "";
+    saveToStorage();
+    toast.innerHTML = "<p> Update sucessful</p>";
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+  }
 }
 
 function formatValue(value) {
