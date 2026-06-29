@@ -305,6 +305,13 @@ input {
   text-align: center;
 }
 
+.error-message {
+  display: inline-block;
+  color: var(--danger);
+  margin-top: 4px;
+  opacity: 0;
+}
+
 /* ---- Topbar ---- */
 .topbar {
   position: sticky;
@@ -1025,4 +1032,8 @@ dialog {
 .input-error-message {
   border-color: var(--danger);
   box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.25);
+}
+.show {
+  visibility: visible;
+  opacity: 1;
 }
