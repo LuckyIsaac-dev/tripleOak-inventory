@@ -245,7 +245,7 @@ select {
   display: none;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 28px 28px 60px;
+  padding: 10px 10px 60px;
   /* display: flex; */
   flex-direction: column;
   gap: 28px;
@@ -1310,6 +1310,8 @@ td {
 @media (max-width: 480px) {
   .main-wrap {
     padding-top: 90px;
+    padding-left: 0;
+    padding-right: 0;
   }
   .stat-grid {
     grid-template-columns: 1fr;
