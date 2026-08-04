@@ -356,16 +356,12 @@ function renderSearchResult(isGuest = false) {
           <span class="stock-badge ${stock.class}">${stock.label}</span>
         </div>
         <div class="card-body">
-          <div class="card-brand">${bottleWater.brand}</div>
-          <div class="card-name">${bottleWater.name}</div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="stat-label">Quantity</div>
-              <div class="stat-value ${quantity}">${bottleWater.quantity}</div>
-            </div>
-            <div class="card-stat">
-              <div class="stat-label">Price / Pack</div>
-              <div class="stat-value">₦${bottleWater.price.toLocaleString()}</div>
+            <div class="card-name"> ${bottleWater.name}</div>
+        <p class="product-price">₦${bottleWater.price}</p> 
+           <div class="quantity-info">
+              <p class="quantity-text">
+                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+              </p>
             </div>
           </div>
           <div class="card-actions">
@@ -424,18 +420,13 @@ function generateHTML(isGuest = false) {
           <span class="stock-badge ${stock.class}">${stock.label}</span>
         </div>
         <div class="card-body">
-          <div class="card-brand">${bottleWater.brand}</div>
-          <div class="card-name">${bottleWater.name}</div>
-          <div class="card-stats">
-            <div class="card-stat">
-              <div class="stat-label">Quantity</div>
-              <div class="stat-value ${quantity}">${bottleWater.quantity} ${bottleWater.quantity > 1 ? "packs" : "pack"}</div>
+             <div class="card-name"> ${bottleWater.name}</div>
+        <p class="product-price">₦${bottleWater.price}</p> 
+           <div class="quantity-info">
+              <p class="quantity-text">
+                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+              </p>
             </div>
-            <div class="card-stat">
-              <div class="stat-label">Price / Pack</div>
-              <div class="stat-value">₦${bottleWater.price.toLocaleString()}</div>
-            </div>
-          </div>
           <div class="card-actions">
             ${
               isGuest
