@@ -297,14 +297,6 @@ function alertPill() {
     }
   });
 
-  document.querySelector(".total-product").innerHTML = brandName.length;
-  document.querySelector(".total-quantity").innerHTML = totalQuantity;
-  document.querySelector(".in-stock").innerHTML = inStock;
-  document.querySelector(".stock-value").innerHTML =
-    `${formatValue(stockValue)}`;
-  document.querySelector(".low-stock").innerHTML = lowStock;
-  document.querySelector(".out-of-stock").innerHTML = outOfStock;
-
   if (lowStock === 0) {
     return;
   } else {
