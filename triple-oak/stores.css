@@ -568,7 +568,7 @@ input {
 .product-quantity {
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--gray-700);
+  color: var(--gray-900);
 }
 
 .quantity-text .product-quantity.low {

@@ -344,7 +344,7 @@ function renderSearchResult(isGuest = false) {
         <p class="product-price">₦${bottleWater.price}</p> 
            <div class="quantity-info">
               <p class="quantity-text">
-                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs left in store
               </p>
             </div>
           </div>
@@ -408,7 +408,7 @@ function generateHTML(isGuest = false) {
         <p class="product-price">₦${bottleWater.price}</p> 
            <div class="quantity-info">
               <p class="quantity-text">
-                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs left in store
               </p>
             </div>
           <div class="card-actions">
