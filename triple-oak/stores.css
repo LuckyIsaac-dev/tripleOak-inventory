@@ -41,6 +41,18 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 16px rgba(10, 22, 40, 0.1);
   --shadow-lg: 0 10px 40px rgba(10, 22, 40, 0.14);
+  --font-xs: 0.65rem;
+  --font-sm: 0.75rem;
+  --font-md: 0.875rem;
+  -font-base: 1rem;
+  --font-lg: 1.125rem;
+  --font-xl: 1.25rem;
+  --font-2xl: 1.5rem;
+  --font-3xl: 1.875;
+  --font-4xl: 2.25rem;
+  --font-heading: 3rem;
+  --font-5xl: 3.75rem;
+  --font-family: "Inter", sans-serif;
 }
 
 html {
@@ -48,7 +60,9 @@ html {
 }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-family);
+
+  /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
   /* background: var(--gray-50);
   color: var(--gray-800); */
   /* min-height: 100vh; */
@@ -540,7 +554,8 @@ input {
 
 .card-name {
   font-family: "DM sans", sans-serif;
-  font-size: 1.1rem;
+
+  font-size: var(--font-lg);
   font-weight: 700;
   color: var(--gray-800);
   margin-bottom: 4px;
@@ -548,7 +563,7 @@ input {
 }
 
 .product-price {
-  font-size: 0.9rem;
+  font-size: var(--font-md);
   color: var(--gray-600);
   font-weight: 500;
   margin-bottom: 16px;
@@ -561,13 +576,14 @@ input {
 }
 
 .quantity-text {
-  font-size: 0.9rem;
+  font-size: var(--font-md);
+  font-family: var(--font-family);
   /* color: var(--blue-500); */
   color: var(--gray-600);
 }
 
 .product-quantity {
-  font-size: 1.1rem;
+  font-size: var(--font-lg);
   font-weight: 700;
   color: var(--gray-900);
 }
@@ -629,6 +645,8 @@ input {
 .btn-update {
   background: linear-gradient(135deg, var(--blue-500), var(--blue-400));
   color: white;
+  font-family: var(--font-family);
+  font-size: var(--font-md);
 }
 
 .btn-update:hover {
