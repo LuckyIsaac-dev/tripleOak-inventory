@@ -22,7 +22,7 @@ ADD MOST REQUESTED GOODS
 SHOW MOST SOLD PRODUCT AT THE END OF THE WEEK
 SHOW WHEN LAST A PRODUCT WAS UPDATED WHEN EDITING OR RESTOCKING
 ADD THE PLUS AND MINUS BTN ON THE EDIT MODAL
-SHOW GOODS WITH THE  HIGHEST  PROFIT OR GOODS THAT MADE THE HIGHEST PROFIT IN A WEEK
+SHOW GOODS WITH THE  HIGHEST  PROFIT OR GOODS THAT MADE THE HIGHEST PROFIT IN A WEEK/Changed to filter/
 SHOW A BETTER CONFIRMATION MESSAGE WHEN EDITING OR RESTOCKING PRODUCT
 BE ABLE TO EDIT PRODUCT PRICE
 
@@ -229,7 +229,7 @@ async function handleLogout() {
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
-    document.querySelector(".main-wrap").style.display = "flex";
+    document.querySelector(".main-wrap").style.display = "block";
     document.getElementById("login-page").style.display = "none";
     document.querySelector(".topbar").style.display = "flex";
     await loadProducts(false);
@@ -238,7 +238,7 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 async function guestAccount() {
-  document.querySelector(".main-wrap").style.display = "flex";
+  document.querySelector(".main-wrap").style.display = "block";
   document.querySelector(".topbar").style.display = "flex";
   document.getElementById("login-page").style.display = "none";
   await loadProducts(true);
@@ -249,14 +249,16 @@ async function loadProducts(isGuest) {
 
   if (snapshot.empty) {
     products = waters.map((w) => new Water(w));
-    alertPill();
+    // alertPill();
 
     generateHTML(isGuest);
     renderSearchResult(isGuest);
-    await saveToStorage();
+    await saveToStorage(isGuest);
   } else {
     products = snapshot.docs.map((d) => new Water(d.data()));
-    alertPill();
+    console.log(products);
+    filterProduct(isGuest);
+    // alertPill();
     generateHTML(isGuest);
     renderSearchResult(isGuest);
   }
@@ -291,47 +293,47 @@ function getStockStatus(quantity) {
   if (quantity <= 10) return { label: "Low Stock", class: "low-stock" };
   return { label: "In Stock", class: "in-stock" };
 }
-function alertPill() {
-  let brandName = [];
-  let outOfStock = 0;
-  let lowStock = 0;
-  let inStock = 0;
-  let totalQuantity = 0;
+// function alertPill() {
+//   let brandName = [];
+//   let outOfStock = 0;
+//   let lowStock = 0;
+//   let inStock = 0;
+//   let totalQuantity = 0;
 
-  let stockValue = 0;
+//   let stockValue = 0;
 
-  products.forEach((product) => {
-    //
+//   products.forEach((product) => {
+//     //
 
-    if (!brandName.includes(product.brand)) {
-      brandName.push(product.brand);
-    }
-    totalQuantity += product.quantity;
-    stockValue += product.price * product.quantity;
+//     if (!brandName.includes(product.brand)) {
+//       brandName.push(product.brand);
+//     }
+//     totalQuantity += product.quantity;
+//     stockValue += product.price * product.quantity;
 
-    if (product.quantity === 0) {
-      outOfStock++;
-    } else if (product.quantity <= 10) {
-      lowStock++;
-    } else {
-      inStock++;
-    }
-  });
+//     if (product.quantity === 0) {
+//       outOfStock++;
+//     } else if (product.quantity <= 10) {
+//       lowStock++;
+//     } else {
+//       inStock++;
+//     }
+//   });
 
-  if (lowStock === 0) {
-    return;
-  } else {
-    warnAlert.style.display = "flex";
-    warnAlert.innerHTML = `<i class="fa-solid fa-clock"></i> ${lowStock}  products reach threshold by end of week`;
-  }
+//   if (lowStock === 0) {
+//     return;
+//   } else {
+//     warnAlert.style.display = "flex";
+//     warnAlert.innerHTML = `<i class="fa-solid fa-clock"></i> ${lowStock}  products reach threshold by end of week`;
+//   }
 
-  if (outOfStock === 0) {
-    return;
-  } else {
-    criticalAlert.style.display = "flex";
-    criticalAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${outOfStock}  products critically low — restock urgently`;
-  }
-}
+//   if (outOfStock === 0) {
+//     return;
+//   } else {
+//     criticalAlert.style.display = "flex";
+//     criticalAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${outOfStock}  products critically low — restock urgently`;
+//   }
+// }
 
 function renderSearchResult(isGuest = false) {
   let searchResult = [];
@@ -566,4 +568,94 @@ function formatValue(value) {
   } else {
     return `₦${value.toLocaleString()}`;
   }
+}
+console.log(products);
+function filterProduct(isGuest) {
+  let filteredProducts;
+  const btnArray = [];
+  let html = "";
+
+  products.forEach((product) => {
+    if (btnArray.includes(product.brand)) {
+      return;
+    } else if (product.brand === "CWAY/BIMO") {
+      return;
+    } else {
+      btnArray.push(product.brand);
+    }
+  });
+
+  console.log(products);
+
+  const filterSection = document.querySelector(".filter-grid");
+
+  btnArray.forEach((brandName) => {
+    html += `<span class="filter" data-filterBrand="${brandName}">${brandName.toLowerCase()}</span>`;
+  });
+
+  filterSection.innerHTML += html;
+
+  filterSection.addEventListener("click", (e) => {
+    const filterBtn = e.target.closest(".filter");
+
+    if (filterBtn) {
+      const spans = document.querySelectorAll(".filter");
+      spans.forEach((span) => {
+        span.classList.remove("active");
+      });
+
+      filterBtn.classList.add("active");
+      const filter = filterBtn.dataset.filterbrand.toLowerCase();
+
+      if (filter === "all") {
+        generateHTML();
+      } else {
+        filteredProducts = products.filter((product) => {
+          return (
+            product.brand.toLowerCase().includes(filter) ||
+            product.type.toLowerCase().includes(filter)
+          );
+        });
+        document.querySelector(".products-grid").innerHTML = filteredProducts
+          .map((bottleWater) => {
+            const Stock = getStockStatus(bottleWater.quantity);
+            const quantity = quantityWarning(bottleWater.quantity);
+            return `
+             <div class="product-card" style="animation-delay: 0s">
+          <div class="card-image-wrap">  
+                   <img src="${bottleWater.image}" alt="" />
+         
+            <span class="stock-badge ${Stock.class}">
+              ${Stock.label}
+            </span>
+          </div>
+          <div class="card-body">
+          <div class="card-name"> ${bottleWater.name}</div>
+          <p class="product-price">₦${bottleWater.price}</p> 
+             <div class="quantity-info">
+                <p class="quantity-text">
+                  <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+                </p>
+              </div>
+            
+            <div class="card-actions">
+            ${
+              isGuest
+                ? `<p class="guest-account">View only </p>`
+                : `
+              <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
+                 Edit
+              </button>
+              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">
+                Update Stock
+              </button>`
+            }
+            </div>
+          </div>
+        </div> `;
+          })
+          .join("");
+      }
+    }
+  });
 }
