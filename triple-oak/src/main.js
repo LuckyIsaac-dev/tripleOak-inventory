@@ -414,38 +414,39 @@ function closeEditModal() {
 function generateHTML(isGuest = false) {
   let productHTML = "";
   products.forEach((bottleWater) => {
-    const stock = getStockStatus(bottleWater.quantity);
-    const quantity = quantityWarning(bottleWater.quantity);
-    productHTML += `
-      <div class="product-card" style="animation-delay: 0s">
-        <div class="card-image-wrap">
-          <img
-            src="${bottleWater.image}"
-            alt="${bottleWater.name}"
-          
-          />
-          <span class="stock-badge ${stock.class}">${stock.label}</span>
-        </div>
-        <div class="card-body">
-             <div class="card-name"> ${bottleWater.name}</div>
-        <p class="product-price">₦${bottleWater.price}</p> 
-           <div class="quantity-info">
-              <p class="quantity-text">
-                <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs left in store
-              </p>
-            </div>
-          <div class="card-actions">
-            ${
-              isGuest
-                ? `<p class="guest-account"> View only</p>`
-                : `
-              <button class="btn-card btn-edit" data-product-id="${bottleWater.id}">Edit</button>
-              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Restock</button>
-            `
-            }
-          </div>
-        </div>
-      </div>`;
+    // productHTML += `
+
+    //   <div class="product-card" style="animation-delay: 0s">
+    //     <div class="card-image-wrap">
+    //       <img
+    //         src="${bottleWater.image}"
+    //         alt="${bottleWater.name}"
+
+    //       />
+    //       <span class="stock-badge ${stock.class}">${stock.label}</span>
+    //     </div>
+    //     <div class="card-body">
+    //          <div class="card-name"> ${bottleWater.name}</div>
+    //     <p class="product-price">₦${bottleWater.price}</p>
+    //        <div class="quantity-info">
+    //           <p class="quantity-text">
+    //             <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs left in store
+    //           </p>
+    //         </div>
+    //       <div class="card-actions">
+    //         ${
+    //           isGuest
+    //             ? `<p class="guest-account"> View only</p>`
+    //             : `
+    //           <button class="btn-card btn-edit" data-product-id="${bottleWater.id}">Edit</button>
+    //           <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Restock</button>
+    //         `
+    //         }
+    //       </div>
+    //     </div>
+    //   </div>`;
+
+    productHTML += productCardHTML(bottleWater, isGuest);
   });
   document.querySelector(".products-grid").innerHTML = productHTML;
 }
