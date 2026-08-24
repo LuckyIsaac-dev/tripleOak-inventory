@@ -249,7 +249,6 @@ async function loadProducts(isGuest) {
 
   if (snapshot.empty) {
     products = waters.map((w) => new Water(w));
-    // alertPill();
 
     generateHTML(isGuest);
     renderSearchResult(isGuest);
@@ -258,7 +257,7 @@ async function loadProducts(isGuest) {
     products = snapshot.docs.map((d) => new Water(d.data()));
     console.log(products);
     filterProduct(isGuest);
-    // alertPill();
+
     generateHTML(isGuest);
     renderSearchResult(isGuest);
   }
@@ -511,8 +510,8 @@ function editStock(productId) {
       });
     }
     editQtyInput.value = "";
-    alertPill();
-    generateHTML();
+
+    updateProductCard(productId);
     saveToStorage();
     toast.innerHTML = "<p> Edit sucessful</p>";
     toast.classList.add("show");
@@ -549,8 +548,8 @@ function updateStock(productId) {
       });
     }
     updateModal.close();
-    generateHTML();
-    alertPill;
+    updateProductCard(productId);
+
     updateQtyInput.value = "";
     saveToStorage();
     toast.innerHTML = "<p> Update sucessful</p>";
@@ -660,4 +659,27 @@ function productCardHTML(bottleWater, isGuest = false) {
       </div>
     </div>
   `;
+}
+
+function updateProductCard(productId) {
+  const product = getProduct(productId);
+  console.log(product);
+  const card = document.getElementById(`product-${String(productId)}`);
+  if (!card) return;
+
+  //
+
+  const stock = getStockStatus(product.quantity);
+  const warning = quantityWarning(product.quantity);
+
+  const badge = card.querySelector(".stock-badge");
+  console.log(badge);
+  badge.className = `stock-badge ${stock.class}`;
+  badge.textContent = stock.label;
+
+  const qtySpan = card.querySelector(".product-quantity");
+  const oldValue = qtySpan.textContent;
+  qtySpan.className = `product-quantity ${warning || ""}`;
+  qtySpan.textContent = product.quantity;
+  animateQuantityChange(qtySpan, oldValue, product.quantity);
 }
