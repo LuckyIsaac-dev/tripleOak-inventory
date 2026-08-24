@@ -585,8 +585,6 @@ function filterProduct(isGuest) {
     }
   });
 
-  console.log(products);
-
   const filterSection = document.querySelector(".filter-grid");
 
   btnArray.forEach((brandName) => {
@@ -617,45 +615,48 @@ function filterProduct(isGuest) {
           );
         });
         document.querySelector(".products-grid").innerHTML = filteredProducts
-          .map((bottleWater) => {
-            const Stock = getStockStatus(bottleWater.quantity);
-            const quantity = quantityWarning(bottleWater.quantity);
-            return `
-             <div class="product-card" style="animation-delay: 0s">
-          <div class="card-image-wrap">  
-                   <img src="${bottleWater.image}" alt="" />
-         
-            <span class="stock-badge ${Stock.class}">
-              ${Stock.label}
-            </span>
-          </div>
-          <div class="card-body">
-          <div class="card-name"> ${bottleWater.name}</div>
-          <p class="product-price">₦${bottleWater.price}</p> 
-             <div class="quantity-info">
-                <p class="quantity-text">
-                  <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
-                </p>
-              </div>
-            
-            <div class="card-actions">
-            ${
-              isGuest
-                ? `<p class="guest-account">View only </p>`
-                : `
-              <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
-                 Edit
-              </button>
-              <button class="btn-card btn-update" data-product-id="${bottleWater.id}">
-                Update Stock
-              </button>`
-            }
-            </div>
-          </div>
-        </div> `;
-          })
+          .map((bottleWater) => productCardHTML(bottleWater, isGuest))
           .join("");
       }
     }
   });
+}
+
+function productCardHTML(bottleWater, isGuest = false) {
+  const Stock = getStockStatus(bottleWater.quantity);
+  const quantity = quantityWarning(bottleWater.quantity);
+
+  return `
+     <div class="product-card" id="product-${bottleWater.id}" style="animation-delay: 0s">
+      <div class="card-image-wrap">  
+               <img src="${bottleWater.image}" alt="" loading="lazy" />
+        <span class="stock-badge ${Stock.class}">
+          ${Stock.label}
+        </span>
+      </div>
+      <div class="card-body">
+      <div class="card-name"> ${bottleWater.name}</div>
+      <p class="product-price">₦${bottleWater.price}</p> 
+         <div class="quantity-info">
+            <p class="quantity-text">
+              <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs in store
+            </p>
+              <a class="product-history" data-product-id="${bottleWater.id}">View history</a>
+          </div>
+        <div class="card-actions">
+        ${
+          isGuest
+            ? `<p class="guest-account">View only </p>`
+            : `
+          <button class="btn-card btn-edit" data-product-id="${bottleWater.id}" >
+             Edit
+          </button>
+          <button class="btn-card btn-update" data-product-id="${bottleWater.id}">
+            Update Stock
+          </button>`
+        }
+        </div>
+      </div>
+    </div>
+  `;
 }
