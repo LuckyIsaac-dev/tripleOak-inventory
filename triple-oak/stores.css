@@ -1029,6 +1029,32 @@ dialog {
   opacity: 1;
 }
 
+/* -----------------------------ANIMATION ----------------------------- */
+.product-quantity {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+  vertical-align: middle;
+  position: relative;
+}
+
+.qty-roll-wrapper {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease;
+}
+
+.qty-roll-old,
+.qty-roll-new {
+  height: 1.2em;
+  line-height: 1.2em;
+}
+
+.qty-roll-wrapper.roll {
+  transform: translateY(-1.2em);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .login-grid {

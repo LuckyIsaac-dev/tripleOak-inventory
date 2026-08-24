@@ -683,3 +683,28 @@ function updateProductCard(productId) {
   qtySpan.textContent = product.quantity;
   animateQuantityChange(qtySpan, oldValue, product.quantity);
 }
+
+function animateQuantityChange(qtySpan, oldValue, newValue) {
+  const wrapper = document.createElement("span");
+  wrapper.className = "qty-roll-wrapper";
+
+  const oldDigit = document.createElement("span");
+  oldDigit.className = "qty-roll-old";
+  oldDigit.textContent = oldValue;
+
+  const newDigit = document.createElement("span");
+  newDigit.className = "qty-roll-new";
+  newDigit.textContent = newValue;
+
+  wrapper.append(oldDigit, newDigit);
+  qtySpan.textContent = "";
+  qtySpan.appendChild(wrapper);
+
+  requestAnimationFrame(() => {
+    wrapper.classList.add("roll");
+  });
+
+  setTimeout(() => {
+    qtySpan.textContent = newValue; // clean up back to plain text after animation
+  }, 800);
+}
