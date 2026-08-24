@@ -479,10 +479,12 @@ input {
  
 
   padding: 10px; */
-  display: flex;
+  display: none;
 
   gap: 16px;
   margin-bottom: 40px;
+  margin-top: var(--space-4);
+
   overflow-x: scroll;
   padding: 0 16px;
   scroll-behavior: smooth;

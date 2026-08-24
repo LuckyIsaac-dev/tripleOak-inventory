@@ -11,6 +11,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  updateProfile,
 } from "firebase/auth";
 //NEW FEATURES TO ADD
 /*
@@ -214,7 +215,8 @@ async function handleLogin() {
   const password = document.getElementById("login-password").value;
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    console.log("iam in");
+
+    console.log("display name set", auth.currentUser.displayName);
   } catch (error) {
     document.querySelector(".login-error").style.display = "flex";
   }
@@ -232,6 +234,7 @@ onAuthStateChanged(auth, async (user) => {
     document.querySelector(".main-wrap").style.display = "block";
     document.getElementById("login-page").style.display = "none";
     document.querySelector(".topbar").style.display = "flex";
+    document.querySelector(".filter-grid").style.display = "flex";
     await loadProducts(false);
     renderPage();
   }
@@ -240,6 +243,7 @@ onAuthStateChanged(auth, async (user) => {
 async function guestAccount() {
   document.querySelector(".main-wrap").style.display = "block";
   document.querySelector(".topbar").style.display = "flex";
+  document.querySelector(".filter-grid").style.display = "flex";
   document.getElementById("login-page").style.display = "none";
   await loadProducts(true);
 }
@@ -705,6 +709,6 @@ function animateQuantityChange(qtySpan, oldValue, newValue) {
   });
 
   setTimeout(() => {
-    qtySpan.textContent = newValue; // clean up back to plain text after animation
+    qtySpan.textContent = newValue;
   }, 800);
 }
