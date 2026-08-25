@@ -75,13 +75,14 @@
         </div>
       </div>
     </div>
-
+    <!-- -------------------EDIT-MODAL--------------- -->
     <dialog class="modal" style="max-width: 380px" closedby="closedrequest">
       <div class="modal-header">
         <div>
           <h3>Edit Stock</h3>
           <p id="qty-modal-product-name">Product name</p>
           <p id="product-quantity"></p>
+          <p>Your removing <span class="quantity-removed"></span></p>
         </div>
         <button class="edit-close">✕</button>
       </div>
@@ -89,14 +90,47 @@
       <div class="form-group" style="margin-bottom: 8px">
         <label>New Quantity</label>
         <div class="qty-controls">
+          <button class="edit-qty-controls undo-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-rotate-ccw-icon lucide-rotate-ccw"
+            >
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
           <input
             type="number"
             class="edit-stock-input"
             autofocus
             inputmode="numeric"
           />
-          <span class="error-message">Invalid input try again</span>
+          <button class="edit-qty-controls subtract-btn">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-minus-icon lucide-minus"
+            >
+              <path d="M5 12h14" />
+            </svg>
+          </button>
         </div>
+        <span class="error-message">Invalid input try again</span>
       </div>
 
       <div class="modal-footer">
@@ -104,7 +138,7 @@
         <button class="btn-save">Edit Quantity</button>
       </div>
     </dialog>
-
+    <!-- --------------------UPDATE-MODAL------------------------ -->
     <dialog
       class="update-modal"
       style="max-width: 380px"

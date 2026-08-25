@@ -60,6 +60,8 @@ const productQuantity = document.getElementById("product-quantity");
 const restockQuantity = document.querySelector(".update-product-quantity");
 const errorMessage = document.querySelector(".error-message");
 const stockHint = document.querySelector(".restock-hint");
+const quantityRemoved = document.querySelector(".quantity-removed");
+const subTractBtn = document.querySelector(".subtract-btn");
 
 // const waters = [
 //   {
@@ -290,7 +292,7 @@ async function saveToStorage() {
     console.error("batch failed:", error);
   }
 }
-
+let quantityToRemove = 0;
 function getStockStatus(quantity) {
   if (quantity === 0) return { label: "Out of Stock", class: "out-of-stock" };
   if (quantity <= 10) return { label: "Low Stock", class: "low-stock" };
@@ -411,6 +413,7 @@ function closeModal() {
 function closeEditModal() {
   editModal.close();
   editQtyInput.value = "";
+  quantityToRemove = 0;
 }
 
 // ── Render ──
@@ -467,7 +470,7 @@ function renderPage() {
     const updateBtn = e.target.closest(".btn-update");
 
     if (editBtn) {
-      currentProductId = editBtn.dataset.productId;
+      currentProductId = Number(editBtn.dataset.productId);
       const product = getProduct(currentProductId);
       modalProductName.innerHTML = product.name;
       productQuantity.innerHTML = `Current Quantity : ${product.quantity}`;
@@ -475,7 +478,7 @@ function renderPage() {
     }
 
     if (updateBtn) {
-      restockId = updateBtn.dataset.productId;
+      restockId = Number(updateBtn.dataset.productId);
       const product = getProduct(restockId);
       updateModalName.innerHTML = product.name;
       restockQuantity.innerHTML = product.quantity;
@@ -490,13 +493,23 @@ function renderPage() {
   updateStockBtn.addEventListener("click", () => {
     updateStock(restockId);
   });
+  subTractBtn.addEventListener("click", subTract);
 }
+
+editQtyInput.addEventListener("input", () => {
+  quantityToRemove = Number(editQtyInput.value);
+  quantityRemoved.innerText = quantityToRemove;
+});
 
 function editStock(productId) {
   let matchingProduct;
-  const value = Number(editQtyInput.value);
+  // const value = Number(editQtyInput.value);
   matchingProduct = getProduct(productId);
-  if (isNaN(value) || value <= 0 || matchingProduct.quantity - value < 0) {
+  if (
+    isNaN(quantityToRemove) ||
+    quantityToRemove <= 0 ||
+    matchingProduct.quantity - quantityToRemove < 0
+  ) {
     editQtyInput.classList.add("input-error-message");
     errorMessage.classList.add("show");
   } else {
@@ -504,12 +517,12 @@ function editStock(productId) {
     editQtyInput.classList.remove("input-error-message");
     editModal.close();
 
-    let refill = matchingProduct.editQuantity(value, productId);
+    let refill = matchingProduct.editQuantity(quantityToRemove, productId);
 
     if (refill) {
       products.forEach((product) => {
         if (product.type === "cway-empties") {
-          product.quantity += value;
+          product.quantity += quantityToRemove;
         }
       });
     }
@@ -573,7 +586,7 @@ function formatValue(value) {
     return `₦${value.toLocaleString()}`;
   }
 }
-console.log(products);
+
 function filterProduct(isGuest) {
   let filteredProducts;
   const btnArray = [];
@@ -711,4 +724,21 @@ function animateQuantityChange(qtySpan, oldValue, newValue) {
   setTimeout(() => {
     qtySpan.textContent = newValue;
   }, 800);
+}
+
+function subTract(productId) {
+  let product = getProduct(productId);
+
+  quantityToRemove++;
+  editQtyInput.value = quantityToRemove;
+
+  quantityRemoved.innerText = quantityToRemove;
+}
+function undo(productId) {
+  const product = getProduct(productId);
+  if (quantityToRemove === 0) return;
+  quantityToRemove -= 1;
+  editQtyInput.value = quantityToRemove;
+  currentQuantity.innerText = product.quantity;
+  quantityRemoved.innerText = quantityToRemove;
 }
