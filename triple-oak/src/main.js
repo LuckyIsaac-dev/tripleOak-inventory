@@ -62,6 +62,7 @@ const errorMessage = document.querySelector(".error-message");
 const stockHint = document.querySelector(".restock-hint");
 const quantityRemoved = document.querySelector(".quantity-removed");
 const subTractBtn = document.querySelector(".subtract-btn");
+const undoBtn = document.querySelector(".undo-btn");
 
 // const waters = [
 //   {
@@ -474,6 +475,7 @@ function renderPage() {
       const product = getProduct(currentProductId);
       modalProductName.innerHTML = product.name;
       productQuantity.innerHTML = `Current Quantity : ${product.quantity}`;
+      quantityRemoved.innerHTML = "";
       editModal.showModal();
     }
 
@@ -494,6 +496,7 @@ function renderPage() {
     updateStock(restockId);
   });
   subTractBtn.addEventListener("click", subTract);
+  undoBtn.addEventListener("click", undo);
 }
 
 editQtyInput.addEventListener("input", () => {
@@ -739,6 +742,6 @@ function undo(productId) {
   if (quantityToRemove === 0) return;
   quantityToRemove -= 1;
   editQtyInput.value = quantityToRemove;
-  currentQuantity.innerText = product.quantity;
+
   quantityRemoved.innerText = quantityToRemove;
 }
