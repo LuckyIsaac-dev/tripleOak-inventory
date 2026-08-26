@@ -74,6 +74,7 @@ const closeProductModalBtn = document.querySelector(".close-modal-btn");
 const errorSpans = document.querySelectorAll(".error-message");
 const productImage = document.querySelector(".image-input");
 const productType = document.querySelector(".product-type");
+const historyModel = document.querySelector(".history-model");
 // const waters = [
 //   {
 //     image: "",
@@ -286,7 +287,7 @@ async function saveToStorage() {
     const batch = writeBatch(db);
 
     products.forEach((product) => {
-      const ref = doc(db, "product", product.id);
+      const ref = doc(db, "product", String(product.id));
       batch.set(ref, {
         image: product.image,
         brand: product.brand,
@@ -295,6 +296,7 @@ async function saveToStorage() {
         quantity: product.quantity,
         type: product.type,
         id: product.id,
+        lastUpdateHistory: product.lastUpdateHistory,
       });
     });
 
@@ -427,42 +429,9 @@ function closeEditModal() {
   quantityToRemove = 0;
 }
 
-// ── Render ──
 function generateHTML(isGuest = false) {
   let productHTML = "";
   products.forEach((bottleWater) => {
-    // productHTML += `
-
-    //   <div class="product-card" style="animation-delay: 0s">
-    //     <div class="card-image-wrap">
-    //       <img
-    //         src="${bottleWater.image}"
-    //         alt="${bottleWater.name}"
-
-    //       />
-    //       <span class="stock-badge ${stock.class}">${stock.label}</span>
-    //     </div>
-    //     <div class="card-body">
-    //          <div class="card-name"> ${bottleWater.name}</div>
-    //     <p class="product-price">₦${bottleWater.price}</p>
-    //        <div class="quantity-info">
-    //           <p class="quantity-text">
-    //             <span class="product-quantity ${quantity}">${bottleWater.quantity}</span> packs left in store
-    //           </p>
-    //         </div>
-    //       <div class="card-actions">
-    //         ${
-    //           isGuest
-    //             ? `<p class="guest-account"> View only</p>`
-    //             : `
-    //           <button class="btn-card btn-edit" data-product-id="${bottleWater.id}">Edit</button>
-    //           <button class="btn-card btn-update" data-product-id="${bottleWater.id}">Restock</button>
-    //         `
-    //         }
-    //       </div>
-    //     </div>
-    //   </div>`;
-
     productHTML += productCardHTML(bottleWater, isGuest);
   });
   document.querySelector(".products-grid").innerHTML = productHTML;
@@ -479,6 +448,15 @@ function renderPage() {
   productGrid.addEventListener("click", (e) => {
     const editBtn = e.target.closest(".btn-edit");
     const updateBtn = e.target.closest(".btn-update");
+
+    const historyBtn = e.target.closest(".product-history");
+
+    if (historyBtn) {
+      const historyId = Number(historyBtn.dataset.productId);
+
+      showHistory(historyId);
+      console.log("hello");
+    }
 
     if (editBtn) {
       currentProductId = Number(editBtn.dataset.productId);
@@ -563,6 +541,7 @@ function updateStock(productId) {
   let matchingProduct = null;
   let newQuantity = Number(updateQtyInput.value);
   matchingProduct = getProduct(productId);
+  let previousQuantity = matchingProduct.quantity;
   if (isNaN(newQuantity) || newQuantity <= 0) {
     updateQtyInput.classList.add("input-error-message");
     stockHint.innerHTML = `Invalid input try again`;
@@ -576,6 +555,8 @@ function updateStock(productId) {
     matchingProduct = getProduct(productId);
 
     let refillEmpty = matchingProduct.updateQuantity(newQuantity, productId);
+    let newStock = matchingProduct.quantity;
+    getUpdateHistory(productId, newQuantity, previousQuantity, newStock);
 
     //
     if (refillEmpty) {
@@ -921,12 +902,12 @@ function getEditHistory(productId, value, previousQuantity, remainingQuantity) {
   };
 
   product.lastUpdateHistory.push(time);
-  console.log();
+  console.log(time);
 
   // saveToStorage();
 }
 function getUpdateHistory(productId, value, previousQuantity, newStock) {
-  let user = currentUser.name;
+  let user = auth.currentUser.displayName;
   const product = getProduct(productId);
 
   const quantityAdded = value;
@@ -950,7 +931,7 @@ function getUpdateHistory(productId, value, previousQuantity, newStock) {
 
   product.lastUpdateHistory.push(time);
 
-  saveToStorage();
+  // saveToStorage();
 }
 
 function showHistory(productId) {
@@ -1018,4 +999,12 @@ function showHistory(productId) {
       container.appendChild(body);
     });
   historyModel.showModal();
+}
+
+function formatGroupLabel(dateString) {
+  const today = new Date().toDateString();
+  if (dateString === today) return "Today";
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (dateString === yesterday) return "Yesterday";
+  return dateString;
 }

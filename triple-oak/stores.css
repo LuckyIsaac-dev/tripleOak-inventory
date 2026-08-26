@@ -1272,3 +1272,111 @@ select {
   display: flex;
   justify-content: end;
 }
+
+.history-details-container {
+  width: 90%;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  /* justify-content: space-between; */
+  /* padding-bottom: var(--space-2); */
+}
+.history-name {
+  font-size: 1rem;
+  /* font-family: "poppins", sans-serif; */
+  font-family: var(--font-family);
+  color: var(--gray-900);
+  font-weight: 500;
+  padding-bottom: var(--space-1);
+  /* padding-bottom: var(--space-1); */
+}
+.description {
+  /* font-family: "poppins", sans-serif; */
+  font-family: var(--font-family);
+  font-size: var(--font-md);
+  color: var(--gray-500);
+  padding-bottom: var(--space-1);
+}
+.previous-quantity,
+.update-quantity {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--gray-800);
+  /* font-family: "poppins", sans-serif; */
+  font-family: var(--font-family);
+}
+
+.history-previous-quantity {
+  padding-bottom: var(--space-4);
+}
+.user-and-time {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+.history-heading {
+  padding-bottom: var(--space-3);
+  font-family: "poppins";
+  color: var(--gray-800);
+}
+
+.history-body {
+  position: relative;
+  border: 1px solid var(--gray-100);
+  padding: var(--space-3);
+  /* box-shadow: var(--shadow-md); */
+  border-radius: 10px;
+  margin: var(--space-2);
+}
+.qty-removed {
+  position: absolute;
+  top: 10px;
+  right: 32px;
+  /* background-color: var(--danger); */
+  color: var(--danger);
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: var(--font-base);
+}
+.user {
+  color: var(--gray-600);
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: var(--font-base);
+}
+.time {
+  color: var(--gray-600);
+  font-family: var(--font-family);
+  /* font-family: "poppins", sans-serif; */
+  font-weight: 600;
+  font-size: var(--font-md);
+}
+.history-date {
+  font-size: var(--font-md);
+  /* font-family: "poppins"; */
+  font-family: var(--font-family);
+  color: var(--gray-500);
+  padding-bottom: var(--space-2);
+  display: block;
+}
+
+.history-model {
+  max-height: 500px;
+  overflow-x: scroll;
+  z-index: 999;
+  border: none;
+  outline: none;
+  /* width: 100%; */
+  scroll-behavior: smooth;
+  justify-content: center;
+  scrollbar-width: none;
+}
+
+.no-history {
+  font-size: var(--font-md);
+  /* color: var(--blue-500); */
+  color: var(--gray-400);
+  cursor: pointer;
+  display: inline-block;
+  padding-top: var(--space-2);
+}

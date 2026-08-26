@@ -7,6 +7,7 @@ export class Water {
     this.quantity = productDetails.quantity;
     this.type = productDetails.type;
     this.id = productDetails.id;
+    this.lastUpdateHistory = productDetails.lastUpdateHistory || [];
   }
 
   editQuantity(value, productId) {
