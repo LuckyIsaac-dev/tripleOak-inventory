@@ -58,12 +58,22 @@ const searchInput = document.querySelector(".search-input");
 const toast = document.querySelector(".toast");
 const productQuantity = document.getElementById("product-quantity");
 const restockQuantity = document.querySelector(".update-product-quantity");
-const errorMessage = document.querySelector(".error-message");
+const errorMessage = document.querySelector(".edit-error-message");
 const stockHint = document.querySelector(".restock-hint");
 const quantityRemoved = document.querySelector(".quantity-removed");
 const subTractBtn = document.querySelector(".subtract-btn");
 const undoBtn = document.querySelector(".undo-btn");
-
+const brandName = document.querySelector(".brand-input");
+const brandPrice = document.querySelector(".price-input");
+const brandSize = document.querySelector(".size-input");
+const brandQty = document.querySelector(".brand-qty-input");
+const createBtn = document.querySelector(".btn-create");
+const addProductBtn = document.querySelector(".add-btn");
+const addProductModal = document.querySelector(".add-product-modal");
+const closeProductModalBtn = document.querySelector(".close-modal-btn");
+const errorSpans = document.querySelectorAll(".error-message");
+const productImage = document.querySelector(".image-input");
+const productType = document.querySelector(".product-type");
 // const waters = [
 //   {
 //     image: "",
@@ -508,6 +518,7 @@ function editStock(productId) {
   let matchingProduct;
   // const value = Number(editQtyInput.value);
   matchingProduct = getProduct(productId);
+  let previousQuantity = matchingProduct.quantity;
   if (
     isNaN(quantityToRemove) ||
     quantityToRemove <= 0 ||
@@ -521,6 +532,13 @@ function editStock(productId) {
     editModal.close();
 
     let refill = matchingProduct.editQuantity(quantityToRemove, productId);
+    let remainingQuantity = matchingProduct.quantity;
+    getEditHistory(
+      productId,
+      quantityToRemove,
+      previousQuantity,
+      remainingQuantity,
+    );
 
     if (refill) {
       products.forEach((product) => {
@@ -683,7 +701,7 @@ function productCardHTML(bottleWater, isGuest = false) {
 
 function updateProductCard(productId) {
   const product = getProduct(productId);
-  console.log(product);
+
   const card = document.getElementById(`product-${String(productId)}`);
   if (!card) return;
 
@@ -744,4 +762,260 @@ function undo(productId) {
   editQtyInput.value = quantityToRemove;
 
   quantityRemoved.innerText = quantityToRemove;
+}
+
+addProductBtn.addEventListener("click", () => {
+  addProductModal.showModal();
+});
+
+closeProductModalBtn.addEventListener("click", () => {
+  addProductModal.close();
+  errorSpans.forEach((span) => {
+    span.classList.remove("show-error-message");
+  });
+
+  brandName.classList.remove("input-error-message");
+  brandSize.classList.remove("input-error-message");
+  brandQty.classList.remove("input-error-message");
+  brandPrice.classList.remove("input-error-message");
+});
+
+createBtn.addEventListener("click", createProduct);
+brandName.addEventListener("input", () => {
+  if (brandName.value.length < 3) {
+    brandName.classList.remove("input-success");
+    errorSpans[0].classList.remove("success");
+    errorSpans[0].classList.add("show-error-message");
+    errorSpans[0].innerText = "Brand is name too short";
+    console.log(errorSpans[0]);
+    brandName.classList.add("input-error-message");
+  } else {
+    //
+    errorSpans[0].classList.add("success");
+    errorSpans[0].innerText = "Good";
+    brandName.classList.remove("input-error-message");
+    brandName.classList.add("input-success");
+  }
+});
+console.log(errorSpans);
+brandName.addEventListener("focusout", () => {
+  if (brandName.value.length >= 3) {
+    brandName.classList.remove("input-error-message");
+    brandName.classList.remove("input-success");
+    errorSpans[0].classList.remove("show-error-message");
+  } else {
+    errorSpans[0].classList.add("show-error-message");
+    errorSpans[0].classList.remove("success");
+    errorSpans[0].innerText = "Brand is name too short";
+    brandName.classList.add("input-error-message");
+  }
+});
+
+brandQty.addEventListener("input", () => {
+  if (brandQty.value !== "") {
+    brandQty.classList.remove("input-error-message");
+    // brandQty.classList.remove("input-success");
+    errorSpans[2].classList.remove("show-error-message");
+  }
+});
+brandPrice.addEventListener("input", () => {
+  if (brandPrice.value !== "") {
+    brandPrice.classList.remove("input-error-message");
+
+    errorSpans[3].classList.remove("show-error-message");
+  }
+});
+brandSize.addEventListener("input", () => {
+  if (brandSize.value !== "") {
+    brandSize.classList.remove("input-error-message");
+
+    errorSpans[1].classList.remove("show-error-message");
+  }
+});
+
+function createProduct() {
+  let highestId = 0;
+  products.forEach((prouductId) => {
+    let id = Number(prouductId.id);
+
+    if (id > highestId) {
+      highestId = id;
+    }
+  });
+
+  highestId += 1;
+
+  if (brandName.value === "") {
+    errorSpans[0].classList.add("show-error-message");
+    errorSpans[0].innerText = "Please fill this field";
+    brandName.classList.add("input-error-message");
+  }
+  if (brandQty.value === "") {
+    errorSpans[2].classList.add("show-error-message");
+    errorSpans[2].innerText = "Please fill this field";
+    brandQty.classList.add("input-error-message");
+  }
+  if (brandPrice.value === "") {
+    errorSpans[3].classList.add("show-error-message");
+    errorSpans[3].innerText = "Please fill this field";
+    brandPrice.classList.add("input-error-message");
+  }
+  if (brandSize.value === "") {
+    errorSpans[1].classList.add("show-error-message");
+    errorSpans[1].innerText = "Please fill this field";
+    brandSize.classList.add("input-error-message");
+  }
+
+  if (
+    brandName.value === "" ||
+    brandQty.value === "" ||
+    brandPrice.value === "" ||
+    brandSize.value === ""
+  ) {
+    return;
+  }
+
+  let object = new Water({
+    image: productImage.value || "",
+    lastUpdateHistory: [],
+    brand: brandName.value,
+    name: brandName.value + " " + brandSize.value,
+    price: brandPrice.value,
+    quantity: brandQty.value,
+    type: productType.value,
+    id: highestId,
+  });
+  products.push(object);
+  getUpdateHistory(highestId, brandQty.value);
+  saveToStorage();
+  brandName.value = "";
+  brandPrice.value = "";
+  brandQty.value = "";
+  brandSize.value = "";
+  generateHTML();
+  addProductModal.close();
+}
+createBtn.addEventListener("click", createProduct);
+function getEditHistory(productId, value, previousQuantity, remainingQuantity) {
+  let user = auth.currentUser.displayName;
+  const product = getProduct(productId);
+
+  const quantityRemoved = value;
+
+  const date = new Date();
+  const dateString = date.toDateString();
+  const hours24 = date.getHours();
+  const meridem = hours24 >= 12 ? "pm" : "am";
+  const hour12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+  const time = {
+    timestamp: date.getTime(),
+    hour: hour12,
+    minutes: date.getMinutes(),
+    meridem,
+    dateString,
+    quantityRemoved,
+    previousQuantity,
+    remainingQuantity,
+    user,
+    id: "edit",
+  };
+
+  product.lastUpdateHistory.push(time);
+  console.log();
+
+  // saveToStorage();
+}
+function getUpdateHistory(productId, value, previousQuantity, newStock) {
+  let user = currentUser.name;
+  const product = getProduct(productId);
+
+  const quantityAdded = value;
+  const date = new Date();
+  const dateString = date.toDateString();
+  const hours24 = date.getHours();
+  const meridem = hours24 >= 12 ? "pm" : "am";
+  const hour12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+  const time = {
+    timestamp: date.getTime(),
+    hour: hour12,
+    minutes: date.getMinutes(),
+    meridem,
+    dateString,
+    quantityAdded,
+    previousQuantity,
+    newStock,
+    user,
+    id: "update",
+  };
+
+  product.lastUpdateHistory.push(time);
+
+  saveToStorage();
+}
+
+function showHistory(productId) {
+  const product = getProduct(productId);
+
+  const dateContainers = new Map();
+
+  document.querySelector(".history-model").innerHTML =
+    `<h2 class="history-heading">History</h2>`;
+
+  //
+  if (product.lastUpdateHistory.length === 0) {
+    document.querySelector(".history-model").innerHTML +=
+      `<p class="no-history">No history stored for this product yet</p>`;
+  }
+
+  [...product.lastUpdateHistory]
+    .sort((a, b) => b.timestamp - a.timestamp)
+    .forEach((history) => {
+      let container = dateContainers.get(history.dateString);
+
+      if (!container) {
+        container = document.createElement("div");
+        container.className = "history-date";
+        container.innerHTML = `<span class="history-date-label">${formatGroupLabel(history.dateString)}</span>`;
+        document.querySelector(".history-model").appendChild(container);
+
+        dateContainers.set(history.dateString, container);
+      }
+
+      const isEdit = history.id === "edit";
+      const body = document.createElement("div");
+      body.className = "history-body";
+      body.innerHTML = `
+    <div>
+      <div class="history-details-container">
+        <p class="history-name">${product.name}</p>
+
+        <p class="description">${history.user} ${isEdit ? "removed" : "added"} <span class="update-quantity">${isEdit ? history.quantityRemoved : history.quantityAdded}</span> packs ${isEdit ? "from" : "to"} stock</p>
+
+        <p class="history-previous-quantity"> 
+
+         Previous quantity 
+
+        <span class="previous-quantity">${history.previousQuantity}</span>
+      </p>
+        <p class="history-previous-quantity"> 
+
+        ${isEdit ? "Remaining quantity" : "New total"}
+
+        <span class="previous-quantity">${isEdit ? history.remainingQuantity : history.newStock}</span>
+      </p>
+
+      </div>
+
+      <div class="qty-removed ${isEdit ? "" : "success"}">${isEdit ? "-" : "+"}${isEdit ? history.quantityRemoved : history.quantityAdded}</div>
+
+      <div class="user-and-time">
+        <p class="user">${history.user}</p>
+        <p class="time">${history.hour}:${String(history.minutes).padStart(2, "0")}${history.meridem}</p>
+      </div>
+
+    </div>
+  `;
+      container.appendChild(body);
+    });
+  historyModel.showModal();
 }
