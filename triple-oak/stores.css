@@ -1394,9 +1394,9 @@ select {
   .topbar-title {
     display: none;
   }
-  .description {
+  /* .description {
     display: none;
-  }
+  } */
   .add-product-modal {
     width: 90%;
     /* min-height: ; */

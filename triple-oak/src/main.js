@@ -971,7 +971,7 @@ function showHistory(productId) {
       <div class="history-details-container">
         <p class="history-name">${product.name}</p>
 
-        <p class="description">${history.user} ${isEdit ? "removed" : "added"} <span class="update-quantity">${isEdit ? history.quantityRemoved : history.quantityAdded}</span> packs ${isEdit ? "from" : "to"} stock</p>
+        <p class="description">${history.user} ${isEdit ? "removed" : "added"} <span class="update-quantity">${isEdit ? history.quantityRemoved : history.quantityAdded}</span> </p>
 
         <p class="history-previous-quantity"> 
 
