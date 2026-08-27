@@ -1120,8 +1120,12 @@ dialog {
   .filter-grid {
     justify-content: flex-start;
   }
+  .logo-image {
+    width: 50px !important;
+  }
 }
-.error-message {
+.error-message,
+.edit-error-message {
   /* display: inline-block;
   color: var(--danger);
   margin-top: 4px;
@@ -1374,7 +1378,10 @@ select {
   justify-content: center;
   scrollbar-width: none;
 }
-
+.lucide-rotate-ccw-icon {
+  width: 20px;
+  height: 20px;
+}
 .no-history {
   font-size: var(--font-md);
   /* color: var(--blue-500); */
@@ -1387,7 +1394,9 @@ select {
   .topbar-title {
     display: none;
   }
-
+  .description {
+    display: none;
+  }
   .add-product-modal {
     width: 90%;
     /* min-height: ; */
@@ -1423,5 +1432,24 @@ select {
   }
   .logo-image {
     width: 50px;
+  }
+}
+
+@media (max-width: 400px) {
+  .search-input {
+    width: 150px;
+  }
+
+  .history-model {
+    padding: 16px !important;
+    width: 100% !important;
+  }
+
+  .history-body {
+    padding: 8px;
+  }
+
+  .qty-removed {
+    right: 15px;
   }
 }

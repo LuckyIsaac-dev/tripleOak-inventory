@@ -526,6 +526,7 @@ function editStock(productId) {
       });
     }
     editQtyInput.value = "";
+    quantityToRemove = 0;
 
     updateProductCard(productId);
     saveToStorage();
